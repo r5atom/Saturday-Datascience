@@ -26,7 +26,8 @@ The website is subject to change once in a while, and sometimes it feels I am ai
 
 ## Step 2: adding extra information
 
-_TODO: RDW_
+Most lots are vehicles with a registration. An API query gives additional information about the registration. The Dutch equivalent to the DMV does a pretty good job maintaining an open data dataset. It is well documented and updates are communicated. The agency is know as [Dienst Wegverkeer](https://www.rdw.nl/information-in-english) (or _RDW_).
+
 
 ## Step 3: EDA
 
@@ -51,7 +52,7 @@ Because the lots have pictures too, a future plan is to do some image classifica
 
 
 
-
-[^1] Auction / tender  
+- - - - -
+[^1] _Auction vs. tender_  
 Formally the way lots are handled in these kind of auction are by invitation to bid through a "tender". The difference is that bids in an auction are public, and in a tender they are not. It is a sort of silent auction.  
 For simplicity I will use the term _auction_.
