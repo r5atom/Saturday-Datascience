@@ -28,6 +28,8 @@ _Screenshot of an example of an auction result. This lot was sold in February 20
 
 The website is subject to change once in a while [^2], and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
 
+![notebook](./code/scrape-drz-auction-results.ipynb)
+
 
 ### Known issues
 - Occasionally lots are a combination of multiple items. Currently only the first item will be handled, however I also store the raw text for future provisioning.
@@ -40,10 +42,13 @@ Most lots are vehicles with a registration. The Dutch equivalent to the DMV know
 
 The RDW does a pretty good job maintaining this open data dataset. Definitions are [well documented](https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen/m9d7-ebf2). They have a [google forum](https://groups.google.com/forum/#!topic/voertuigen-open-data/rnwGKL-HQ8Y) where updates are communicated.
 
+![notebook](./code/add-rdw-info-to-drz.ipynb)
 
 ## Step 3: EDA
 
-...
+With the scraped and results I can do some very basic *E*xploratory *D*ata *A*nalysis.
+
+![notebook](./code/explore-auction-results.ipynb)
 
 ## Step 4: aggregate into one dataset
 
