@@ -11,14 +11,14 @@ The published auction results are relatively clean, but with enough "dirt" to ma
 ![drz-home](./assets/drz-home-square.png)  
 _Screenshot of website_
 
-So far I've been collecting results for about two years now. It contains all sorts of lots (goods that are offered in an auction): Cars, trucks, motorcycles and trailers. I've focussed on cars mainly.
+I started working on this in 2014, but I've been systematically been collecting results for about two years now. It contains all sorts of lots (goods that are offered in an auction): Cars, trucks, motorcycles and trailers. I've been focussing on getting the results cleaned on cars mainly.
 
 To interpret the auction results, I realize it helps to know a little Dutch. But, I've done most of the work translating the results into meaningful field names. If something is unclear, online translators are your best friend or contact me.
 
 ## Step 1: Scraping the results
 
-Initially results were published on a downloadable .pdf file. 
-In the past (2017) I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
+Initially results were published on a downloadable [.pdf file](./assets/201410-catalogusdrz.pdf). 
+In the past I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
 Those old routines have since been archived.  
 
 The way the results are published have changed too. They are now available on a website, which I decided to scrape with home-brew _python_ routines that use _pandas_ and run from a _Jupyter notebook_. Initially I used clunky solutions like `str.index` to find patterns in the text. Recently I started using [regex](https://en.wikipedia.org/wiki/Regular_expression). This is more powerful. I store the patterns to find text fragments in a .csv file, keeping my workflow clean.
