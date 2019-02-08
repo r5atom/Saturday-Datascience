@@ -1,0 +1,32 @@
+# fragments that need replacing
+# e.g. clear typos and special characters
+# Use xml escape codes
+# First column is re search pattern, 
+# second column is replacement
+"^ *",""
+" *$",""
+"&#13;&#10;$",""
+"&#10;$",""
+"&#13;$",""
+"\r",""
+"\n",""
+"rechts geplaats","rechts geplaatst"
+"rechts geplaatstt","rechts geplaatst"
+"IKS","IGK"
+"geregisteerd","geregistreerd"
+"Domein Roerende Zaken","Domeinen Roerende Zaken"
+#"voertuigonderzoek +RDW","voertuigonderzoek RDW"
+" +"," "
+"&#128;","EUR"
+"€","EUR"
+"&#239;&#191;&#189;","EUR"
+#
+# Below makes default parsing easier
+#
+"Let op: In verband met een RDW voertuigen onderzoek worden er extra kosten berekend van EUR 150,00", "Kosten voertuigonderzoek RDW EUR 150,00\nZie onze website, onder vraag en antwoord."
+"Taxigoedkeuring te verkrijgen bij RDW via de afd\. TTV", "Het voertuig is voorzien van taxi-kentekenplaten Taxiregistratie kunt u laten aanpassen via de RDW. Vervanging van blauwe door gele kentekenplaten kunt u laten verrichten door de erkende bedrijven."
+"Voertuig is nog nooit eerder tenaamgesteld", "Voertuig is niet eerder tenaamgesteld. Voertuig dient eerst op naam van een natuurlijk- of rechtspersoon gezet te worden, daarna kan het voertuig eventueel op bedrijfsvoorraad gezet worden."
+"Voertuig is niet eerder tenaamgesteld", "Voertuig is niet eerder tenaamgesteld. Voertuig dient eerst op naam van een natuurlijk- of rechtspersoon gezet te worden, daarna kan het voertuig eventueel op bedrijfsvoorraad gezet worden."
+"Het voertuig dient, samen met het door Domeinen Roerende Zaken meegeleverde RDW-rapport en de factuur, voor heractivatie van het originele kenteken te worden aangeboden voor keuring bij een RDW-keuringsstation\.","Voertuig dient voor heractivatie van het originele kenteken bij een RDW-keuringsstation te worden aangeboden met overlegging van de factuur/gunningsbiljet van Domein(en)? Roerende Zaken."
+"De bok is geen onderdeel van de kavel\.", "De bok waar dit vaartuig op staat is eigendom van DRZ en mag het terrein niet verlaten." 
+# "Let op, de trailer op de foto is geen onderdeel van dit kavel\.", "De boottrailer waar dit vaartuig op staat is eigendom van DRZ en mag het terrein niet verlaten." 
