@@ -58,11 +58,16 @@ docs/_build/
 target/
 
 # Mac stuff
-Icon[]
-\.DS_Store
+# Note: ctrl-alt-enter is <CR> in textmate
+*Icon[]
+*\.DS_Store
 
 # Prevent keys from being visible in notebooks
 hidden_api_keys\.py
 
+# Jupyter Notebook specific
+*\.ipynb_checkpoints/
+
+# For now ignore data
 data/*\.csv
 data/*\.pkl
