@@ -63,3 +63,6 @@ Icon[]
 
 # Prevent keys from being visible in notebooks
 hidden_api_keys\.py
+
+data/*\.csv
+data/*\.pkl
