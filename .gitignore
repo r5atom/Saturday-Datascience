@@ -71,3 +71,4 @@ hidden_api_keys\.py
 # For now ignore data
 data/*\.csv
 data/*\.pkl
+data/images/*\.jpg

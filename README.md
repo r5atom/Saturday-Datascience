@@ -13,7 +13,7 @@ _Screenshot of website_
 
 I started working on this in 2014, but I've been systematically been collecting results for about two years now. It contains all sorts of lots (goods that are offered in an auction): Cars, trucks, motorcycles and trailers. I've been focussing on getting the results cleaned on cars mainly.
 
-To interpret the auction results, I realize it helps to know a little Dutch. But, I've done most of the work translating the results into meaningful field names. If something is unclear, online translators are your best friend or contact me.
+To interpret the auction results, I realize it helps to know a little Dutch. I've tried to translate the results into meaningful field names. Here below is a glossary, but if something remains unclear you can always raise an issue.
 
 ## Step 1: Scraping the results
 
@@ -65,17 +65,26 @@ With the scraped and results I can do some very basic *E*xploratory *D*ata *A*na
 
 # Future
 
-Because the lots have pictures too, a future plan is to do some image classification on these pictures.
+## Image classification
+
+The auction results have pictures too, a future plan is to do some image classification on these pictures. I've added a notebook that downloads images for future use.
+
+[notebook](./code/download-images.ipynb)
+
+Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier.
+
+
+
 
 # Glossary
 
 | Term        | Description |
-| ----------: | :---------: |
+| ----------: | :--------- |
 | Lot         | Article for sale |
-| [Dutch] APK | _Algemene Periodieke Keuring_ Vehicle inspection, MOT test. |
-| [Dutch] DRZ | _Dienst Roerende Zaken_ Agency that holds police auctions. |
-| [Dutch] Rdw | _Dienst Wegverkeer_ DOT |
-| [Dutch] BPM | _Belasting van personenauto's en motorrijwielen_ Registration Tax. |
+| [_Dutch_] APK | _Algemene Periodieke Keuring_ Vehicle inspection, MOT test. |
+| [_Dutch_] DRZ | _Dienst Roerende Zaken_ Agency that holds police auctions. |
+| [_Dutch_] Rdw | _Dienst Wegverkeer_ DOT |
+| [_Dutch_] BPM | _Belasting van personenauto's en motorrijwielen_ Registration Tax. |
 
 - - - - -
 [^1] _Auction vs. tender_  
