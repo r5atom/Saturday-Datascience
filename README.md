@@ -46,7 +46,7 @@ The RDW does a pretty good job maintaining this open data dataset. Definitions a
 
 ## Step 3: EDA
 
-With the scraped and results I can do some very basic *E*xploratory *D*ata *A*nalysis.
+With the scraped and results I can do some basic **E**xploratory **D**ata **A**nalysis.
 
 [notebook](./code/explore-auction-results.ipynb)
 
