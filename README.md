@@ -67,7 +67,15 @@ With the scraped and results I can do some very basic *E*xploratory *D*ata *A*na
 
 Because the lots have pictures too, a future plan is to do some image classification on these pictures.
 
+# Glossary
 
+| Term        | Description |
+| ----------: | :---------: |
+| Lot         | Article for sale |
+| [Dutch] APK | _Algemene Periodieke Keuring_ Vehicle inspection, MOT test. |
+| [Dutch] DRZ | _Dienst Roerende Zaken_ Agency that holds police auctions. |
+| [Dutch] Rdw | _Dienst Wegverkeer_ DOT |
+| [Dutch] BPM | _Belasting van personenauto's en motorrijwielen_ Registration Tax. |
 
 - - - - -
 [^1] _Auction vs. tender_  
