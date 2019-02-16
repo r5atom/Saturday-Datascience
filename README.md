@@ -1,6 +1,16 @@
 # Saturday Data science
 
-Here you can follow what I am doing on a Saturday (and sometimes other days too).  
+## TL;DR
+
+- Monthly police auction results.
+- So far 2+ years of auction 5000+ results with 3000+ cars.
+- Aside from make and model, engine specification, color, and more is available.
+- Item features can be used to predict pricing.
+- Images can be used for classification.
+
+- - - -
+
+Here you can follow what I am doing on a Saturday (and sometimes [other days](.,/../graphs/commit-activity) too).  
 
 A project I am working on involves **Police auctions** held once a month by the Dutch authorities: [Dienst Domeinen Roerende Zaken](https://www.domeinenrz.nl/) (or _DRZ_). The results of the auction [^1] are published. 
 Initially I set out to get a bidding advantage in a future auction by using prior auction results. In a way I was setting myself up for a prediction modeling project!  
@@ -23,13 +33,13 @@ Initially results were published on a downloadable [.pdf file](./assets/201410-c
 In the past I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
 Those old routines have since been archived.  
 
-The way the results are published have changed since and they became available on a website. I've decided to scrape these results with home-brew _python_ routines that use _pandas_ and run from _Jupyter notebooks_. Initially I used clunky solutions like `str.index` to find patterns in the text, but recently I started using [regex](https://en.wikipedia.org/wiki/Regular_expression). This is more powerful. I store the regex patterns to find text fragments in a .csv file, thus keeping my workflow clean.
+The way the results are published have changed since and they became available on a website. I've decided to scrape these results with home-brew _python_ routines that use _pandas_ and run from _Jupyter notebooks_. Initially I used clunky solutions like `str.index` to find patterns in the text, but recently I started using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (regex). This is more powerful and maintains a clean workflow. The regex patterns are stored in .csv files: [./code/regexp-patterns](./code/regexp-patterns).
 
 ![drz-result](./assets/drz-result-190022405.png)  
-_Screenshot of an example of an auction result. This lot was sold in February 2019 for EUR 35,290.00 (about $40.000)_
+_Screenshot of an auction result. This example lot was sold in February 2019 for EUR 35,290.00 (about $40.000)_
 
 ![regex-example](./assets/regex-selection-190022405.png)  
-_Example of how a *regex* pattern retrieves values from text. In this case the odo meter value follows the text `Km-stand`, which might also be lower case._
+_Example of how a *regex* pattern is used in parsing text. In this case the odometer value follows the text `Km-stand`, which might also be in lower case._
 
 The drz website is subject to change once in a while [^2], and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
 
