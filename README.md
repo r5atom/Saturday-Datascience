@@ -28,6 +28,9 @@ The way the results are published have changed since and they became available o
 ![drz-result](./assets/drz-result-190022405.png)  
 _Screenshot of an example of an auction result. This lot was sold in February 2019 for EUR 35,290.00 (about $40.000)_
 
+![regex-example](./assets/regex-selection-190022405.png)  
+_Example of how a *regex* pattern retrieves values from text. In this case the odo meter value follows the text `Km-stand`, which might also be lower case._
+
 The drz website is subject to change once in a while [^2], and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
 
 
@@ -68,7 +71,7 @@ With the scraped and results I can do some basic **E**xploratory **D**ata **A**n
 
 The auction results have pictures too, a future plan is to do some image classification on these pictures. I've added a notebook that downloads images for future use.
 
-[notebook](./code/download-images.ipynb)
+### Download images [(notebook)](./code/download-images.ipynb)
 
 Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier.
 
