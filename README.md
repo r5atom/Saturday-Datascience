@@ -4,7 +4,7 @@
 
 - Monthly police auction results.
 - So far 2+ years of auction 5000+ results with 3000+ cars.
-- Aside from make and model, engine specification, color, and more is available.
+- Aside from make and model, engine specification, color, and more is available, amounting to 100+ features.
 - Item features can be used to predict pricing.
 - Images can be used for classification.
 
@@ -25,7 +25,8 @@ _Screenshot of website_
 
 I started working on this in 2014, but I've been systematically been collecting results for about two years now. All sorts of lots (goods) are auctioned off: Cars, trucks, motorcycles and trailers. I've been focussing on getting the results on cars cleaned.
 
-To interpret the auction results, I realize it helps to know a little Dutch. I've tried to translate the results into meaningful field names. Here below I've added a glossary, but if something remains unclear you can always raise an issue.
+To interpret the auction results, I realize it helps to know a little Dutch. For instance the date format is "day first": dd-mm-yyyy and the decimal separator is `,` and the thousand separator is `.`. One thousand euros and forty two cents is formatted as `EUR 1.000,42`.  
+I've tried to translate the results into meaningful field names. Here below I've added a glossary, but if something remains unclear you can always raise an issue.
 
 ## Step 1: Scraping the results [(notebook)](./code/scrape-drz-auction-results.ipynb)
 
@@ -62,9 +63,9 @@ The RDW does a pretty good job maintaining this open data dataset. Definitions a
 With the scraped and results I can do some basic **E**xploratory **D**ata **A**nalysis.
 
 
-## Step 4: aggregate into one dataset
+## Step 4: aggregate into one dataset [(notebook)](./code/aggregate-all-auctions.ipynb)
 
-...
+In this step all auction results are merged into one dataset. All cars are selected and saved to disk in `.pkl` format.
 
 ## Step 5: some more EDA
 
@@ -90,13 +91,14 @@ Lots contain information such as brand and model, color, registration number. Th
 
 # Glossary
 
-| Term          | Description |
-| ------------: | :---------- |
-| Lot           | Article for sale |
-| [_Dutch_] APK | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
-| [_Dutch_] DRZ | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
-| [_Dutch_] Rdw | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
-| [_Dutch_] BPM | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
+| Term            | Description |
+| --------------: | :---------- |
+| Lot             | Article for sale |
+| [_Dutch_] Kavel | Lot |
+| [_Dutch_] APK   | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
+| [_Dutch_] DRZ   | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
+| [_Dutch_] Rdw   | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
+| [_Dutch_] BPM   | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
 
 - - - - -
 [^1] _Auction vs. tender_  
