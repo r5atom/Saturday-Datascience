@@ -34,7 +34,7 @@ Initially results were published on a downloadable [.pdf file](./assets/201410-c
 In the past I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
 Those old routines have since been archived.  
 
-The way the results are published have changed since and they became available on a website. I've decided to scrape these results with home-brew _python_ routines that use _pandas_ and run from _Jupyter notebooks_. Initially I used clunky solutions like `str.index` to find patterns in the text, but recently I started using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (regex). This is more powerful and maintains a clean workflow. The regex patterns are stored in .csv files: [./code/regexp-patterns](./code/regexp-patterns).
+The way the results are published have changed since and they became available on a website. I've decided to scrape these results with home-brew _python_ routines that use _pandas_ and run from _Jupyter notebooks_. Initially I used clunky solutions like `str.index` to find patterns in the text, but recently I started using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (regex). This is more powerful and maintains a clean workflow. The regex patterns are stored in .csv files: [./code/regex-patterns](./code/regex-patterns).
 
 ![drz-result](./assets/drz-result-190022405.png)  
 _Screenshot of an auction result. This example lot was sold in February 2019 for EUR 35,290.00 (about $40.000)_
@@ -108,14 +108,20 @@ Lots contain information such as brand and model, color, registration number. Th
 
 # Glossary
 
-| Term            | Description |
-| --------------: | :---------- |
-| Lot             | Article for sale |
-| [_Dutch_] Kavel | Lot |
-| [_Dutch_] APK   | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
-| [_Dutch_] DRZ   | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
-| [_Dutch_] Rdw   | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
-| [_Dutch_] BPM   | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
+| Term                | Description |
+| ------------------: | :---------- |
+| Lot                 | Article for sale |
+| LPG                 | Autogas, _liquefied petroleum gas_ |
+| [_Dutch_] Kavel     | Lot |
+| [_Dutch_] Datum     | Date |
+| [_Dutch_] Brandstof | Fuel |
+| [_Dutch_] Merk      | Brand |
+| [_Dutch_] Vermogen  | Engine power (HP) |
+| [_Dutch_] APK       | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
+| [_Dutch_] DRZ       | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
+| [_Dutch_] Rdw       | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
+| [_Dutch_] BPM       | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
+| [_Dutch_] NAP       | Certification of lawful odometer. "_Nationale Auto of Pas_" |
 
 - - - - -
 [^1] _Auction vs. tender_  
