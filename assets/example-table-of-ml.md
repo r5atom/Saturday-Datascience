@@ -1,8 +1,8 @@
 index|price|brand|model|age|fuel|odometer|days_since_inspection_invalid|days_since_import|body_type|cylinder_volume|number_of_cylinders|power|power2|weight|registration_tax|sale_price|number_of_seats|number_of_doors|color
 -----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----
 2019-2-7254|1290.0|VOLVO|v50|5224.0|diesel|191969.0|||NaN||||||||||
-2019-2-7255|0.0|SAAB|417|3959.0|diesel|257041.204992|||NaN||||||||||
-2019-2-7256|0.0|VOLVO|v70|5371.0|diesel|398248.0|257.0|0.0|stationwagen|2401|5|0.07|120.0|1617|13583||5|4|ZWART
+2019-2-7255||SAAB|417|3959.0|diesel|257041.204992|||NaN||||||||||
+2019-2-7256||VOLVO|v70|5371.0|diesel|398248.0|257.0|0.0|stationwagen|2401|5|0.07|120.0|1617|13583||5|4|ZWART
 2019-2-7257|190.0|MAZDA|6|4964.0|diesel|182287.0|||NaN||||||||||
 2019-2-7258|1100.0|VOLVO|v50|5140.0|benzine|358460.0|190.0|0.0|stationwagen|2521|5|0.11|162.0|1389|9318|39604|5|4|ZWART
 2019-2-7259|3170.0|MERCEDES-BENZ|b 200 cdi|4951.0|diesel|274361.0|185.0|2681.0|stationwagen|1992|4|0.07|103.0|1370|9741|48544|5|4|GRIJS
