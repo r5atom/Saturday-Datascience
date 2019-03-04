@@ -8,6 +8,15 @@
 - Item features can be used to predict pricing.
 - Images can be used for classification.
 
+## Who am I?
+
+Check my [page](https://r5atom.github.io/).
+
+## Take me to the results right away!
+
+Alright. [Here you go.](./results/)
+
+
 - - - -
 
 Here you can follow what I am doing on a Saturday (and sometimes [other days](https://github.com/r5atom/Saturday-Datascience/graphs/commit-activity) too).  
@@ -165,7 +174,7 @@ index|image_urls|brand|model|model_specification|color|age|body_type|convertible
 |           BPM       | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
 |           NAP       | Certification of lawful odometer. "_Nationale Auto of Pas_" |
 
-Engine displacement (or cylinder volume) is expressed _cubic centimeters_, typically abbreviated as _cc_, but the SI standard is cm^3. Conversion from cc units to cubic inches (CID, in^3) is `y = x / 2.54^3`, where `x` is volume in cm^3 and `y` the conversion to in^3.
+**Engine displacement** (or cylinder volume) is expressed _cubic centimeters_, typically abbreviated as _cc_, and the SI standard unit is cm^3. Conversion from cc units to cubic inches (CID, in^3) is `y = x / 2.54^3`, where `x` is volume in cm^3 and `y` the conversion to in^3.
 
 - - - - -
 ## Footnotes
