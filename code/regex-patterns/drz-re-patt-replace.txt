@@ -11,6 +11,7 @@
 "\r",""
 "\n",""
 "rechts geplaats","rechts geplaatst"
+"recht geplaatst","rechts geplaatst"
 "rechts geplaatstt","rechts geplaatst"
 "IKS","IGK"
 "geregisteerd","geregistreerd"

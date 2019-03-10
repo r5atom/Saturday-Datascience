@@ -2,7 +2,7 @@
 # e.g."Type Apple" should be parsed to ItemType='Apple'
 # Pattern that is used is set to name "val"
 "ItemType", "Type (?P<val>.*)\n",
-"Reg", "((Kenteken)|(Registratien((r\.)|(ummer)))) (?P<val>.*)\n",
+"Reg", "((het originele kenteken)|(Kenteken)|(Registratien((r\.)|(ummer)))) (?P<val>.*)\n",
 "OdoKM", "((Afgelezen k)|(K))m-stand (?P<val>.*)\n",
 "OdoMLS", "((Afgelezen m)|(M))ijlenstand (?P<val>.*)\n",
 "NAP", "Km-stand volgens nap (?P<val>.*)\n",
