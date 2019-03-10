@@ -10,7 +10,7 @@
 
 ## Who am I?
 
-Check my [page](https://r5atom.github.io/).
+You can get that information on [this page](https://r5atom.github.io/).
 
 ## Take me to the results right away!
 
@@ -26,8 +26,7 @@ Initially I set out to get a bidding advantage in a future auction by using prio
 
 What makes this project interesting is that I did the full pipeline from data engineering to analysis: Scraping data > Cleaning up > Combining data sets > Modeling.  
 
-Although the published auction results are relatively clean, there is enough "dirt" to make it challenging for data cleaning. 
-
+Although the published auction results are relatively clean, there is enough "dirt" to make it challenging for data cleaning.
 
 ![drz-home](./assets/drz-home-square.png)  
 _Screenshot of website_
@@ -120,9 +119,11 @@ index|price|brand|model|age|fuel|odometer|days_since_inspection_invalid|days_sin
 
 
 
-## Step 6: some more EDA
+## Step 6: EDA and some basic analyses [(notebook)](./code/eda-after-merge.ipynb)
 
-...
+Following preprocessing cars some basic analysis can be performed. These are shown in the [Results](./results/). One result is to get a bidding advantage it is to avoid round bids. Based on the analysis, ending your bid with the digits `37` reduces the chance being outbid by a small difference.
+
+Another analysis shows cars travel approximately 16.5 thousand km a year (45 km/day). This median value can help to gauge the usage intensity of the car and determine its value. 
 
 
 ## Step 7: modeling
