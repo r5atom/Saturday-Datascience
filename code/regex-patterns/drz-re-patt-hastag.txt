@@ -9,7 +9,7 @@
 "rdw150", "Kosten voertuigonderzoek ((buitenlands[ ,\n]gekentekende )?voertuigen )?(RDW )?EUR 150,00\.?[ ,\n]Zie onze website, onder vraag en antwoord\.?\n"
 "no_rdw", "RDW[ ,-]?keuring verplicht"
 "taxi", "Het voertuig is voorzien van taxi-kentekenplaten(\.)?[ ,\n]((Kenteken deel I kunt u laten aanpassen via het RDW\. )|(Taxiregistratie kunt u laten aanpassen via de RDW\.)|(Taxiregistratie kunt u laten beëindigen via de RDW\.))[ ,\n]Vervanging van blauwe door gele kentekenplaten[ ,\n]kunt u laten verrichten door de erkende bedrijven\.\n"
-"no_inireg", "(Voertuig is niet eerder tenaamgesteld. )?[ ,\n]Voertuig dient eerst op naam van een natuurlijk(-)? of[ ,\n]rechtspersoon gezet te worden, daarna kan het[ ,\n]voertuig eventueel op bedrijfsvoorraad (gezet worden)|(worden gezet)(\.)?\n"
+"no_inireg", "Voertuig is (niet|nog nooit) eerder tenaamgesteld\.[ ,\n]Voertuig dient eerst op naam van een natuurlijk(-)? of[ ,\n]rechtspersoon gezet te worden, daarna kan het[ ,\n]voertuig eventueel op bedrijfsvoorraad ((gezet worden)|(worden gezet))\.?\n"
 "early_reg", "((((Deze bromfiets)|(Deze brommobiel)|(Dit voertuig)|(Voertuig)) is e)|(E))erder in gebruik genomen[ ,\n]dan (onder datum eerste toelating vermeld|(aantoonbaar geregistreerd))\.?\n"
 "no_orireg", "(Dit voertuig staat voor export geregistreerd\. )?Voertuig dient voor[ ,\n](heractivatie van het originele kenteken ([A-Z,0-9,\-]{6,8})?bij[ ,\n])?een[ ,\n]RDW[ ,-]keuringsstation[ ,\n]te worden aangeboden met overlegging van de[ ,\n]factuur/gunningsbiljet[ ,\n]van Domein(en)? Roerende Zaken\.?\n"
 "maybe_reg", "Let op, mogelijk is op dit vaartuig een registratieverplichting[ ,\n]van[ ,\n]toepassing.[ ,\n]Zie onze website, onder '?vraag en antwoord'? voor meer informatie\.\n"
