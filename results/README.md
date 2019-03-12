@@ -83,3 +83,8 @@ There is still room for improvement here. Cars older than 20 year seem to have a
 _Figure 9. as figure 8, but ignoring older cars by focussing on cars younger than 25 years._
 
 Figure 9 shows the result of a fit with partial data. The performance of this model is reasonable with R^2 = 0.6, also cv shows the model generalizes well (std. dev < 0.1).
+
+## How are we doing?
+
+![model performance](./model-performance.png)  
+_Model performance_
