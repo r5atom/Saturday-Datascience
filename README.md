@@ -126,9 +126,9 @@ Following preprocessing cars some basic analysis can be performed. These are sho
 Another analysis shows cars travel approximately 16.5 thousand km a year (45 km/day). This median value can help to gauge the usage intensity of the car and determine its value. 
 
 
-## Step 7: modeling
+## Step 7: modeling [(notebook)](./code/predict-price.ipynb)
 
-...
+Finally we will see some predictions of bidding prices.
 
 # Future
 
