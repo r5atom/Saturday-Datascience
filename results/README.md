@@ -60,5 +60,22 @@ _Figure 7. Linear regression of age and price (Mar. 2019). Car's age is the inde
 
 The result of a simple linear regression model predicts a depreciation of EUR 1.40 a day (Mar. 2019). The predicted price at auction of a brand new car (0 days old) is EUR 12k. There are some obvious shortcomings of this model. For one, the coefficient of determination (_R²_) is low. Less than 15% of the variance in the price is explained by this model. But maybe more serious is that the prediction for cars of 25 years and older will be negative! Bidding price are always more than zero euros and this model predicts values that are impossible in real-life. 
 
-Not only because of its poor performance will this model be unsuitable to predict future auctions, it also fails to generalize for other data. Here all data is used to "train" the linear model. Generally it is considered bad practice to neglect _cross validation_. Better is to test model performance on data that the model has not seen yet. This requires to split data in train and test sets. This can be done multiple times and the variance in the model performance is an indication of how well a model generalizes over all possible data.
+Not only because of its poor performance will this model be unsuitable to predict future auctions, it also fails to generalize for other data. Here all data is used to "train" the linear model. Generally it is considered bad practice to neglect _cross validation_. Better is to test model performance on data that the model has not seen yet. This requires to split data in train and test sets. This can be done multiple times and the variance in the model performance is an indication of how well a model generalizes over all possible data. In subsequent model evaluations cross validation will be added.
+
+As we've seen bidding price can not be negative and during e.d.a. I've noticed winning bids are log-normally distributed. Improving on the linear model above would be to transform the prediction in log units. Figure 8 shows the result.
+
+![F8](./linear_regression_log_price.png)  
+_Figure 8. As figure 7, but with log-transformed dependent variable (winning bid). Data used for fitting are marked as blue, the test set is marked black. R^2 is shown for fitting test data, all data and the mean and standard deviation of cross validations (cvX, where X denotes number of folds)._
+
+The fit show that new cars start with ~10^4 euro and depreciate daily with ~10^-4. The later means that the model predicts that cars depreciate to half their value every 2578 days (7.1 years, eq. 1, Mar. 2019).
+
+
+![eq.1](https://latex.codecogs.com/png.latex?\frac{\textup{log}(2)}{\beta_1\cdot\textup{log(10)}})
+eq.1.,
+
+where \beta_1 is the last parameter of the equation.
+
+The performance of this model has improved. ~30% of the variance can be explained. Although the test set yields equal performance, cross validation shows that the generalization of this model isn't very good (standard deviation of R^2 in 5 folds is 0.12).
+
+There is still room for improvement here. Cars older than 20 year seem to have a strong effect on the fit result. As already concluded earlier, these classic cars might need separate treatment.
 
