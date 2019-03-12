@@ -70,7 +70,7 @@ _Figure 8. As figure 7, but with log-transformed dependent variable (winning bid
 The fit show that new cars start with ~10^4 euro and depreciate daily with ~10^-4. The later means that the model predicts that cars depreciate to half their value every 2578 days (7.1 years, eq. 1, Mar. 2019).
 
 
-![eq.1](https://latex.codecogs.com/png.latex?\frac{\textup{log}(2)}{\beta_1\cdot\textup{log(10)}})
+![eq.1](./eq1.png)
 eq.1.,
 
 where \beta_1 is the last parameter of the equation.
