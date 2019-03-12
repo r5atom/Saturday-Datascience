@@ -70,10 +70,10 @@ _Figure 8. As figure 7, but with log-transformed dependent variable (winning bid
 The fit show that new cars start with ~10^4 euro and depreciate daily with ~10^-4. The later means that the model predicts that cars depreciate to half their value every 2578 days (7.1 years, eq. 1, Mar. 2019).
 
 
-![eq.1](https://latex.codecogs.com/png.latex?\frac{\textup{log}(2)}{\beta_1\cdot\textup{log(10)}})
-eq.1.,
+![eq.1](./eq1.png)
+equation 1,
 
-where \beta_1 is the last parameter of the equation.
+where \beta_1 is the last parameter of the fitted function (Mar. 2019: \beta_1 = 1.2 . 10^-4).
 
 The performance of this model has improved. ~30% of the variance can be explained. Although the test set yields equal performance, cross validation shows that the generalization of this model isn't very good (standard deviation of R^2 in 5 folds is 0.12).
 
