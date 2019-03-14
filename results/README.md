@@ -86,4 +86,11 @@ Figure 9 shows the result of a fit with partial data. This model predicts a stee
 
 ## How are we doing?
 
+| Model 1 | Model 2 | Model 3 |
+|:-------:|:-------:|:-------:|
+| ![model1](./linear_regression_no_cv-accuracy.png) | ![model1](./linear_regression_log_price-accuracy.png) | ![model1](./linear_regression_log_price_young-accuracy.png) |
+
+_Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
+
 ![model performance](./model-performance.png)  
+_R-square of all models._
