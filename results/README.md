@@ -82,7 +82,7 @@ There is still room for improvement here. Cars older than 20 year seem to have a
 ![F9](./linear_regression_log_price_young.png)  
 _Figure 9. as figure 8, but ignoring older cars by focussing on cars younger than 25 years._
 
-Figure 9 shows the result of a fit with partial data. This model predicts a steeper depreciation. Every 3.5 years (1266 days, Mar. 2019) the predicted bids reduced by a factor 2. The predicted bids for a new car is EUR 24k (10^4.38, Mar. 2019). The performance of this model is reasonable with R^2 = 0.6, also cv shows the model generalizes well (std. dev < 0.1).
+Figure 9 shows the result of a fit with partial data. This model predicts a steeper depreciation. Every 3.5 years (1266 days, Mar. 2019) the predicted bids are divided by two and new cars are EUR 24k (10^4.38, Mar. 2019). The performance of this model is reasonable with R^2 = 0.6, also cv shows the model generalizes well (std. dev < 0.1).
 
 ## How are we doing?
 
