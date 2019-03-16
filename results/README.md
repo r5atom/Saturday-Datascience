@@ -84,13 +84,30 @@ _Figure 9. as figure 8, but ignoring older cars by focussing on cars younger tha
 
 Figure 9 shows the result of a fit with partial data. This model predicts a steeper depreciation. Every 3.5 years (1266 days, Mar. 2019) the predicted bids are divided by two and new cars are EUR 24k (10^4.38, Mar. 2019). The performance of this model is reasonable with R^2 = 0.6, also cv shows the model generalizes well (std. dev < 0.1).
 
+Note that this model only uses age to predict. This is **only one feature**. The model can be improved by adding more information about, or features of, the car. 
+
+## Multiple linear regression (MLR)
+
+Figure 10 shows the result of MLR. As with the previous model, the predicted bid is in log units, but all ages are used. 13 features are included and the model allows for an fixed offset (bias). If a value is missing from one of the features the car is removed. This causes a reduction in the data set.
+
+![F10](./MLR.png)  
+_Figure 10. Result of Multiple Linear Regression (MLR). Bar height indicate coefficient of the features. When the bar height is small a value is shown. The first bar indicates the offset. Subsequent features are sorted in descending order. The dashed line separates features with positive coefficient from features that have a negative coefficient. This indicates which features correlate positively or negatively._
+
+The accuracy of the MLR model is around 0.9 and it generalizes well. However in general the coefficients are very low. only the _power_ coefficient is reasonable. The sign of the coefficients indicates what features have a positive or negative influence on the bidding price. This corroborates the observations during e.d.a..
+
+A confound of this model is that it does not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6), and the coefficients could outweigh each other.
+
 ## How are we doing?
 
 | Model 1 | Model 2 | Model 3 |
 |:-------:|:-------:|:-------:|
 | ![model1](./linear_regression_no_cv-accuracy.png) | ![model1](./linear_regression_log_price-accuracy.png) | ![model1](./linear_regression_log_price_young-accuracy.png) |
 
+| Model 4 |
+|:-------:|
+| ![model4](./MLR-accuracy.png) | 
+
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
 ![model performance](./model-performance.png)  
-_R-square of all models._
+_R-square of all models. With every new model the aim is to improve the accuracy of the prediction, thus increasing R^2_
