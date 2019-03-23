@@ -70,8 +70,7 @@ _Figure 8. As figure 7, but with log-transformed dependent variable (winning bid
 The fit show that new cars start with ~10^4 euro and depreciate daily with ~10^-4. The later means that the model predicts that cars depreciate to half their value every 2578 days (7.1 years, eq. 1, Mar. 2019).
 
 
-![eq.1](./eq1.png)
-equation 1,
+![eq.1](./eq1.png) (eq. 1),
 
 where \beta_1 is the last parameter of the fitted function (Mar. 2019: \beta_1 = 1.2 . 10^-4).
 
@@ -95,7 +94,26 @@ _Figure 10. Result of Multiple Linear Regression (MLR). Bar height indicate coef
 
 The accuracy of the MLR model is around 0.9 and it generalizes well. However in general the coefficients are very low. only the _power_ coefficient is reasonable. The sign of the coefficients indicates what features have a positive or negative influence on the bidding price. This corroborates the observations during e.d.a..
 
-A confound of this model is that it does not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6), and the coefficients could outweigh each other.
+However, a keen observer already spotted that the number of cars that are used has dramatically reduced. Where the first (single linear) regression models have close to 3000 cars in total, here in the MLR it is less than 1000. This is because cars with a missing value is dropped from the analyses. For instance when the`weight` is not registered the car is dropped. This becomes a serious issue when the number of features are increased. The chances of having to drop an observation because of one missing field increases.  
+To overcome this the missing values can be substituted by a assigned value. This proces is know as _'imputation'_. Common strategies are to impute with zero, or the mean or median of the other observations.
+
+The resulting coefficients are expressed in units of the feature. For example the number of doors (coefficient \beta = -0.03) contributes to the prediction (in log[EUR]) with 0.03 doors/log(EUR). As a result coefficients depend on their scale. To overcome this all features can be scaled to similar ranges. 
+
+In figure 11 missing values are imputed with median values. Also all features are scaled according to equation 2. This is know as normalizing, z-scoring or z-transforming.
+
+z = (x - \mu) / \sigma (eq. 2),
+
+where _z_ is the normalized value of input value _x_, and \mu and \sigma the mean and standard deviation of _x_.
+
+![F11](./MLR_impute_median.png)  
+_Figure 11. As fig. 10; Result of Multiple Linear Regression (MLR) but with missing values replaced with median value._
+
+The models accuracy has changed dramatically (R^2 = ~0.7), but note that the original number of observations (~3000) has been restored. 
+
+A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). So do the two observations about power (_power_ and _power2_). As a consequence of correlation coefficients could outweigh each other.
+
+
+
 
 ## How are we doing?
 
@@ -103,9 +121,9 @@ A confound of this model is that it does not handle co-linearity well. For insta
 |:-------:|:-------:|:-------:|
 | ![model1](./linear_regression_no_cv-accuracy.png) | ![model1](./linear_regression_log_price-accuracy.png) | ![model1](./linear_regression_log_price_young-accuracy.png) |
 
-| Model 4 |
-|:-------:|
-| ![model4](./MLR-accuracy.png) | 
+| Model 4 | Model 5 |
+|:-------:|:-------:|
+| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | 
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
