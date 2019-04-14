@@ -110,7 +110,7 @@ _Figure 11. As fig. 10; Result of Multiple Linear Regression (MLR) but with miss
 
 The models accuracy has changed dramatically (R^2 = ~0.7), but note that the original number of observations (~3000) has been restored. 
 
-A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). So do the two observations about power (_power_ and _power2_). As a consequence of correlation coefficients could outweigh each other.
+A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). As a consequence of correlation coefficients could outweigh each other.
 
 
 
