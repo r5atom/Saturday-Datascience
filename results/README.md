@@ -1,16 +1,14 @@
-# Results
-
-## The peril of round bids
+# The peril of round bids
 
 In auctions where the bid price is not made public the winning bid could have been outbid by only small difference. A common strategy is to **avoid round bids** (e.g. _EUR 100_). For instance an intended bid of _EUR 4200_ can be submitted as _EUR 4201_. With the extra euro you buy yourself the edge of outbidding the other bidder! However other bidders could do the same.  
 In attempt to see where the balance is between outbidding and adding a little to your intended bid, I've investigated the last two digits of the prices in the auctions. Because only the winning bid is made public, the distribution of all the bids is unknown and strategic bidding prices remain invisible. But still this analysis might give an indication of where to strategically put a bid.
 
 ![F1](./last-two-digits.png)  
-_Figure 1. Last two digits of all winning bids (Mar. 2019). The last digits (0, 1, .. 8, 9) are on the abscissa. The decimal digits (10, 20, .. 80, 90) are on the ordinate. The lower left square contain bids ending with `00` (E.g. `1100`, `100` or `4200`). The upper right are bids ending with `99` (`4299`, `99`, ..). The number of bids are shown as color intensity. If the occurrence is homogenous for all numbers, the occurrence would be the total number of bids divided by the possibilities. As of March 2019 this was 2891/100 = 28.91 times. This is the (expected) average of occurrence and indicated in **white**. **Blue** indicates above average occurrence (saturating at 10 times the expected value) and **red** is below average (saturating at 1/10 of the expected value). Five most occurring digit pairs (279 [`00`] to 72 times) and five least occurring digit pairs (only 2 to 4 times) are labeled inside the colored squares._
+_Figure 1. Last two digits of all winning bids. The last digits (0, 1, .. 8, 9) are on the abscissa. The decimal digits (10, 20, .. 80, 90) are on the ordinate. The lower left square contain bids ending with `00` (E.g. `1100`, `100` or `4200`). The upper right are bids ending with `99` (`4299`, `99`, ..). The number of bids are shown as color intensity. If the occurrence is homogenous for all numbers, the occurrence would be the total number of bids divided by the possibilities. On April 2019 this was 3041/100 ≈ 30 times. This is the (expected) average of occurrence and indicated in **white**. **Blue** indicates above average occurrence (saturating at 10 times the expected value) and **red** is below average (saturating at 1/10 of the expected value). The number of occurrences of the five most and least occurring digit pairs are labeled inside the colored squares (e.g. `00`)._
 
-Fig. 1 shows bids ending with `00` are most frequent. A higher bid ending with `01` could have outbid these items. Other frequent occurring bids (blue) end with `11`, `50`, `55` and `77`. Figure 1 appear to show a blue-to-white diagonal (`x = y`). This indicates that bids with the same digits (`11`, `22`, `33`, ..) appear to be frequent. Bids with `4` as the last digit are not so frequent. This can be seen by a red vertical band at `x = 4`. Bids ending with `92` and `94` occur only twice each (dark red). It might be a good strategical advantage to use a bid ending with these values (however note the caveat not knowing all bids to this conclusion here above). Increasing a bid with close to EUR 100 might not be worth the edge, however a less expensive cost is to choose to end a bid with `37`, which only occurs 3 times.
+Fig. 1 shows bids ending with `00` are most frequent. A higher bid ending with `01` could have outbid these items. Other frequent occurring bids (blue) end with `11`, `50`, `55` and `77`. Figure 1 appear to show a blue-to-white diagonal (`x = y`). This indicates that bids with the same digits (`11`, `22`, `33`, ..) appear to be frequent. Bids with `4` as the last digit are not so frequent. This can be seen by a red vertical band at `x = 4`. Bids ending with `92` and `94` occur only a few times (dark red). It might be a good strategical advantage to use a bid ending with these values (however note the caveat not knowing all bids to this conclusion here above). Increasing a bid with close to EUR 100 might not be worth the edge, however a less expensive cost is to choose to end a bid with `37`, which has only occurred a few times since 2017.
 
-## Usage intensity: wear and tear
+# Usage intensity: wear and tear
 
 The intensity of usage determines the value of a car. Usage can be expressed as age and/or as distance travelled.
 
@@ -51,7 +49,7 @@ Another likely confound to the above analysis that diesel cars on average are us
 Furthermore it might be best to treat subsets of cars differently. Older cars might be used for recreational purpose only, and the usage intensity might have an lesser effect on their value.
 
 - - - - 
-## Predicting winning bids
+# Predicting winning bids
 
 Overall age seems a decent predictor for car value. The first and simplest model performs a linear regression on age and price. Figure 7 shows there is a negative correlation between age and price: newer cars have higher winning bids than older cars. 
 
@@ -110,12 +108,15 @@ _Figure 11. As fig. 10; Result of Multiple Linear Regression (MLR) but with miss
 
 The models accuracy has changed dramatically (R^2 = ~0.7), but note that the original number of observations (~3000) has been restored. 
 
-A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). As a consequence of correlation coefficients could outweigh each other.
+There is one car where prediction and real bid are quite different (see model 5 accuracy here below). The real bid is ~3.2 log (EUR ~1600), but the predicted bid is ~1.9 log (EUR ~80). This particular lot (2017-3-8109) is a 2005 Mercedes e200 with an odometer reading of 816k km! Querying the web with the registration number confirms this car indeed has a very high odometer reading. If the MLR model penalizes heavily for odometer reading, the prediction can be a lot lower than the actual value. A linear scaling as performed according to eq. 2 might not be the best solution.
+
+A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). As a consequence of correlation coefficients could outweigh each other, leading to uninterpretable coefficients.
 
 
 
 
-## How are we doing?
+- - - - 
+# How are we doing?
 
 | Model 1 | Model 2 | Model 3 |
 |:-------:|:-------:|:-------:|
