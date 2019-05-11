@@ -21,6 +21,7 @@
 "&#128;","EUR"
 "€","EUR"
 "&#239;&#191;&#189;","EUR"
+"""","&quot;"
 #
 # Below makes default parsing easier
 #
