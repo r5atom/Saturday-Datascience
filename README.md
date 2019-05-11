@@ -183,4 +183,6 @@ index|image_urls|brand|model|model_specification|color|age|body_type|convertible
 Formally the way lots are handled in these kind of auction are by invitation to bid through a "tender". The difference is that bids in an auction are public, and in a tender they are not. It is a sort of silent auction.  
 For simplicity I will use the term _auction_.
 
-[^2] _Feb 2019_: Another change on the results website: The URL now contains the name of the month.
+[^2]  
+_Feb. 2019_: Another change on the results website: The URL now contains the name of the month.  
+_May 2019_: _Belastingdienst_ (IRS) now also lists auctions on DRZ website. URL has changed.
