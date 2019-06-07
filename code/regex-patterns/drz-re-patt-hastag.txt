@@ -39,6 +39,7 @@
 "no_vin","Herinslag vereist\n"
 "d_lic", "Voor dit voertuig met deze inrichting is een D rijbewijs[ ,\n]verplicht\.\n"
 "btw21", "BTW 21%"
+"legguard", "Inclusief beenkleed\n"
 
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
 # "import22_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 22% invoerrechten en 21% BTW\.\n"
