@@ -8,7 +8,7 @@ _Figure 1. Last two digits of all winning bids. The last digits (0, 1, .. 8, 9) 
 
 Fig. 1 shows bids ending with `00` are most frequent and occurs 10x more than expected. A higher bid ending with `01` could have outbid these items. Other frequent occurring bids (blue) end with `11`, `50`, `55` and `77`. Figure 1 appear to show a blue-to-white diagonal (`x = y`). This indicates that bids with the same digits (`11`, `22`, `33`, ..) appear to be frequent. Bids with `4` as the last digit are not so frequent. This can be seen by a red vertical band at `x = 4`. Bids ending with `92` and `94` occur only a few times (dark red). It might be a good strategical advantage to use a bid ending with these values (however note the caveat not knowing all bids to this conclusion here above). Increasing a bid with close to EUR 100 might not be worth the edge, however a less expensive cost is to choose to end a bid with `32`, which has only occurred a few times since 2017.
 
-# Usage intensity: wear and tear
+# Combining features: Usage intensity. wear and tear
 
 The intensity of usage determines the value of a car. Usage can be expressed as age and/or as distance travelled.
 
@@ -65,14 +65,15 @@ As we've seen bidding price can not be negative and during e.d.a. I've noticed w
 ![F8](./linear_regression_log_price.png)  
 _Figure 8. As figure 7, but with log-transformed dependent variable (winning bid). Data used for fitting are marked as blue, the test set is marked black. R^2 is shown for fitting test data, all data and the mean and standard deviation of cross validations (cvX, where X denotes number of folds)._
 
-The fit show that new cars start with ~10^4 euro and depreciate daily with ~10^-4. The later means that the model predicts that cars depreciate to half their value every 7.1 years (eq. 1, May 2019).
-
+The fit show that new cars start with ~$10^4$ euro and depreciate daily with ~$10^-4$. The later means that the model predicts that cars depreciate to half their value every 7.1 years (eq. 1, May 2019). This is what this model predicts, but obviously the depreciation is much steeper (as we will see below when we ignore classic cars). 
 
 ![eq.1](./eq1.png) (eq. 1),
 
-where \beta_1 is the last parameter of the fitted function (May 2019: \beta_1 = 1.2 . 10^-4).
+where $\beta_1$ is the last parameter of the fitted function (May 2019: $\beta_1 = 1.2 . 10^-4$).
 
 The performance of this model has improved. ~30% of the variance can be explained. Although the test set yields equal performance, cross validation shows that the generalization of this model isn't very good (standard deviation of R^2 in 5 folds is 0.12).
+
+However we need to exercise some caution interpreting the performance, because the prediction error is calculated in log[EUR]. This caution holds for the following models as well. When I introduce a model with categorical features, the performance is calculated after inverse transformation.
 
 There is still room for improvement here. Cars older than 20 year seem to have a strong effect on the fit result. As already concluded earlier, these classic cars might need separate treatment.
 
