@@ -69,7 +69,7 @@ The fit show that new cars start with ~$10^4$ euro and depreciate daily with ~$1
 
 $$\frac{\log(2)}{-\beta_1 \cdot \log(10)}$$ (eq. 1),
 
-where $\beta_1$ is the last parameter of the fitted function (May 2019: $\beta_1 = 1.2 . 10^{-4}$).
+where $\beta_1$ is the last parameter of the fitted function (May 2019: $\beta_1 = 1.2 \cdot 10^{-4}$).
 
 The performance of this model has improved. ~30% of the variance can be explained. Although the test set yields equal performance, cross validation shows that the generalization of this model isn't very good (standard deviation of $R^2$ in 5 folds is 0.12).
 
@@ -113,19 +113,30 @@ There is one car where prediction and real bid are quite different (see model 5 
 
 A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). As a consequence of correlation coefficients could outweigh each other, leading to uninterpretable coefficients.
 
+Another reason that could hold performance back in this model is that there are not a lot of features, and the complexity of the model is relatively low. The following model adds more features by adding categorical features. These features do not have a numerical value but non-ordinal discrete values such as color. These features however could still be important determinants of the auction value, with car brand being the obvious one.
 
+![F12](./MLR_with_categorical.png)  
+_Figure 12. As fig. 10; Result of Multiple Linear Regression (MLR) with numerical and categorical features. The top panel shows the numerical features as used in the previous model (fig. 11). The panels below the top panel are the categorical features. As with the numerical features the coefficients are sorted as well. The third panel show that luxury brands like "Rolls-Royce" are left of the vertical dashed line and positive contributors to the auction price._
+
+The categorical features are transformed to a numerical feature by employing a "one-hot-encoding" method. In essence a single field is split in different fields as many as there are possible values and for every observation the field gets a value of 1 and otherwise zero. E.g. in a particular observation the field _brand = 'BMW'_. The newly one-hot-encoded fields are 'brand audi', 'brand bmw', 'brand citroen' which will get values 0, 1, 0 receptively.
+
+As with the previous MLR model the missing numerical values are replaced with the median value. In the categorical features the category "missing" is introduced.
+
+Figure 12 shows the contributions of the category values to the auction price. Values left of the dashed line have a positive coefficient and contribute positively to the price. The higher the bar, the larger the contribution. The current model predicts that the brand name contribute more to the price than the power. Compare the coefficients for _Rolls-Royce > +1_ and _power < +1_ in the top and third panel (Although, note the scale differences).
+
+Unfortunately this model does not generalize well. CV $R^2$ is very variable. Also there is no real improvement in accuracy with $R^2 = ~0.6$. However the model does the logarithmic target transformation (fig. 8) internally and computes $R^2$ on the real price in EUR and the early warning does not hold here.
 
 
 - - - - 
 # How are we doing?
 
-| Model 1 | Model 2 | Model 3 |
+| Simple linear | Log target | Ignore classics |
 |:-------:|:-------:|:-------:|
-| ![model1](./linear_regression_no_cv-accuracy.png) | ![model1](./linear_regression_log_price-accuracy.png) | ![model1](./linear_regression_log_price_young-accuracy.png) |
+| ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) |
 
-| Model 4 | Model 5 |
-|:-------:|:-------:|
-| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | 
+| MLR with reduced observations | MLR with imputed values | MLR with categorical |
+|:-------:|:-------:|:-------:|
+| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | 
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
