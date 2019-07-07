@@ -16,6 +16,18 @@ You can get that information on [this page](https://r5atom.github.io/).
 
 Alright. [Here you go.](./results/)
 
+## Can I get the data?
+
+I have not included data in this repo. You can start scraping yourself. If you need historical data you can reach out to [me](https://r5atom.github.io/).
+
+## Change log
+- July 2019: Add categorical MLR model
+- June 2019: Add features based on conformity codes
+- May 2019: _Belastingdienst_ (IRS) now also lists auctions on DRZ website. URL has changed.
+- April 2019: Query with Socrata Query Language (SoQL)
+- March 2019: Add MLR models
+- February 2019: Combine features as usage intensity. Another change on the results website: The URL now contains the name of the month.
+- 2014: First download of results
 
 - - - -
 
@@ -36,7 +48,26 @@ I started working on this in 2014, but I've been systematically been collecting 
 To interpret the auction results, I realize it helps to know a little Dutch. For instance the date format is "day first": dd-mm-yyyy and the decimal separator is `,` and the thousand separator is `.`. One thousand euros and forty two cents is formatted as `EUR 1.000,42`.  
 I've tried to translate the results into meaningful field names. Here below I've added a glossary, but if something remains unclear you can always raise an issue.
 
-## Step 1: Scraping the results [(notebook)](./code/scrape-drz-auction-results.ipynb)
+## Sequence of steps
+
+The analysis pipeline is a sequence of Jupyter notebooks that are run in sequence. The notebooks can be found [here](./code/).
+
+1. Scraping the results  
+   Scraping the auction website once the results are published. After scraping download the pictures of the items.
+2. Adding extra information  
+   Combining auction data with open source data.
+3. Exploratory data analysis (EDA)  
+   Get an idea of the scraped results
+4. Aggregate data  
+   Combine all auctions.
+5. Preprocessing cars  
+   Cleaning data and drop non-car auction lots (for now).
+6. EDA on cars  
+   Perform EDA on aggregated data set.
+7. Modelling  
+   Predict price and other analyses.
+
+### Step 1a: Scraping the results [(notebook)](./code/scrape-drz-auction-results.ipynb)
 
 Initially results were published on a downloadable [.pdf file](./assets/201410-catalogusdrz.pdf). 
 In the past I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
@@ -50,14 +81,32 @@ _Screenshot of an auction result. This example lot was sold in February 2019 for
 ![regex-example](./assets/regex-selection-190022405.png)  
 _Example of how a *regex* pattern is used in parsing text. In this case the odometer value follows the text `Km-stand`, which might also be in lower case._
 
-The drz website is subject to change once in a while [^2], and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
+The drz website is subject to change once in a while (see change log), and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
+
+### Step 1b: Download images [(notebook)](./code/download-images.ipynb)
+
+Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier. During preprocessing [(./code/preproc-cars.ipynb)](./code/preproc-cars.ipynb) a data set is saved with fields that contain information about the appearance of the car. 
+
+_The last 10 rows of the cleaned data set created in June 2019. This set forms the basis for following image classification._
+
+index|image_urls|brand|model|model_specification|color|age|body_type|convertible|number_of_doors|length|height|width|wheelbase|foreign_registration|registration_number|taxi
+-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----
+2019-6-9140|['http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/8fb6ae5f80c4cf0349ac0cbdca18f40c/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/2d6e178265f4a099b063272ce191f7cb/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/a632dbe2d2ccd06a2982ec0b1a05e269/1024/768/image.jpg']|SKODA|fabia|combi 55 kw|GRIJS|5777.0|stationwagen|False|4|4325.0|1495.0|1646.0|2462.0||17-ND-TF|False
+2019-6-9141|['http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/58911d27cbc7533e34a04c89723007ef/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1b6a293d0063c4ac03b754a7feedafc6/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/a1b29ac2b65aec66314c0e8311b0c092/1024/768/image.jpg']|VOLKSWAGEN|golf|55 kw|BLAUW|5608.0|hatchback|False|4|4304.0|1505.0|1759.0|2575.0||34-NS-FR|False
+2019-6-9142|['http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/d1327bc290564323cddeaa22ed44c53b/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/cd1209b52d3f08d2e3649bc989b068c1/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/456bf3ce75ed5306437d94bc2e81bc10/1024/768/image.jpg']|MITSUBISHI|colt|cz3 1.3 mivec|ROOD|5240.0|hatchback|False|2|3820.0|1520.0|1695.0|2500.0||33-PZ-HT|False
+2019-6-9143|['http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/5363b74fac337aa02bb6bdbf51701f5f/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/5f968c3170bf7484466787a19cdea02a/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965215/thumb/domeinenrz_sites/7e0fa9620bfd30869092fd3ecb10dc2e/1024/768/image.jpg']|PEUGEOT|107||ROOD|2411.0|hatchback|False|2|3435.0|1470.0|1630.0|2340.0||SB-433-L|False
+2019-6-9145|['http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/77c45cd8ae1766658abc58cadff4a34b/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/6b82273b6bf28bcba4f3624a3a20eb67/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/bdc7825893fe159c55ef640434dcf76f/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/c8ce7189072f9b836c5a1046d4585c26/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/729a9a5cf07805856dd0c1d9f2649fb6/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/9872cf7b49af3ad6bf7c7b05a8b498bd/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/975578f528aa4beeea474c4dd4ff03de/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/0d2c120c1a30a003a86fc04baffa0211/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/e74cf8ad50cd2886d20c4b40b634a79e/1024/768/image.jpg']|VOLKSWAGEN|polo||GRIJS|4250.0|hatchback|False|-1|4012.0|1482.0|1650.0|2454.0||10-XV-JZ|False
+2019-6-9146|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/10333ad5ad87952e7e940a245549b1e8/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/a1c1ce2e1a8ef6b4a4d344ed95bb6f50/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/f82029fed10a50f62d1badf0a92c6473/1024/768/image.jpg']|VOLKSWAGEN|polo||ZWART|2565.0|hatchback|False|-1|4064.0|1488.0|1682.0|2455.0||44-XDS-7|False
+2019-6-9148|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/0fa7c4caed7f5c26612c461e186fc0a2/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/f982d7800ddd64ec67dffc7d912e4a1d/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965215/thumb/domeinenrz_sites/87a4cd2c05a8a2ef1307f4598ff8a344/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b7845129a161c5ce33aad020f9497182/1024/768/image.jpg']|VOLKSWAGEN|transporter bestel 1.0 tdi 65||N.v.t.|6588.0|bestelwagen|False|-1|||1840.0|2920.0||72-VV-TX|False
+2019-6-9149|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1c6cde4763c01dae43bfb4b586f23345/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/58c995e45bcb46d381a52bd807fde84e/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/d2bcfa0d7f1619e196eb2cdbd5de4ffe/1024/768/image.jpg']|VOLKSWAGEN|golf||ZWART|2157.0|stationwagen|False|4|4631.0|1524.0|1781.0|2574.0||TN-877-X|True
+2019-6-9152|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1ddacd67adf2dc2f4d0b3b187eab9224/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/c9f4bd027f2baddb11ab089ba838ff28/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/ac425cf26f674778daef767dfcd5b0c4/1024/768/image.jpg']|OPEL|corsa||GRIJS|4601.0|hatchback|False|2|4040.0|1488.0|1713.0|2511.0||75-TK-ZV|False
+2019-6-9158|['http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/369ab67f5441ad1d4e0a51e129523606/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/200eba6e00946ea768dd0e26bef30cbf/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b73424f03c792da07e02a017d76a7696/1024/768/image.jpg']|BMW|116i||BLAUW|4704.0|stationwagen|False|-1|4230.0|||2660.0||18-TD-JG|False
 
 
-
-### Known issues
+#### Known issues
 - Occasionally lots are a combination of multiple items. Currently only the first item will be handled, however I also store the raw text for future provisioning.
 
-## Step 2: adding extra information [(notebook)](./code/add-rdw-info-to-drz.ipynb)
+### Step 2: adding extra information [(notebook)](./code/add-rdw-info-to-drz.ipynb)
 
 
 Most lots are vehicles with a registration. The Dutch equivalent to the DMV know as [Dienst Wegverkeer](https://www.rdw.nl/information-in-english) (or _RDW_) provides an API service where registration can be queried. This gives additional information about vehicles that is not in the auction results such as engine capacity.
@@ -66,12 +115,12 @@ Most lots are vehicles with a registration. The Dutch equivalent to the DMV know
 
 The RDW does a pretty good job maintaining this open data dataset. Definitions are [well documented](https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen/m9d7-ebf2). They have a [google forum](https://groups.google.com/forum/#!topic/voertuigen-open-data/rnwGKL-HQ8Y) where updates are communicated.
 
-## Step 3: EDA [(notebook)](./code/explore-auction-results.ipynb)
+### Step 3: EDA [(notebook)](./code/explore-auction-results.ipynb)
 
 With the scraped and results I can do some basic **E**xploratory **D**ata **A**nalysis.
 
 
-## Step 4: aggregate into one dataset [(notebook)](./code/aggregate-all-auctions.ipynb)
+### Step 4: aggregate into one dataset [(notebook)](./code/aggregate-all-auctions.ipynb)
 
 In this step all auction results are merged into one dataset. All cars are selected and saved to disk in `.pkl` format.
 
@@ -91,7 +140,7 @@ K1900069152|2269.0|Kavel K1900069152|Voertuigen en onderdelen |Personenauto|OPEL
 K1900069158|2431.0|Kavel K1900069158|Voertuigen en onderdelen |Personenauto|BMW|116i|15.07.2006|||True|False|False|False|False|False|False|189.983|||logisch|18-TD-JG||False|False|False|False|False|False|True|0.0|False|False|False|False|False|False|False|False|False|False||True|True|False|0.0|False|.. suplm. info. ..|False|.. raw text ..|.. rdw info ..|https://opendata.rdw.nl/resource/kmfi-hrps.json|Geen verstrekking in Open Data|4.0|Nee|https://opendata.rdw.nl/resource/3huj-srit.json||1745.0|||0.0|0.0|https://opendata.rdw.nl/resource/jhie-znh9.json|1596.0|Nee|20190412.0|https://opendata.rdw.nl/resource/8ys7-d773.json|||op r. schroefveerkoker onder motorkap|M1|e1*2001/116*0287*09||0.06|Nee|UF11|1220.0|https://opendata.rdw.nl/resource/vezc-m2t6.json|Personenauto|266.0|187|18TDJG|4.0|423.0|0.0||BLAUW|0.0|5.0|0.0|3020.0|116I||BMW|Niet geregistreerd|4.0|Nee|1320.0|||20060715.0|01|1745.0||20060715.0|stationwagen|6782.0||||28336.0||||20180806.0||635.0|1200.0|||||||D|||||||||||||||||||['http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/369ab67f5441ad1d4e0a51e129523606/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/200eba6e00946ea768dd0e26bef30cbf/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b73424f03c792da07e02a017d76a7696/1024/768/image.jpg']|||3.0|http://www.domeinenrz.nl/catalogi/verkoop_bij_inschrijving_2019-0006?=&veilingen=2019-0006&meerfotos=K1900069158|False|False|False||20190611|e1*01/116*0287*09|01|UF11|0.0|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-AS-Gegevens-EEG-Uitvoering/ahsi-8uyu|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Basisgegevens-EEG-Uitvoering/wx3j-69ie|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering/w2qp-idms|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering-Klasse/q7fi-ijjh|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering-Nummerieke-Co/nypm-t8hx|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Handelsbenaming-Uitvoering/mdqe-txpd|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Merk-Uitvoering-Toegestaan/fj7t-hhik|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Motor-Uitvoering/g2s6-ehxa|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Motor-Uitvoering-Brandstof/5w6t-p66a|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Plaatsaanduiding-Uitvoering/mt8t-4ep4|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Subcategorie-Uitvoering/h9pa-e9ta|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Uitvoering-Gebruiksgegevens-Per-Uitg/2822-t8sx|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Versnellingsbak-Uitvoering/r7cw-67gs|287.0|M1|20060125.0|9.0||e1*01/116*0287*09|20070226.0|BT|20151005.0|20060125.0|BAYERISCHE MOTOREN WERKE AG|e1|01/116|187||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||20190611|||||||||||||||||False||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||False|False|False||||18-TD-JG|||2.0|2.0|||||149.0|151.0|840.0|990.0|||840.0|990.0|Benzine||5.8||7.5||10.5||180.0||Euro 4||73.0||81.0||70/220*2003/76B||85.0||||||4500.0||||||AC|Stationwagen||||False|False|||False
 
 
-## Step 5: data cleaning, preprocess car data [(notebook)](./code/preproc-cars.ipynb)
+### Step 5: data cleaning, preprocess car data [(notebook)](./code/preproc-cars.ipynb)
 
 After merging car data is cleaned to enforce some consistency. The **odometer** is converted to KM only. Some had readings in miles, but the majority was in KMs. Then there is some inconsistent naming in the **brand names**. For example _Mercedes_, _Mercedes Benz_ or _Mercedes-Benz_. If kept uncleaned further analyses would treat these cars as different brands.  
 At this point also some parsing errors and other repairs are performed, sometimes caused by errors in the data (typos). 
@@ -119,14 +168,14 @@ index|price|brand|model|age|fuel|odometer|days_since_inspection_invalid|age_at_i
 2019-6-9158|2431.0|BMW|116i|4704.0|benzine|189983.0|299.0|0.0|stationwagen|1596.0|4|85.0|1220.0|6782.0|28336.0|-1|-1|BLAUW|||4230.0||||
 
 
-## Step 6: EDA and some basic analyses [(notebook)](./code/eda-after-merge.ipynb)
+### Step 6: EDA and some basic analyses [(notebook)](./code/eda-after-merge.ipynb)
 
 Following preprocessing cars some basic analysis can be performed. These are shown in the [Results](./results/). One result is to get a bidding advantage it is to avoid round bids. Based on the analysis, ending your bid with the digits `37` reduces the chance being outbid by a small difference.
 
 Another analysis shows cars travel approximately 16.5 thousand km a year (45 km/day). This median value can help to gauge the usage intensity of the car and determine its value. 
 
 
-## Step 7: modeling [(notebook)](./code/predict-price.ipynb)
+### Step 7: modeling [(notebook)](./code/predict-price.ipynb)
 
 Finally we will see some predictions of bidding prices.
 
@@ -136,43 +185,26 @@ Finally we will see some predictions of bidding prices.
 
 The auction results have pictures too, a future plan is to do some image classification on these pictures. I've added a notebook that downloads images for future use.
 
-### Download images [(notebook)](./code/download-images.ipynb)
-
-Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier. During preprocessing [(./code/preproc-cars.ipynb)](./code/preproc-cars.ipynb) a data set is saved with fields that contain information about the appearance of the car. 
-
-_The last 10 rows of the cleaned data set created in June 2019. This set forms the basis for following image classification._
-
-index|image_urls|brand|model|model_specification|color|age|body_type|convertible|number_of_doors|length|height|width|wheelbase|foreign_registration|registration_number|taxi
------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----
-2019-6-9140|['http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/8fb6ae5f80c4cf0349ac0cbdca18f40c/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/2d6e178265f4a099b063272ce191f7cb/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/a632dbe2d2ccd06a2982ec0b1a05e269/1024/768/image.jpg']|SKODA|fabia|combi 55 kw|GRIJS|5777.0|stationwagen|False|4|4325.0|1495.0|1646.0|2462.0||17-ND-TF|False
-2019-6-9141|['http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/58911d27cbc7533e34a04c89723007ef/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1b6a293d0063c4ac03b754a7feedafc6/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/a1b29ac2b65aec66314c0e8311b0c092/1024/768/image.jpg']|VOLKSWAGEN|golf|55 kw|BLAUW|5608.0|hatchback|False|4|4304.0|1505.0|1759.0|2575.0||34-NS-FR|False
-2019-6-9142|['http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/d1327bc290564323cddeaa22ed44c53b/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/cd1209b52d3f08d2e3649bc989b068c1/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/456bf3ce75ed5306437d94bc2e81bc10/1024/768/image.jpg']|MITSUBISHI|colt|cz3 1.3 mivec|ROOD|5240.0|hatchback|False|2|3820.0|1520.0|1695.0|2500.0||33-PZ-HT|False
-2019-6-9143|['http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/5363b74fac337aa02bb6bdbf51701f5f/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/5f968c3170bf7484466787a19cdea02a/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965215/thumb/domeinenrz_sites/7e0fa9620bfd30869092fd3ecb10dc2e/1024/768/image.jpg']|PEUGEOT|107||ROOD|2411.0|hatchback|False|2|3435.0|1470.0|1630.0|2340.0||SB-433-L|False
-2019-6-9145|['http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/77c45cd8ae1766658abc58cadff4a34b/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/6b82273b6bf28bcba4f3624a3a20eb67/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/bdc7825893fe159c55ef640434dcf76f/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/c8ce7189072f9b836c5a1046d4585c26/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965214/thumb/domeinenrz_sites/729a9a5cf07805856dd0c1d9f2649fb6/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/9872cf7b49af3ad6bf7c7b05a8b498bd/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/975578f528aa4beeea474c4dd4ff03de/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/0d2c120c1a30a003a86fc04baffa0211/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/e74cf8ad50cd2886d20c4b40b634a79e/1024/768/image.jpg']|VOLKSWAGEN|polo||GRIJS|4250.0|hatchback|False|-1|4012.0|1482.0|1650.0|2454.0||10-XV-JZ|False
-2019-6-9146|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/10333ad5ad87952e7e940a245549b1e8/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965216/thumb/domeinenrz_sites/a1c1ce2e1a8ef6b4a4d344ed95bb6f50/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/f82029fed10a50f62d1badf0a92c6473/1024/768/image.jpg']|VOLKSWAGEN|polo||ZWART|2565.0|hatchback|False|-1|4064.0|1488.0|1682.0|2455.0||44-XDS-7|False
-2019-6-9148|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/0fa7c4caed7f5c26612c461e186fc0a2/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965219/thumb/domeinenrz_sites/f982d7800ddd64ec67dffc7d912e4a1d/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965215/thumb/domeinenrz_sites/87a4cd2c05a8a2ef1307f4598ff8a344/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b7845129a161c5ce33aad020f9497182/1024/768/image.jpg']|VOLKSWAGEN|transporter bestel 1.0 tdi 65||N.v.t.|6588.0|bestelwagen|False|-1|||1840.0|2920.0||72-VV-TX|False
-2019-6-9149|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1c6cde4763c01dae43bfb4b586f23345/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965213/thumb/domeinenrz_sites/58c995e45bcb46d381a52bd807fde84e/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/d2bcfa0d7f1619e196eb2cdbd5de4ffe/1024/768/image.jpg']|VOLKSWAGEN|golf||ZWART|2157.0|stationwagen|False|4|4631.0|1524.0|1781.0|2574.0||TN-877-X|True
-2019-6-9152|['http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/1ddacd67adf2dc2f4d0b3b187eab9224/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965218/thumb/domeinenrz_sites/c9f4bd027f2baddb11ab089ba838ff28/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/ac425cf26f674778daef767dfcd5b0c4/1024/768/image.jpg']|OPEL|corsa||GRIJS|4601.0|hatchback|False|2|4040.0|1488.0|1713.0|2511.0||75-TK-ZV|False
-2019-6-9158|['http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/369ab67f5441ad1d4e0a51e129523606/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/200eba6e00946ea768dd0e26bef30cbf/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b73424f03c792da07e02a017d76a7696/1024/768/image.jpg']|BMW|116i||BLAUW|4704.0|stationwagen|False|-1|4230.0|||2660.0||18-TD-JG|False
-
 
 # Glossary
 
-| Term                | Description |
-| ------------------: | :---------- |
-| Lot                 | Article for sale |
-| LPG                 | Autogas, _liquefied petroleum gas_ |
-| [_Dutch_]           | _Translation_|
-|           Kavel     | Lot |
-|           Datum     | Date |
-|           Brandstof | Fuel |
-|           Merk      | Brand |
-|           Vermogen  | Engine power (HP) |
-|           APK       | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
-|           DRZ       | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
-|           Rdw       | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
-|           BPM       | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
-|           NAP       | Certification of lawful odometer. "_Nationale Auto of Pas_" |
+| Term                  | Description |
+| --------------------: | :---------- |
+| Lot                   | Article for sale |
+| LPG                   | Autogas, _liquefied petroleum gas_ |
+| [_Dutch_]             | _Translation_|
+|           Kavel       | Lot |
+|           Datum       | Date |
+|           Brandstof   | Fuel |
+|           Merk        | Brand |
+|           Vermogen    | Engine power (HP) |
+|           Vrachtwagen | Truck (heavy)|
+|           Bestelwagen | Delivery truck |
+|           APK         | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
+|           DRZ         | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
+|           Rdw         | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
+|           BPM         | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
+|           NAP         | Certification of lawful odometer. "_Nationale Auto of Pas_" |
 
 **Engine displacement** (or cylinder volume) is expressed _cubic centimeters_, typically abbreviated as _cc_, and the SI standard unit is cm^3. Conversion from cc units to cubic inches (CID, in^3) is `y = x / 2.54^3`, where `x` is volume in cm^3 and `y` the conversion to in^3.
 
@@ -182,6 +214,3 @@ index|image_urls|brand|model|model_specification|color|age|body_type|convertible
 Formally the way lots are handled in these kind of auction are by invitation to bid through a "tender". The difference is that bids in an auction are public, and in a tender they are not. It is a sort of silent auction.  
 For simplicity I will use the term _auction_.
 
-[^2]  
-_Feb. 2019_: Another change on the results website: The URL now contains the name of the month.  
-_May 2019_: _Belastingdienst_ (IRS) now also lists auctions on DRZ website. URL has changed.

@@ -122,7 +122,7 @@ The categorical features are transformed to a numerical feature by employing a "
 
 As with the previous MLR model the missing numerical values are replaced with the median value. In the categorical features the category "missing" is introduced.
 
-Figure 12 shows the contributions of the category values to the auction price. Values left of the dashed line have a positive coefficient and contribute positively to the price. The higher the bar, the larger the contribution. The current model predicts that the brand name contribute more to the price than the power. Compare the coefficients for _Rolls-Royce > +1_ and _power < +1_ in the top and third panel (Although, note the scale differences).
+Figure 12 shows the contributions of the category values to the auction price. Values left of the dashed line have a positive coefficient and contribute positively to the price. The higher the bar, the larger the contribution. The current model predicts that the brand name contribute more to the price than the power. Compare the coefficients for _Rolls-Royce > +1_ and _power < +1_ in the top and third panel (Although note the scale differences). It also shows that four wheel drive (fwd) is not a good predictor in this model. 
 
 Unfortunately this model does not generalize well. CV $R^2$ is very variable. Also there is no real improvement in accuracy with $R^2 = ~0.6$. However the model does the logarithmic target transformation (fig. 8) internally and computes $R^2$ on the real price in EUR and the early warning does not hold here.
 
@@ -130,15 +130,15 @@ Unfortunately this model does not generalize well. CV $R^2$ is very variable. Al
 - - - - 
 # How are we doing?
 
-| Simple linear | Log target | Ignore classics |
+| Model 1 | Model 2 | Model 3 |
 |:-------:|:-------:|:-------:|
 | ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) |
 
-| MLR with reduced observations | MLR with imputed values | MLR with categorical |
+| Model 4 | Model 5 | Model 6 |
 |:-------:|:-------:|:-------:|
 | ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | 
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
 ![model performance](./model-performance.png)  
-_R-square of all models. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$_
+_R-square of all models. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$._
