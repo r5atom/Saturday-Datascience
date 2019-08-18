@@ -131,7 +131,7 @@ By adding categorical features there is a risk of overfitting. A way to overcome
 ![F13](./MLR_Lasso.png)  
 _Figure 13. As fig. 12; MLR with categorical and numerical features, but with regularization (Lasso). The dashed lines bound coefficients that are zero._
 
-The effect of regularization can be seen in figure 13. Overall, coefficients are reduced and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha=0.001$. The performance of the model is comparable to the model without regularization (see fig. 12), but this model uses less features to achieve this. The overal trend of feature importance (contribution to the value) is maintained. The brand feature might be more insightful in the regularized model.  
+The effect of regularization can be seen in figure 13. Overall, coefficients are reduced (not scale difference) and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha=0.001$. The performance of the model is comparable to the model without regularization (see fig. 12), but this model uses less features (i.e. it is less complex) to achieve this. The overal trend of feature importance is maintained. The brand feature might be more insightful now than in the un-regularized model.  
 
 As said the Lasso model performs equivalently to the non regularized model (fig. 8) with $R^2 = ~0.6$ and with similar high variable CV $R^2$, indicating low level of generalization.
 
@@ -143,13 +143,9 @@ As said the Lasso model performs equivalently to the non regularized model (fig.
 |:-------:|:-------:|:-------:|
 | ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) |
 
-| Model 4 | Model 5 | Model 6 |
-|:-------:|:-------:|:-------:|
-| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | 
-
-| Model 7 |   |   |
-|:-------:|:-------:|:-------:|
-| ![model7](./MLR_Lasso-accuracy.png) |   |   | 
+| Model 4 | Model 5 | Model 6 | Model 7 |
+|:-------:|:-------:|:-------:|:-------:|
+| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) |
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
