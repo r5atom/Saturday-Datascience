@@ -126,6 +126,15 @@ Figure 12 shows the contributions of the category values to the auction price. V
 
 Unfortunately this model does not generalize well. CV $R^2$ is very variable. Also there is no real improvement in accuracy with $R^2 = ~0.6$. However the model does the logarithmic target transformation (fig. 8) internally and computes $R^2$ on the real price in EUR and the early warning does not hold here.
 
+By adding categorical features there is a risk of overfitting. A way to overcome this is by applying regularization to constrict the coefficients from becoming large. The Lasso regularization method is commonly applied to achieve this.
+
+![F13](./MLR_Lasso.png)  
+_Figure 13. As fig. 12; MLR with categorical and numerical features, but with regularization (Lasso). The dashed lines bound coefficients that are zero._
+
+The effect of regularization can be seen in figure 13. Overall, coefficients are reduced and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha=0.001$. The performance of the model is comparable to the model without regularization (see fig. 12), but this model uses less features to achieve this. The overal trend of feature importance (contribution to the value) is maintained. The brand feature might be more insightful in the regularized model.  
+
+As said the Lasso model performs equivalently to the non regularized model (fig. 8) with $R^2 = ~0.6$ and with similar high variable CV $R^2$, indicating low level of generalization.
+
 
 - - - - 
 # How are we doing?
@@ -137,6 +146,10 @@ Unfortunately this model does not generalize well. CV $R^2$ is very variable. Al
 | Model 4 | Model 5 | Model 6 |
 |:-------:|:-------:|:-------:|
 | ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | 
+
+| Model 7 |   |   |
+|:-------:|:-------:|:-------:|
+| ![model7](./MLR_Lasso-accuracy.png) |   |   | 
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 

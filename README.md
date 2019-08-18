@@ -21,7 +21,7 @@ Alright. [Here you go.](./results/)
 I have not included data in this repo. You can start scraping yourself. If you need historical data you can reach out to [me](https://r5atom.github.io/).
 
 ## Change log
-- August 2019: First attempt of Lasso regularization
+- August 2019: Added model with Lasso regularization
 - July 2019: Add categorical MLR model
 - June 2019: Add features based on conformity codes
 - May 2019: _Belastingdienst_ (IRS) now also lists auctions on DRZ website. URL has changed.
