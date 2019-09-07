@@ -51,103 +51,24 @@ Furthermore it might be best to treat subsets of cars differently. Older cars mi
 - - - - 
 # Predicting winning bids
 
-Overall age seems a decent predictor for car value. The first and simplest model performs a linear regression on age and price. Figure 7 shows there is a negative correlation between age and price: newer cars have higher winning bids than older cars. 
+To predict winning bids, the approach is to use information about the lots and use a regression model to describe the bid prices. This approach is described in detail [here](./regression-models.md). Several linear models are presented with increasing complexity.
 
-![F7](./linear_regression_no_cv.png)  
-_Figure 7. Linear regression of age and price. Car's age is the independent variable (x-axis) and the winning bid is the dependent variable (y-axis). Cars with no auction results and no known age are not included. The resulting fit is shown in the legend. Note that for graphical purposes the x-scale is converted to year, where the source data has unit days._
+![F7](./model-performance.png)  
+_Figure 7. Coefficient of determination as measure of fit performance of all linear models examined. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$. $R^2$ is determined with cross validations, hence every model has multiple observations for $R^2$. The model with reduced observations appears to have the best performance, however it ignores observations with missing values and the number of observations is reduced._
 
-The result of a simple linear regression model predicts a depreciation of EUR 1.4 a day (May 2019). The predicted price at auction of a brand new car (0 days old) is EUR 12k. There are some obvious shortcomings of this model. For one, the coefficient of determination ($R^2$) is low. Less than 15% of the variance in the price is explained by this model. But maybe more serious is that the prediction for cars of 25 years and older will be negative! Bidding price are always more than zero euros and this model predicts values that are impossible in real-life. 
+After exploring several models the model with Lasso regularization appears to return a reasonable predictor for bid price that generalizes well. The model uses many features, but the coefficients are constrained to prevent them to become very large. This usually occurs when features are colinear. 
 
-Not only because of its poor performance will this model be unsuitable to predict future auctions, it also fails to generalize for other data. Here all data is used to "train" the linear model. Generally it is considered bad practice to neglect _cross validation_. Better is to test model performance on data that the model has not seen yet. This requires to split data in train and test sets. This can be done multiple times and the variance in the model performance is an indication of how well a model generalizes over all possible data. In subsequent model evaluations cross validation will be added.
+![F8](./MLR_Lasso.png)  
+_Figure 8. Result of Multiple Linear Regression (MLR) with categorical and numerical features. The coefficients are constrained with Lasso regularization. Bar height indicate coefficient of the features. Features may correlate positively or negatively indicated by the sign of the coefficient. When the bar height is small a value is shown. Features are sorted in descending order. The dashed lines bound coefficients that are zero. The top panel shows the numerical features. The first bar indicates the offset. The panels below the top panel are the categorical features. As with the numerical features the coefficients are sorted as well. The third panel show that luxury brands like "Rolls-Royce" are left of the vertical dashed line and positive contributors to the auction price._
 
-As we've seen bidding price can not be negative and during e.d.a. I've noticed winning bids are log-normally distributed. Improving on the linear model above would be to transform the prediction in log units. Figure 8 shows the result.
+- - - -
+# Classifying images
 
-![F8](./linear_regression_log_price.png)  
-_Figure 8. As figure 7, but with log-transformed dependent variable (winning bid). Data used for fitting are marked as blue, the test set is marked black. $R^2$ is shown for fitting test data, all data and the mean and standard deviation of cross validations (cvX, where X denotes number of folds)._
+The dataset also contains images of the auction lots. These can be used for [classification](./classification-models.md). 
 
-The fit show that new cars start with ~$10^4$ euro and depreciate daily with ~$10^{-4}$. The later means that the model predicts that cars depreciate to half their value every 7.1 years (eq. 1, May 2019). This is what this model predicts, but obviously the depreciation is much steeper (as we will see below when we ignore classic cars). 
+| A) Front | B) Rear | C) Interior |
+|:-----:|:-----:|:-----:|
+| ![F9a](../assets/2019-9-2209-00.jpg) | ![F9b](../assets/2019-9-2209-01.jpg) | ![F9c](../assets/2019-9-2209-02.jpg) |
 
-$$\frac{\log(2)}{-\beta_1 \cdot \log(10)}$$ (eq. 1),
+_Figure 9. Three views of example lot 2019-9-2209._
 
-where $\beta_1$ is the last parameter of the fitted function (May 2019: $\beta_1 = 1.2 \cdot 10^{-4}$).
-
-The performance of this model has improved. ~30% of the variance can be explained. Although the test set yields equal performance, cross validation shows that the generalization of this model isn't very good (standard deviation of $R^2$ in 5 folds is 0.12).
-
-However we need to exercise some caution interpreting the performance, because the prediction error is calculated in log[EUR]. This caution holds for the following models as well. When I introduce a model with categorical features, the performance is calculated after inverse transformation.
-
-There is still room for improvement here. Cars older than 20 year seem to have a strong effect on the fit result. As already concluded earlier, these classic cars might need separate treatment.
-
-![F9](./linear_regression_log_price_young.png)  
-_Figure 9. as figure 8, but ignoring older cars by focussing on cars younger than 25 years._
-
-Figure 9 shows the result of a fit with partial data. This model predicts a steeper depreciation. Every 3.5 years (May 2019) the predicted bids are divided by two and new cars are EUR 24k ($10^{4.38}$, May 2019). The performance of this model is reasonable with $R^2 = 0.6$, also cv shows the model generalizes well (std. dev < 0.1).
-
-Note that this model only uses age to predict. This is **only one feature**. The model can be improved by adding more information about, or features of, the car. 
-
-## Multiple linear regression (MLR)
-
-Figure 10 shows the result of MLR. As with the previous model, the predicted bid is in log units, but all ages are used. 13 features are included and the model allows for an fixed offset (bias). If a value is missing from one of the features the car is removed. This causes a reduction in the data set.
-
-![F10](./MLR.png)  
-_Figure 10. Result of Multiple Linear Regression (MLR). Bar height indicate coefficient of the features. When the bar height is small a value is shown. The first bar indicates the offset. Subsequent features are sorted in descending order. The dashed line separates features with positive coefficient from features that have a negative coefficient. This indicates which features correlate positively or negatively._
-
-The accuracy of the MLR model is around 0.9 and it generalizes well. However in general the coefficients are very low. only the _power_ coefficient is reasonable. The sign of the coefficients indicates what features have a positive or negative influence on the bidding price. This corroborates the observations during e.d.a..
-
-However, a keen observer already spotted that the number of cars that are used has dramatically reduced. Where the first (single linear) regression models have close to 3000 cars in total, here in the MLR it is less than 1000. This is because cars with a missing value is dropped from the analyses. For instance when the`weight` is not registered the car is dropped. This becomes a serious issue when the number of features are increased. The chances of having to drop an observation because of one missing field increases.  
-To overcome this the missing values can be substituted by a assigned value. This proces is know as _'imputation'_. Common strategies are to impute with zero, or the mean or median of the other observations.
-
-The resulting coefficients are expressed in units of the feature. For example the number of doors (coefficient $\beta = -0.03$) contributes to the prediction (in log[EUR]) with 0.03 doors/log(EUR). As a result coefficients depend on their scale. To overcome this all features can be scaled to similar ranges. 
-
-In figure 11 missing values are imputed with median values. Also all features are scaled according to equation 2. This is know as normalizing, z-scoring or z-transforming.
-
-$$z = \frac{x - \mu} {\sigma}$$ (eq. 2),
-
-where $z$ is the normalized value of input value $x$, and $\mu$ and $\sigma$ the mean and standard deviation of $x$.
-
-![F11](./MLR_impute_median.png)  
-_Figure 11. As fig. 10; Result of Multiple Linear Regression (MLR) but with missing values replaced with median value._
-
-The models accuracy has changed dramatically ($R^2 = ~0.7$), but note that the original number of observations (~3000) has been restored. 
-
-There is one car where prediction and real bid are quite different (see model 5 accuracy here below). The real bid is ~3.2 log (EUR ~1600), but the predicted bid is ~1.9 log (EUR ~80). This particular lot (2017-3-8109) is a 2005 Mercedes e200 with an odometer reading of 816k km! Querying the web with the registration number confirms this car indeed has a very high odometer reading. If the MLR model penalizes heavily for odometer reading, the prediction can be a lot lower than the actual value. A linear scaling as performed according to eq. 2 might not be the best solution.
-
-A confound of these kind of MLR models is that they do not handle co-linearity well. For instance we saw that _odometer reading_ and _age_ are highly correlated (fig. 5 and 6). As a consequence of correlation coefficients could outweigh each other, leading to uninterpretable coefficients.
-
-Another reason that could hold performance back in this model is that there are not a lot of features, and the complexity of the model is relatively low. The following model adds more features by adding categorical features. These features do not have a numerical value but non-ordinal discrete values such as color. These features however could still be important determinants of the auction value, with car brand being the obvious one.
-
-![F12](./MLR_with_categorical.png)  
-_Figure 12. As fig. 10; Result of Multiple Linear Regression (MLR) with numerical and categorical features. The top panel shows the numerical features as used in the previous model (fig. 11). The panels below the top panel are the categorical features. As with the numerical features the coefficients are sorted as well. The third panel show that luxury brands like "Rolls-Royce" are left of the vertical dashed line and positive contributors to the auction price._
-
-The categorical features are transformed to a numerical feature by employing a "one-hot-encoding" method. In essence a single field is split in different fields as many as there are possible values and for every observation the field gets a value of 1 and otherwise zero. E.g. in a particular observation the field _brand = 'BMW'_. The newly one-hot-encoded fields are 'brand audi', 'brand bmw', 'brand citroen' which will get values 0, 1, 0 receptively.
-
-As with the previous MLR model the missing numerical values are replaced with the median value. In the categorical features the category "missing" is introduced.
-
-Figure 12 shows the contributions of the category values to the auction price. Values left of the dashed line have a positive coefficient and contribute positively to the price. The higher the bar, the larger the contribution. The current model predicts that the brand name contribute more to the price than the power. Compare the coefficients for _Rolls-Royce > +1_ and _power < +1_ in the top and third panel (Although note the scale differences). It also shows that four wheel drive (fwd) is not a good predictor in this model. 
-
-Unfortunately this model does not generalize well. CV $R^2$ is very variable. Also there is no real improvement in accuracy with $R^2 = ~0.6$. However the model does the logarithmic target transformation (fig. 8) internally and computes $R^2$ on the real price in EUR and the early warning does not hold here.
-
-By adding categorical features there is a risk of overfitting. A way to overcome this is by applying regularization to constrict the coefficients from becoming large. The Lasso regularization method is commonly applied to achieve this.
-
-![F13](./MLR_Lasso.png)  
-_Figure 13. As fig. 12; MLR with categorical and numerical features, but with regularization (Lasso). The dashed lines bound coefficients that are zero._
-
-The effect of regularization can be seen in figure 13. Overall, coefficients are reduced (not scale difference) and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha=0.001$. The performance of the model is comparable to the model without regularization (see fig. 12), but this model uses less features (i.e. it is less complex) to achieve this. The overal trend of feature importance is maintained. The brand feature might be more insightful now than in the un-regularized model.  
-
-As said the Lasso model performs equivalently to the non regularized model (fig. 8) with $R^2 = ~0.6$ and with similar high variable CV $R^2$, indicating low level of generalization.
-
-
-- - - - 
-# How are we doing?
-
-| Model 1 | Model 2 | Model 3 |
-|:-------:|:-------:|:-------:|
-| ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) |
-
-| Model 4 | Model 5 | Model 6 | Model 7 |
-|:-------:|:-------:|:-------:|:-------:|
-| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) |
-
-_Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
-
-![model performance](./model-performance.png)  
-_R-square of all models. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$._

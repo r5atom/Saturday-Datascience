@@ -21,6 +21,7 @@ Alright. [Here you go.](./results/)
 I have not included data in this repo. You can start scraping yourself. If you need historical data you can reach out to [me](https://r5atom.github.io/).
 
 ## Change log
+- September 2019: split results section, catch NAP exception when presented before odometer reading.
 - August 2019: Added model with Lasso regularization, introduced classification
 - July 2019: Add categorical MLR model
 - June 2019: Add features based on conformity codes
