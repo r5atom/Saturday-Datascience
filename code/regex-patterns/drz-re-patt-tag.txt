@@ -5,7 +5,7 @@
 "Reg", "((het originele kenteken)|(Kenteken)|(Registratien((r\.)|(ummer)))) (?P<val>.*)\n",
 "OdoKM", "((Afgelezen k)|(K))m-stand (?P<val>.*)\n",
 "OdoMLS", "((Afgelezen m)|(M))ijlenstand (?P<val>.*)\n",
-"NAP", "Km-stand volgens nap (?P<val>.*)\n",
+"NAP", "Km-stand volgens ((nap)|(NAP)) (?P<val>.*)\n",
 "OpH", "((Afgelezen d)|(D))raaiurenstand[:, ](?P<val>.*)\n",
 "Mfdate", "((De d)|(D))atum eerste toelating (?P<val>.*)\n",
 "Mfyear", "Bouwjaar (?P<val>.*)\n",
