@@ -56,6 +56,8 @@ To predict winning bids, the approach is to use information about the lots and u
 ![F7](./model-performance.png)  
 _Figure 7. Coefficient of determination as measure of fit performance of all linear models examined. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$. $R^2$ is determined with cross validations, hence every model has multiple observations for $R^2$. The model with reduced observations appears to have the best performance, however it ignores observations with missing values and the number of observations is reduced._
 
+## The current model: Lasso with categorical data included.
+
 After exploring several models the model with Lasso regularization appears to return a reasonable predictor for bid price that generalizes well. The model uses many features, but the coefficients are constrained to prevent them to become very large. This usually occurs when features are colinear. The regularization term ($\alpha$) was determined with a grid search.
 
 ![F8](./MLR_Lasso.png)  
@@ -64,7 +66,7 @@ _Figure 8. Result of Multiple Linear Regression (MLR) with categorical and numer
 - - - -
 # Classifying images
 
-The dataset also contains images of the auction lots. These can be used for [classification](./classification-models.md). 
+The dataset also contains images of the auction lots. These can be used for classification and is described in detail  [here](./classification-models.md). Figure 9 shows an example of all available pictures of a single auction lot. In an attempt to identify the car brand the front view (ex. fig. 9a) of the lot is used to train several classification models.
 
 | A) Front | B) Rear | C) Interior |
 |:-----:|:-----:|:-----:|
@@ -72,3 +74,7 @@ The dataset also contains images of the auction lots. These can be used for [cla
 
 _Figure 9. Three views of example lot 2019-9-2209._
 
+The model performance can be expressed in F1 score and the tested models yield different results.
+
+![F10](./model-performance-classification.png)  
+_Figure 10. F1 scores as measure of classification performance for all models._

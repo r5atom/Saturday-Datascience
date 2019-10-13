@@ -13,3 +13,22 @@ _Figure 3. High resolution representation of random forest binary classifier._
 
 ![F4](../assets/gradient_descent_multiclass.png)  
 _Figure 4. High resolution representation of multiclass classifier (with gradient descent)._
+
+- - - -
+## Model performance
+
+As a measure of performance I use _F1 scores_. F1 is defined as:
+
+$F1 = 2*\frac{recall * specificity}{recall + specificity}$ with  
+$recall = \frac{n_{tp}}{n_{cp}}$  
+$specificity = \frac{n_{tn}}{n_{cn}}$ and  
+`n`: number (count)  
+`tp`: true positive  
+`tn`: true negative  
+`cp`: condition positive  
+`cn`: condition negative  
+
+It takes into account that a good model is able to be precise (**specificity**: not including too many false positives) and able to retrieve all positive elements (**recall**: identify as many as the true positives).
+
+![model performance](./model-performance-classification.png)  
+_F1 scores as measure of classification performance for all models._
