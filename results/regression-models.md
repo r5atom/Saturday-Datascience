@@ -80,7 +80,7 @@ By adding categorical features there is a risk of overfitting. A way to overcome
 ![F7](./MLR_Lasso.png)  
 _Figure 7. As fig. 6; MLR with categorical and numerical features, but with regularization (Lasso). The dashed lines bound coefficients that are zero._
 
-The effect of regularization can be seen in figure 7. Overall, coefficients are reduced (note scale differences between figure 6 and 7) and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha=0.001$. The performance of the model is comparable to the model without regularization (see fig. 6), but this model uses less features (i.e. it is less complex) to achieve this. The overal trend of feature importance is maintained. The brand feature might be more insightful now than in the un-regularized model.  
+The effect of regularization can be seen in figure 7. Overall, coefficients are reduced (note scale differences between figure 6 and 7) and many are set to zero. The regularization hyperparameter alpha was determined by a grid search and set to $\alpha = ~0.001$. The performance of the model is comparable to the model without regularization (see fig. 6), but this model uses less features (i.e. it is less complex) to achieve this. The overal trend of feature importance is maintained. The brand feature might be more insightful now than in the un-regularized model.  
 
 As said the Lasso model performs equivalently to the non regularized model (fig. 2) with $R^2 = ~0.6$ and with similar high variable CV $R^2$, indicating low level of generalization.
 
