@@ -1,0 +1,24 @@
+# notebook context
+
+figure.dpi : 80
+
+
+# fontsize
+axes.labelsize: 10
+axes.titlesize: 12
+xtick.labelsize: 10
+ytick.labelsize: 10
+legend.fontsize: 10
+
+
+# lines
+lines.linewidth : 1.0
+
+axes.linewidth: 1.0
+xtick.major.width: 1.0
+xtick.minor.width: 1.0
+ytick.major.width: 1.0
+ytick.minor.width: 1.0
+
+lines.markeredgewidth: 1.0
+patch.linewidth: 1.0

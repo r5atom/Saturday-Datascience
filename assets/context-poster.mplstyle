@@ -1,0 +1,6 @@
+# poster context
+axes.labelsize: 32
+axes.titlesize: 32
+xtick.labelsize: 32
+ytick.labelsize: 32
+legend.fontsize: 12

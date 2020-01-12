@@ -1,0 +1,6 @@
+# talk context
+axes.labelsize: 16
+axes.titlesize: 16
+xtick.labelsize: 16
+ytick.labelsize: 16
+legend.fontsize: 12
