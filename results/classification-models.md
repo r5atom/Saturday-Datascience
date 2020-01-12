@@ -14,6 +14,11 @@ _Figure 3. High resolution representation of random forest binary classifier._
 ![F4](../assets/gradient_descent_multiclass.png)  
 _Figure 4. High resolution representation of multiclass classifier (with gradient descent)._
 
+## Image preprocessing
+
+![F5](../assets/2019-9-2209-00-masked.png)
+_Figure 5. Example of how Detectron2 segments the car from the background._
+
 - - - -
 ## Model performance
 

@@ -49,9 +49,11 @@ Another likely confound to the above analysis that diesel cars on average are us
 Furthermore it might be best to treat subsets of cars differently. Older cars might be used for recreational purpose only, and the usage intensity might have an lesser effect on their value.
 
 - - - - 
-# Predicting winning bids
+# [Predicting winning bids](./regression-models.md)
 
-To predict winning bids, the approach is to use information about the lots and use a regression model to describe the bid prices. This approach is described in detail [here](./regression-models.md). Several linear models are presented with increasing complexity.
+_(The approach is described in detail [here](./regression-models.md).)_
+
+To predict winning bids, the approach is to use information about the lots and use a regression model to describe the bid prices. Several linear models are presented with increasing complexity.
 
 ![F7](./model-performance.png)  
 _Figure 7. Coefficient of determination as measure of fit performance of all linear models examined. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$. $R^2$ is determined with cross validations, hence every model has multiple observations for $R^2$. The model with reduced observations appears to have the best performance, however it ignores observations with missing values and the number of observations is reduced._
@@ -64,9 +66,11 @@ After exploring several models the model with Lasso regularization appears to re
 _Figure 8. Result of Multiple Linear Regression (MLR) with categorical and numerical features. The coefficients are constrained with Lasso regularization. Bar height indicate coefficient of the features. Features may correlate positively or negatively indicated by the sign of the coefficient. When the bar height is small a value is shown. Features are sorted in descending order. The dashed lines bound coefficients that are zero. The top panel shows the numerical features. The first bar indicates the offset. The panels below the top panel are the categorical features. As with the numerical features the coefficients are sorted as well. The third panel show that luxury brands like "Rolls-Royce" are left of the vertical dashed line and positive contributors to the auction price._
 
 - - - -
-# Classifying images
+# [Classifying images](./classification-models.md)
 
-The dataset also contains images of the auction lots. These can be used for classification and is described in detail  [here](./classification-models.md). Figure 9 shows an example of all available pictures of a single auction lot. In an attempt to identify the car brand the front view (ex. fig. 9a) of the lot is used to train several classification models.
+_(More details [here](./classification-models.md).)_
+
+The dataset also contains images of the auction lots. These can be used for classification. Figure 9 shows an example of all available pictures of a single auction lot. In an attempt to identify the car brand the front view (ex. fig. 9a) of the lot is used to train several classification models.
 
 | A) Front | B) Rear | C) Interior |
 |:-----:|:-----:|:-----:|
@@ -74,7 +78,27 @@ The dataset also contains images of the auction lots. These can be used for clas
 
 _Figure 9. Three views of example lot 2019-9-2209._
 
-The model performance can be expressed in F1 score and the tested models yield different results.
+A (projected) first step is to remove the background, because it does not contain information about the car's properties. A method to segment the car from its background is by using a R-CNN (Region Based Convolutional Neural Network). Work by He et al. 2017 [Mask R-CNN [1]](https://arxiv.org/abs/1703.06870) and the Facebook AI Research group [Detectron2 [2]](https://github.com/facebookresearch/detectron2) can help to implement this. Detetron2 is trained on de [COCO dataset [3]](http://cocodataset.org/#explore) and includes ~100 categories. Many are not relevant.
 
-![F10](./model-performance-classification.png)  
-_Figure 10. F1 scores as measure of classification performance for all models._
+The way how _Detectron2_ would work is exemplified in figure 10.
+
+![F10](../assets/2019-9-2209-00-masked.png)
+_Figure 10. Example of how Detectron2 segments the car from the background in the picture of lot 2019-9-2209. Both "car" and "truck" are detected in this image. Detectron2 is able to return more than one category. In the COCO dataset "truck" is often nested in "car" [[3]](http://cocodataset.org/#explore)._
+
+The model performance can be expressed in F1 score and the tested models yield different results (fig. 11).
+
+![F11](./model-performance-classification.png)  
+_Figure 11. F1 scores as measure of classification performance for all models._
+
+[^1] Mask R-CNN:  
+Kaiming He and Georgia Gkioxari and Piotr Dollár and Ross Girshick. (2017). Mask R-CNN.  
+[https://arxiv.org/abs/1703.06870](https://arxiv.org/abs/1703.06870)
+
+[^2] Detectron2:  
+Yuxin Wu and Alexander Kirillov and Francisco Massa and Wan-Yen Lo and Ross Girshick. (2019). Detectron2.  
+[https://github.com/facebookresearch/detectron2](https://github.com/facebookresearch/detectron2)
+
+[^3] COCO dataset  
+Tsung-Yi Lin and Michael Maire and Serge Belongie and Lubomir Bourdev and Ross Girshick and James Hays and Pietro Perona and Deva Ramanan and C. Lawrence Zitnick and Piotr Dollár. (2014). Microsoft COCO: Common Objects in Context.  
+[http://cocodataset.org/#explore](http://cocodataset.org/#explore)  
+[https://arxiv.org/abs/1405.0312](https://arxiv.org/abs/1405.0312)

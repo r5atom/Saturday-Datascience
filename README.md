@@ -9,6 +9,11 @@
 - Images can be used for classification.
 
 ## Change log
+- Januari 2020 (Major): 
+    - Used mplstyle for figures. 
+    - Added gearbox type to classifier. 
+    - Enabled IRS auction downloads. Results were added to the website in May 2019.
+    - Tested masking with R-CNN
 - October 2019: Reorganized landing page
 - September 2019: split results section, catch NAP exception when presented before odometer reading.
 - August 2019: Added model with Lasso regularization, introduced classification
@@ -19,6 +24,12 @@
 - March 2019: Add MLR models
 - February 2019: Combine features as usage intensity. Another change on the results website: The URL now contains the name of the month.
 - 2014: First download of results
+
+Planned
+
+- save models as .pkl
+- Use R-CNN to mask images for classification
+- Analyse power (model performance as function of data set size)
 
 ## Take me to the results right away!
 
@@ -46,7 +57,7 @@ Although the published auction results are relatively clean, there is enough "di
 ![drz-home](./assets/drz-home-square.png)  
 _Screenshot of website_
 
-I started working on this in 2014, but I've been systematically been collecting results for about two years now. All sorts of lots (goods) are auctioned off: Cars, trucks, motorcycles and trailers. I've been focussing on getting the results on cars cleaned.
+I started working on this in 2014, but I've been systematically been collecting monthly results for about two years now. All sorts of lots (goods) are auctioned off: Cars, trucks, motorcycles and trailers, but I've been focussing on getting the results on cars cleaned.
 
 To interpret the auction results, I realize it helps to know a little Dutch. For instance the date format is "day first": dd-mm-yyyy and the decimal separator is `,` and the thousand separator is `.`. One thousand euros and forty two cents is formatted as `EUR 1.000,42`.  
 I've tried to translate the results into meaningful field names. Here below I've added a glossary, but if something remains unclear you can always raise an issue.
