@@ -13,7 +13,6 @@
 "rechts geplaats","rechts geplaatst"
 "recht geplaatst","rechts geplaatst"
 "rechts geplaatstt","rechts geplaatst"
-"IKS","IGK"
 "geregisteerd","geregistreerd"
 "Domein Roerende Zaken","Domeinen Roerende Zaken"
 #"voertuigonderzoek +RDW","voertuigonderzoek RDW"

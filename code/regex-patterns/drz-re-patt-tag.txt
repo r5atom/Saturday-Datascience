@@ -1,15 +1,17 @@
 # Tags leading or trailing values."
 # e.g."Type Apple" should be parsed to ItemType='Apple'
 # Pattern that is used is set to name "val"
-"ItemType", "Type (?P<val>.*)\n",
-"Reg", "((het originele kenteken)|(Kenteken)|(Registratien((r\.)|(ummer)))) (?P<val>.*)\n",
-"OdoKM", "((Afgelezen k)|(K))m-stand (?P<val>.*)\n",
-"OdoMLS", "((Afgelezen m)|(M))ijlenstand (?P<val>.*)\n",
-"NAP", "Km-stand volgens ((nap)|(NAP)) (?P<val>.*)\n",
-"OpH", "((Afgelezen d)|(D))raaiurenstand[:, ](?P<val>.*)\n",
-"Mfdate", "((De d)|(D))atum eerste toelating (?P<val>.*)\n",
-"Mfyear", "Bouwjaar (?P<val>.*)\n",
-"APKdate", "APK geldig tot (?P<val>.*)\n",
-"LotCat", "Categorie(&#235;n)?: (?P<val>.*) *\n",
-"BTW", "BTW: (?P<val>.*)\n",
-"ForeignReg", "(?P<val>.*) kenteken\n"
+"ItemType", "(?<! )Type (?P<val>.+) *\n"
+"LotCat", "(?<! )Categorie(&#235;n)?: *(?P<val>.+) *\n"
+"Reg", "(?<! )het originele kenteken (?P<val>[A-Z,0-9,\-]{6,8}) *\n"
+"Reg", "(?<! )(([K,k]enteken)|([R,r]egistratien(r\.|ummer))) (?P<val>[A-Z,0-9,\-]{6,8}) *\n"
+#"NAP", "(?<! )([K,k][M,m]-stand|[M,m]ijlenstand) volgens? ((nap)|(NAP)) (?P<val>.*)\n"
+"NAP", "(?i)(?<! )(km-stand|mijlenstand) volgens? nap (?P<val>.*)\n"
+"OdoKM", "(?<! )(Afgelezen )?[K,k]m-stand *(?P<val>[0-9,\., ,(onbekend)]+)\n"
+"OdoMLS", "(?<! )(Afgelezen )?(?<!/)[M,m]ijlenstand *(?P<val>[0-9,\., ,(onbekend)]+)\n"
+"OpH", "(?<! )(Afgelezen )?[D,d]raaiurenstand[:, ] *(?P<val>[0-9,\., ,(onbekend)]+)\n"
+"Mfdate", "(?<! )((De d)|(D))atum eerste toelating *(?P<val>[0-9,\.,-]+)\n"
+"Mfyear", "(?<! )Bouwjaar:? *(?P<val>[0-9,(onbekend)]+)\n"
+"APKdate", "(?<! )APK geldig tot *(?P<val>[0-9,\.,-]+)\n"
+"BTW", "(?<! )BTW: (?P<val>.+) *\n"
+"ForeignReg", "(?<! )(?P<val>.*) kenteken *\n"

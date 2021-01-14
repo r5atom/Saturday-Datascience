@@ -9,6 +9,17 @@
 - Images can be used for classification.
 
 ## Change log
+- Januari 2021: Major changes
+    - General overhaul
+    - Auction lot parsing now done within a Class
+    - Configuration settings in .cfg file
+    - Outsourced reading re patterns.
+    - Linked commenting in notebooks
+    - Included fields nr of owners and "WOK" from webportal.
+    - ... and more
+- October 2020: 
+    - Auctions were cancelled due to pandemic. IRS auctions are suspended as yet.
+    - Some functions are outsourced.
 - Januari 2020 (Major): 
     - Used mplstyle for figures. 
     - Added gearbox type to classifier. 
@@ -45,12 +56,12 @@ I have not included data in this repo. Hence [`./data/`](./data) remains mostly 
 
 ## Little bit of background
 
-Here you can follow what I am doing on a Saturday (and sometimes [other days](https://github.com/r5atom/Saturday-Datascience/graphs/commit-activity) too).  
+Here you can follow what I am doing on a Saturday (and sometimes [other days](https://github.com/r5atom/Saturday-Datascience/graphs/commit-activity) too). 
 
 A project I am working on involves **Police auctions** held once a month by the Dutch authorities: [Dienst Domeinen Roerende Zaken](https://www.domeinenrz.nl/) (or _DRZ_). The results of the auction [^1] are published. 
-Initially I set out to get a bidding advantage in a future auction by using prior auction results. In a way I was setting myself up for a prediction modeling project!  
+Initially I set out to get a bidding advantage in a future auction by using prior auction results. In a way I was setting myself up for a prediction modeling project!
 
-What makes this project interesting is that I did the full pipeline from data engineering to analysis: Scraping data > Cleaning up > Combining data sets > Modeling.  
+What makes this project interesting is that I did the full pipeline from data engineering to analysis: Scraping data > Cleaning up > Combining data sets > Modeling. 
 
 Although the published auction results are relatively clean, there is enough "dirt" to make it challenging for data cleaning.
 
@@ -76,8 +87,8 @@ You can get that information on [this page](https://r5atom.github.io/).
 | LPG                   | Autogas, _liquefied petroleum gas_ |
 | [_Dutch_]             | _Translation_|
 |           Kavel       | Lot |
-|           Datum       | Date |
 |           Brandstof   | Fuel |
+|           Versnellingsbak | Gearbox |
 |           Merk        | Brand |
 |           Vermogen    | Engine power (HP) |
 |           Vrachtwagen | Truck (heavy)|
@@ -87,6 +98,8 @@ You can get that information on [this page](https://r5atom.github.io/).
 |           Rdw         | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
 |           BPM         | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
 |           NAP         | Certification of lawful odometer. "_Nationale Auto of Pas_" |
+|           WOK         | Under survey. Needs assessment by Rdw. "_Wachten op keuren_" |
+|           OVI         | Online vehicle information. "_Online Voertuig Informatie_" |
 
 **Engine displacement** (or cylinder volume) is expressed _cubic centimeters_, typically abbreviated as _cc_, and the SI standard unit is cm^3. Conversion from cc units to cubic inches (CID, in^3) is `y = x / 2.54^3`, where `x` is volume in cm^3 and `y` the conversion to in^3.
 
