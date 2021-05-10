@@ -13,7 +13,8 @@ def read_config(settings_fn = r'../code/assets/drz-auction-settings.ini'):
     # Read other  properties
     VERBOSE = cfg['latest'].getint('verbose') # debug level
     OPBOD = cfg['latest'].getboolean('is_irs') # "opbod" (multiple bids) of IRS (belastingdienst) results
-    CLOSEDDATA = cfg['latest'].getboolean('query_close_data') # Also query closed data?
+    closed_data_fields = cfg['latest'].get('query_close_data') # Also query closed data?
+    CLOSEDDATA = (closed_data_fields is not None) and (closed_data_fields.lower() not in ['0', 'false'])
     SKIPSAVE = cfg['latest'].getboolean('skip_saving') # Do not save to files
 
     # Url to website with results
@@ -42,12 +43,14 @@ def read_config(settings_fn = r'../code/assets/drz-auction-settings.ini'):
     
     # output as dict
     out = dict(
+        settings_fn=settings_fn,
         DATE=DATE,
         VERBOSE=VERBOSE,
         OPBOD=OPBOD,
         URL=URL,
         EXTEND_URL=EXTEND_URL,
         CLOSEDDATA=CLOSEDDATA,
+        closed_data_fields=closed_data_fields,
         SKIPSAVE=SKIPSAVE,
     )
 

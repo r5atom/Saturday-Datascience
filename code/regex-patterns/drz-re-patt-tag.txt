@@ -14,4 +14,4 @@
 "Mfyear", "(?<! )Bouwjaar:? *(?P<val>[0-9,(onbekend)]+)\n"
 "APKdate", "(?<! )APK geldig tot *(?P<val>[0-9,\.,-]+)\n"
 "BTW", "(?<! )BTW: (?P<val>.+) *\n"
-"ForeignReg", "(?<! )(?P<val>.*) kenteken *\n"
+"ForeignReg", "(?<! )(?P<val>\w*) [K,k]enteken *\n"

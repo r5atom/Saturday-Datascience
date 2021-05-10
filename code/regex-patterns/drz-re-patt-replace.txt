@@ -21,6 +21,7 @@
 "€","EUR"
 "&#239;&#191;&#189;","EUR"
 """","&quot;"
+"VOLKWAGEN", "VOLKSWAGEN"
 #
 # Below makes default parsing easier
 #
