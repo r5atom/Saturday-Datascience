@@ -72,3 +72,8 @@ hidden_api_keys\.py
 data/*\.csv
 data/*\.pkl
 data/images/*\.jpg
+
+# Ignore temp notebook files
+*\.clean\.ipynb
+*\.smudge\.ipynb
+*\.bup\.ipynb
