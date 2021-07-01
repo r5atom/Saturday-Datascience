@@ -25,7 +25,9 @@ def read_config(settings_fn = r'../code/assets/drz-auction-settings.ini'):
     else:
         url_part2 = eval(f'f{cfg.get(url_section, "url_insch")}')
     URL = baseurl + url_part2
+    URL = URL.format(counter=cfg['latest'].getint('counter'))
     EXTEND_URL = cfg.getboolean(url_section, "url_add_veilingen")
+    
 
     # Ini file
     if VERBOSE > 1:

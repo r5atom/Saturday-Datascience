@@ -9,6 +9,9 @@
 - Images can be used for classification.
 
 ## Change log
+- June 2021: 
+    - Cleaner notebooks by deleting outputs before committing
+    - Auctions are bi-monthly
 - Januari 2021: Major changes
     - General overhaul
     - Auction lot parsing now done within a Class
