@@ -1,4 +1,4 @@
-def read_tag_value(fn = './regex-patterns/drz-re-patt-tag.txt'):
+def read_tag_value(fn = 'drz-re-patt-tag.txt', path='./regex-patterns/'):
 
     '''
     Reads text file.
@@ -10,7 +10,7 @@ def read_tag_value(fn = './regex-patterns/drz-re-patt-tag.txt'):
     import pandas as pd
     
     df=pd.read_csv(
-        fn,
+        path + fn,
         comment='#',
         header=None,
         quotechar='"',
@@ -21,7 +21,7 @@ def read_tag_value(fn = './regex-patterns/drz-re-patt-tag.txt'):
     
     return df
 
-def read_has_tag(fn = './regex-patterns/drz-re-patt-hastag.txt'):
+def read_has_tag(fn = 'drz-re-patt-hastag.txt', path='./regex-patterns/'):
 
     '''
     Reads text file.
@@ -33,7 +33,7 @@ def read_has_tag(fn = './regex-patterns/drz-re-patt-hastag.txt'):
     import pandas as pd
     
     df=pd.read_csv(
-        fn,
+        path + fn,
         comment='#',
         header=None,
         quotechar='"',
@@ -44,7 +44,7 @@ def read_has_tag(fn = './regex-patterns/drz-re-patt-hastag.txt'):
     
     return df
 
-def read_replace_fragments(fn = './regex-patterns/drz-re-patt-replace.txt'):
+def read_replace_fragments(fn = 'drz-re-patt-replace.txt', path='./regex-patterns/'):
     
     '''
     Reads text file.
@@ -55,7 +55,7 @@ def read_replace_fragments(fn = './regex-patterns/drz-re-patt-replace.txt'):
     import pandas as pd
     
     df=pd.read_csv(
-        fn,
+        path + fn,
         comment='#',
         header=None,
         quotechar='"',
@@ -66,14 +66,14 @@ def read_replace_fragments(fn = './regex-patterns/drz-re-patt-replace.txt'):
 
     return df
 
-def read_all():
+def read_all(path = './regex-patterns/'):
     
     '''
     do all with defaults
     '''
     
-    tags = read_tag_value()
-    flagtags = read_has_tag()
-    repfragments = read_replace_fragments()
+    tags = read_tag_value(path=path)
+    flagtags = read_has_tag(path=path)
+    repfragments = read_replace_fragments(path=path)
 
     return tags, flagtags, repfragments
