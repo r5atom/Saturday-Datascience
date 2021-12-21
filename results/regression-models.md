@@ -35,15 +35,15 @@ Note that this model only uses age to predict. This is **only one feature**. The
 
 ## Multiple linear regression (MLR)
 
-Figure 4 shows the result of MLR. As with the previous model, the predicted bid is in log units, but all ages are used. 13 features are included and the model allows for an fixed offset (bias). If a value is missing from one of the features the car is removed. This causes a reduction in the data set.
+Figure 4 shows the result of MLR. As with the previous model, the predicted bid is in log units, but all ages are used. 19 features are included and the model allows for an fixed offset (bias). If a value is missing from one of the features the car is removed. This causes a **reduction of the data set**.
 
-![F4](./MLR.png)  
+![F4](./MLR_reduced_observations.png)  
 _Figure 4. Result of Multiple Linear Regression (MLR). Bar height indicate coefficient of the features. When the bar height is small a value is shown. The first bar indicates the offset. Subsequent features are sorted in descending order. The dashed line separates features with positive coefficient from features that have a negative coefficient. This indicates which features correlate positively or negatively._
 
-The accuracy of the MLR model is around 0.9 and it generalizes well. However in general the coefficients are very low. only the _power_ coefficient is reasonable. The sign of the coefficients indicates what features have a positive or negative influence on the bidding price. This corroborates the observations during e.d.a..
+The accuracy of the MLR model is around 0.9 and it generalizes well. However in general the coefficients are very low. The sign of the coefficients indicates what features have a positive or negative influence on the bidding price. This corroborates the observations during e.d.a..
 
-However, a keen observer already spotted that the number of cars that are used has dramatically reduced. Where the first (single linear) regression models have close to 3000 cars in total, here in the MLR it is less than 1000. This is because cars with a missing value is dropped from the analyses. For instance when the`weight` is not registered the car is dropped. This becomes a serious issue when the number of features are increased. The chances of having to drop an observation because of one missing field increases.  
-To overcome this the missing values can be substituted by a assigned value. This proces is know as _'imputation'_. Common strategies are to impute with zero, or the mean or median of the other observations.
+However, a keen observer already spotted that the number of cars that are used for this model has dramatically reduced. Where the first (single linear) regression uses several thousand cars in total, here in the MLR it is around 1000. This is because cars with a missing value are dropped from the analyses. For instance when the `weight` is not registered, the car is dropped. This becomes a serious issue when the model uses a large number of features. The chances of needing to drop an observation because of a missing field increases.  
+To overcome this, the missing values can be substituted by a assigned value. This proces is know as _'imputation'_. Common strategies are to impute with zero, or the mean or median of the other observations.
 
 The resulting coefficients are expressed in units of the feature. For example the number of doors (coefficient $\beta = -0.03$) contributes to the prediction (in log[EUR]) with 0.03 doors/log(EUR). As a result coefficients depend on their scale. To overcome this all features can be scaled to similar ranges. 
 
@@ -94,9 +94,10 @@ As said the Lasso model performs equivalently to the non regularized model (fig.
 
 | Model 4 | Model 5 | Model 6 | Model 7 |
 |:-------:|:-------:|:-------:|:-------:|
-| ![model4](./MLR-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) |
+| ![model4](./MLR_reduced_observations-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) |
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
 ![model performance](./model-performance.png)  
 _R-square of all models. With every new model the aim is to improve the accuracy of the prediction, thus increasing $R^2$._
+
