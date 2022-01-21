@@ -9,6 +9,8 @@
 - Images can be used for classification.
 
 ## Change log
+- Januari 2022:
+    - Also retrieve inspection info (APK) from RDW
 - June 2021: 
     - Cleaner notebooks by deleting outputs before committing
     - Auctions are bi-monthly

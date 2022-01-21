@@ -52,7 +52,7 @@
 "btw21", "BTW 21%"
 "legguard", "Inclusief beenkleed\n"
 "first_reg_abroad", "Van\simport\safkomstig\.?\n"
-"no_nap", "Onvoldoende\sinfo\svoor\sNAP\.?\n"
+"no_nap", "(Onvoldoende\sinfo\svoor\sNAP)|(NAP\sgeen\soordeel)\.?\n"
 "key_fixed", "Sleutel\szit\svast\sin\shet\scontact\.?\n"
 
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
