@@ -77,3 +77,4 @@ data/images/*\.jpg
 *\.clean\.ipynb
 *\.smudge\.ipynb
 *\.bup\.ipynb
+*\.notebook-cleaning/

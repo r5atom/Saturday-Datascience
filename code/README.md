@@ -17,7 +17,7 @@ Here you'll find code. Mostly Jupyter notebooks. The sequence of analysis steps 
 7. Modelling  
    Predict price and other analyses such as classifications.
 
-## Step 1a: Scraping the results [(notebook: scrape-drz-auction-results)](./scrape-drz-auction-results.ipynb)
+## Step 1a: Scraping the results [(notebook: scrape-drz-auction-results)](./00-scrape/scrape-drz-auction-results.ipynb)
 
 Initially results were published on a downloadable [`.pdf` file](../assets/201410-catalogusdrz.pdf). 
 In the past I've selected the text manually and copied it to a text file, which I parsed with workable, but not so pretty _Matlab/Octave_ code.
@@ -33,9 +33,9 @@ _Example of how a *regex* pattern is used in parsing text. In this case the odom
 
 The drz website is subject to change once in a while (see change log), and sometimes it feels I am aiming at a moving target, but this keeps it challenging. 
 
-## Step 1b: Download images [(notebook: download-images)](./download-images.ipynb)
+## Step 1b: Download images [(notebook: download-images)](./00-scrape/download-images.ipynb)
 
-Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier. During preprocessing (step 5, [notebook: preproc-cars](./preproc-cars.ipynb)) a data set is saved with fields that contain information about the appearance of the car. 
+Lots contain information such as brand and model, color, registration number. This can be used for supervised learning. The background in the images are pretty standardized and could make things easier. During preprocessing (step 5, [notebook: preproc-cars](./10-combine-and-preprocess/preproc-cars.ipynb)) a data set is saved with fields that contain information about the appearance of the car. 
 
 _The last 10 rows of the cleaned data set created in June 2019. This set forms the basis for following image classification._
 
@@ -56,7 +56,7 @@ index|image_urls|brand|model|model_specification|color|age|body_type|convertible
 #### Known issues
 - Occasionally lots are a combination of multiple items. Currently only the first item will be handled, however I also store the raw text for future provisioning.
 
-## Step 2: adding extra information [(notebook: add-rdw-info-to-drz)](./add-rdw-info-to-drz.ipynb)
+## Step 2: adding extra information [(notebook: add-rdw-info-to-drz)](./00-scrape/add-rdw-info-to-drz.ipynb)
 
 
 Most lots are vehicles with a registration. The Dutch equivalent to the DMV know as [Dienst Wegverkeer](https://www.rdw.nl/information-in-english) (or _RDW_) provides an API service where registration can be queried. This gives additional information about vehicles that is not in the auction results such as engine capacity.
@@ -65,12 +65,12 @@ Most lots are vehicles with a registration. The Dutch equivalent to the DMV know
 
 The RDW does a pretty good job maintaining this open data dataset. Definitions are [well documented](https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen/m9d7-ebf2). They have a [google forum](https://groups.google.com/forum/#!topic/voertuigen-open-data/rnwGKL-HQ8Y) where updates are communicated.
 
-## Step 3: EDA [(notebook: explore-auction-results)](./explore-auction-results.ipynb)
+## Step 3: EDA [(notebook: explore-auction-results)](./00-scrape/explore-auction-results.ipynb)
 
 With the scraped and results I can do some basic **E**xploratory **D**ata **A**nalysis.
 
 
-## Step 4: aggregate into one dataset [(notebook: aggregate-all-auctions)](./aggregate-all-auctions.ipynb)
+## Step 4: aggregate into one dataset [(notebook: aggregate-all-auctions)](./10-combine-and-preprocess/aggregate-all-auctions.ipynb)
 
 In this step all auction results are merged into one dataset. All cars are selected and saved to disk in `.pkl` format.
 
@@ -90,7 +90,7 @@ K1900069152|2269.0|Kavel K1900069152|Voertuigen en onderdelen |Personenauto|OPEL
 K1900069158|2431.0|Kavel K1900069158|Voertuigen en onderdelen |Personenauto|BMW|116i|15.07.2006|||True|False|False|False|False|False|False|189.983|||logisch|18-TD-JG||False|False|False|False|False|False|True|0.0|False|False|False|False|False|False|False|False|False|False||True|True|False|0.0|False|.. suplm. info. ..|False|.. raw text ..|.. rdw info ..|https://opendata.rdw.nl/resource/kmfi-hrps.json|Geen verstrekking in Open Data|4.0|Nee|https://opendata.rdw.nl/resource/3huj-srit.json||1745.0|||0.0|0.0|https://opendata.rdw.nl/resource/jhie-znh9.json|1596.0|Nee|20190412.0|https://opendata.rdw.nl/resource/8ys7-d773.json|||op r. schroefveerkoker onder motorkap|M1|e1*2001/116*0287*09||0.06|Nee|UF11|1220.0|https://opendata.rdw.nl/resource/vezc-m2t6.json|Personenauto|266.0|187|18TDJG|4.0|423.0|0.0||BLAUW|0.0|5.0|0.0|3020.0|116I||BMW|Niet geregistreerd|4.0|Nee|1320.0|||20060715.0|01|1745.0||20060715.0|stationwagen|6782.0||||28336.0||||20180806.0||635.0|1200.0|||||||D|||||||||||||||||||['http://www.domeinenrz.nl/ufc/static/1558965212/thumb/domeinenrz_sites/369ab67f5441ad1d4e0a51e129523606/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965211/thumb/domeinenrz_sites/200eba6e00946ea768dd0e26bef30cbf/1024/768/image.jpg', 'http://www.domeinenrz.nl/ufc/static/1558965217/thumb/domeinenrz_sites/b73424f03c792da07e02a017d76a7696/1024/768/image.jpg']|||3.0|http://www.domeinenrz.nl/catalogi/verkoop_bij_inschrijving_2019-0006?=&veilingen=2019-0006&meerfotos=K1900069158|False|False|False||20190611|e1*01/116*0287*09|01|UF11|0.0|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-AS-Gegevens-EEG-Uitvoering/ahsi-8uyu|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Basisgegevens-EEG-Uitvoering/wx3j-69ie|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering/w2qp-idms|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering-Klasse/q7fi-ijjh|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Carrosserie-Uitvoering-Nummerieke-Co/nypm-t8hx|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Handelsbenaming-Uitvoering/mdqe-txpd|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Merk-Uitvoering-Toegestaan/fj7t-hhik|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Motor-Uitvoering/g2s6-ehxa|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Motor-Uitvoering-Brandstof/5w6t-p66a|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Plaatsaanduiding-Uitvoering/mt8t-4ep4|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Subcategorie-Uitvoering/h9pa-e9ta|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Uitvoering-Gebruiksgegevens-Per-Uitg/2822-t8sx|https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Versnellingsbak-Uitvoering/r7cw-67gs|287.0|M1|20060125.0|9.0||e1*01/116*0287*09|20070226.0|BT|20151005.0|20060125.0|BAYERISCHE MOTOREN WERKE AG|e1|01/116|187||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||20190611|||||||||||||||||False||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||False|False|False||||18-TD-JG|||2.0|2.0|||||149.0|151.0|840.0|990.0|||840.0|990.0|Benzine||5.8||7.5||10.5||180.0||Euro 4||73.0||81.0||70/220*2003/76B||85.0||||||4500.0||||||AC|Stationwagen||||False|False|||False
 
 
-## Step 5: data cleaning, preprocess car data [(notebook: preproc-cars)](./preproc-cars.ipynb)
+## Step 5: data cleaning, preprocess car data [(notebook: preproc-cars)](./10-combine-and-preprocess/preproc-cars.ipynb)
 
 After merging car data is cleaned to enforce some consistency. The **odometer** is converted to KM only. Some had readings in miles, but the majority was in KMs. Then there is some inconsistent naming in the **brand names**. For example _Mercedes_, _Mercedes Benz_ or _Mercedes-Benz_. If kept uncleaned further analyses would treat these cars as different brands.  
 At this point also some parsing errors and other repairs are performed, sometimes caused by errors in the data (typos). 
@@ -118,17 +118,17 @@ index|price|brand|model|age|fuel|odometer|days_since_inspection_invalid|age_at_i
 2019-6-9158|2431.0|BMW|116i|4704.0|benzine|189983.0|299.0|0.0|stationwagen|1596.0|4|85.0|1220.0|6782.0|28336.0|-1|-1|BLAUW|||4230.0||||
 
 
-## Step 6: EDA and some basic analyses [(notebook: eda-after-merge)](./eda-after-merge.ipynb)
+## Step 6: EDA and some basic analyses [(notebook: eda-after-merge)](./10-combine-and-preprocess/eda-after-merge.ipynb)
 
 Following preprocessing cars some basic analysis can be performed. These are shown in the [results](../results/) section of the repo. One result is to get a bidding advantage it is to avoid round bids. Based on the analysis, ending your bid with the digits `37` reduces the chance being outbid by a small difference.
 
 Another analysis shows cars travel approximately 16.5 thousand km a year (45 km/day). This median value can help to gauge the usage intensity of the car and determine its value. 
 
 
-## Step 7a: modeling [(notebook: predict-price)](./predict-price.ipynb)
+## Step 7a: modeling [(notebook: predict-price)](./20-modelling/predict-price.ipynb)
 
 Finally we will see some predictions of bidding prices.
 
-## Step 7b: classification [(notebook: classify-pictures)](./classify-pictures.ipynb)
+## Step 7b: classification [(notebook: classify-pictures)](./20-modelling/classify-pictures.ipynb)
 
 Use pictures to do classification.
