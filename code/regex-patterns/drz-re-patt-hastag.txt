@@ -46,7 +46,7 @@
 "no_regneeded", "(?i)niet kentekenplichtig\n"
 "rhd", "(([V,v]oertuig (met|(is voorzien van een)) )?rechts ?geplaatst stuurwiel)|(stuur rechts)\n"
 "no_odo", "(?i)(afgelezen )?(km|((?<!/)mijlen)|km-?/mijlen)[ ,-]?stand onbekend\n"
-"no_road", "(?i)niet (geschikt )?voor (op )?de openbare weg\n"
+"no_road", "(?i)niet (geschikt )?voor (op )?(de )?openbare weg\n"
 "disclaim_cr6", "(Dit|Deze) ((voertuig(en)?)|(goed(eren)?)|(object(en)?)|(shelter(s)?)|(aanhanger(s)?)|(cabine(s)?)|(container(s)?)|(vaartuig(en)?))( en (bijbehorende goederen)|(goed))? bevat(ten)? mogelijk bestanddelen\s(met|van) Chroom-?6(\sverbindingen)?\.\s(Bij het\s(het )?verwerken\sof\sverwijderen van de verf kan deze stof\smogelijk\svrijkomen\.)?((Kijk\svoor meer informatie hierover en de informatiebrochure\svan het RIVM op onze website, tabblad Info en kies Informatie\sdefensievoertuigen\.)|(\sMeer\sinformatie leest u in de begrippenlijst( op deze\swebsite\.?)?))\n"
 "crewcab", "Dubbele cabine\n"
 "carwrap", "(Voertuig|(Het dak)) is (gedeeltelijk )?voorzien van carwrap\.?\n"
