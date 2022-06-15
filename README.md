@@ -9,8 +9,8 @@
 - Images can be used for classification.
 
 ## Change log
-- Januari 2022:
-    - Also retrieve inspection info (APK) from RDW
+- June 2022: Textual changes
+- Januari 2022: Also retrieve inspection info (APK) from RDW
 - June 2021: 
     - Cleaner notebooks by deleting outputs before committing
     - Auctions are bi-monthly
@@ -41,11 +41,13 @@
 - February 2019: Combine features as usage intensity. Another change on the results website: The URL now contains the name of the month.
 - 2014: First download of results
 
-Planned
+Future plans
 
 - save models as .pkl
 - Use R-CNN to mask images for classification
 - Analyse power (model performance as function of data set size)
+- Save data as (relational) database
+
 
 ## Take me to the results right away!
 
@@ -53,17 +55,17 @@ Alright. [Here you go: `./results/`](./results/)
 
 ## Sequence of analysis steps
 
-The analysis pipeline is a sequence of Jupyter notebooks that are run in sequence. The notebooks can be found under [`./code/`](./code/).
+The analysis pipeline is a sequence of Jupyter notebooks that are run in sequence. The notebooks can be found under [`./code/`](./code/) and can be divided in roughly three phases: 1. Scrape, 2. combine and preprocess, and 3. modelling.
 
 ## Can I get the data?
 
-I have not included data in this repo. Hence [`./data/`](./data) remains mostly empty (I've added this to my [`.gitignore`](./.gitignore)), but all analyses point to that directory. You can start scraping yourself and fill that directory. If you need historical data you can reach out to [me](https://r5atom.github.io/).
+I have not included data in this repo. Hence [`./data/`](./data) remains mostly empty (I've added .pkl and .jpg files to my [`.gitignore`](./.gitignore)), but all analyses point to that directory. You can start scraping yourself and fill that directory. If you need historical data you can reach out to [me](https://r5atom.github.io/).
 
 ## Little bit of background
 
 Here you can follow what I am doing on a Saturday (and sometimes [other days](https://github.com/r5atom/Saturday-Datascience/graphs/commit-activity) too). 
 
-A project I am working on involves **Police auctions** held once a month by the Dutch authorities: [Dienst Domeinen Roerende Zaken](https://www.domeinenrz.nl/) (or _DRZ_). The results of the auction [^1] are published. 
+A project I am working on involves **Police auctions** held twice a month by the Dutch authorities: [Dienst Domeinen Roerende Zaken](https://www.domeinenrz.nl/) (or _DRZ_). The results of the auction [^1] are published. 
 Initially I set out to get a bidding advantage in a future auction by using prior auction results. In a way I was setting myself up for a prediction modeling project!
 
 What makes this project interesting is that I did the full pipeline from data engineering to analysis: Scraping data > Cleaning up > Combining data sets > Modeling. 
@@ -73,7 +75,7 @@ Although the published auction results are relatively clean, there is enough "di
 ![drz-home](./assets/drz-home-square.png)  
 _Screenshot of website_
 
-I started working on this in 2014, but I've been systematically been collecting monthly results for about two years now. All sorts of lots (goods) are auctioned off: Cars, trucks, motorcycles and trailers, but I've been focussing on getting the results on cars cleaned.
+I started working on this in 2014, but I've been systematically been collecting results for many years now. All sorts of lots (goods) are auctioned off: Cars, trucks, motorcycles and trailers, but I've been focussing on getting the results on cars cleaned.
 
 To interpret the auction results, I realize it helps to know a little Dutch. For instance the date format is "day first": dd-mm-yyyy and the decimal separator is `,` and the thousand separator is `.`. One thousand euros and forty two cents is formatted as `EUR 1.000,42`.  
 I've tried to translate the results into meaningful field names. Here below I've added a glossary, but if something remains unclear you can always raise an issue.
@@ -101,6 +103,7 @@ You can get that information on [this page](https://r5atom.github.io/).
 |           APK         | Vehicle inspection, MOT test. "_Algemene Periodieke Keuring_" |
 |           DRZ         | Agency that holds police auctions. "_Dienst Roerende Zaken_" |
 |           Rdw         | Department of Transportation, DOT. "_Dienst Wegverkeer_" |
+|           Belastingdienst | National tax service |
 |           BPM         | Registration Tax. "_Belasting van personenauto's en motorrijwielen_" |
 |           NAP         | Certification of lawful odometer. "_Nationale Auto of Pas_" |
 |           WOK         | Under survey. Needs assessment by Rdw. "_Wachten op keuren_" |
