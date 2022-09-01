@@ -25,7 +25,7 @@
 # even older
 "no_orireg", "(?i)(zonder|geen) kentekenbewijs\.?\n"
 "maybe_reg", "Let op\, mogelijk is op dit vaartuig een registratieverplichting\svan\stoepassing\.(\sZie onze website,? onder '?vraag en antwoord'?( voor meer informatie)?\.)?\n"
-"wo_frame", "De (bok|boottrailer|pallet|automovers|trolle?y|(Gojaks (auto )?dolly\x92s)|dolly) (waar (dit|het|deze|de) (vaartuig|voertuig|object|voertuig/vaartuig|vrachtwagencabine) op staat (en de (hijsbanden)|(en de spanband waarmee het voorwiel op\szijn plaats wordt gehouden) )?)?(is|zijn) eigendom\svan\s(DRZ|(Domeinen\sRoerende\sZaken))\sen\s(mag|mogen) het terrein\sniet\sverlaten\.?\n"
+"wo_frame", "De (bok|boottrailer|pallet|automovers|trolle?y|(Gojaks (auto )?dolly\x92s)|dolly) (waar (dit|het|deze|de) (vaartuig|voertuig|object|voertuig/vaartuig|vrachtwagencabine) (op|tegen) staat (en de (hijsbanden)|(en de spanband waarmee het voorwiel op\szijn plaats wordt gehouden) )?)?(is|zijn) eigendom\svan\s(DRZ|(Domeinen\sRoerende\sZaken))\sen\s(mag|mogen) het terrein\sniet\sverlaten\.?\n"
 "import", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te\sbetalen [0-9,\,,\.]+% invoerrechten en 21% BTW\.\n"
 "jfc", "(Zie &quot;bijzondere voorwaarden verkoop goederen\sJFC HQ Brunssum&quot; elders op\sdeze site\.\n)|(Afkomstig van JFC HQ Brunssum\.?\n)"
 "benzine", "(?i)((Brandstof )|(?<![/, *]))benzine *(?!/)\n"
