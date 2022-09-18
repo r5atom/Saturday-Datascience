@@ -9,12 +9,15 @@
 - Images can be used for classification.
 
 ## Change log
+- September 2022: 
+    - Upgrade to Python 3.10 and upgrade of several packages ([See: `../code/assets/drz-auction-settings.ini`](./code/assets/drz-auction-settings.ini)). 
+    - Added new model and extended with engineered features.
 - June 2022: Textual changes
-- Januari 2022: Also retrieve inspection info (APK) from RDW
+- January 2022: Also retrieve inspection info (APK) from RDW
 - June 2021: 
     - Cleaner notebooks by deleting outputs before committing
     - Auctions are bi-monthly
-- Januari 2021: Major changes
+- January 2021: Major changes
     - General overhaul
     - Auction lot parsing now done within a Class
     - Configuration settings in .cfg file
@@ -25,7 +28,7 @@
 - October 2020: 
     - Auctions were cancelled due to pandemic. IRS auctions are suspended as yet.
     - Some functions are outsourced.
-- Januari 2020 (Major): 
+- January 2020 (Major): 
     - Used mplstyle for figures. 
     - Added gearbox type to classifier. 
     - Enabled IRS auction downloads. Results were added to the website in May 2019.
