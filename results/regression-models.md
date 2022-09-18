@@ -85,15 +85,21 @@ The effect of regularization can be seen in figure 7. Overall, coefficients are 
 As said the Lasso model performs equivalently to the non regularized model (fig. 2) with $R^2 = ~0.6$ and with similar high variable CV $R^2$, indicating low level of generalization.
 
 
+_WORK IN PROGRESS_: This model has added features.
+
+![F8](./MLR_added_features.png)  
+_Figure 8. As fig. 7; Lasso regularized MLR with added features._
+
+
 - - - - 
 # How are we doing?
 
 Here is a summary of the performance of the models described above.
 
 
-| Model 1 | Model 2 | Model 3 | Model 4 | Model 5 | Model 6 | Model 7 |
-|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
-| ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) | ![model4](./MLR_reduced_observations-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) |  
+| Model 1 | Model 2 | Model 3 | Model 4 | Model 5 | Model 6 | Model 7 | Model 8 |
+|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+| ![model1](./linear_regression_no_cv-accuracy.png) | ![model2](./linear_regression_log_price-accuracy.png) | ![model3](./linear_regression_log_price_young-accuracy.png) | ![model4](./MLR_reduced_observations-accuracy.png) | ![model5](./MLR_impute_median-accuracy.png) | ![model6](./MLR_with_categorical-accuracy.png) | ![model7](./MLR_Lasso-accuracy.png) | ![model8](./MLR_added_features-accuracy.png) |  
 
 _Model performance. Regression of data and prediction are shown in the top panels. The residuals (errors) are in the bottom panels. The solid lines indicate perfect predictions. Note that errors are shown as function of real bidding prices. This visualizes systematic under- or over estimation._
 
