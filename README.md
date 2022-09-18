@@ -10,7 +10,7 @@
 
 ## Change log
 - September 2022: 
-    - Upgrade to Python 3.10 and upgrade of several packages ([See: `../code/assets/drz-auction-settings.ini`](./code/assets/drz-auction-settings.ini)). 
+    - Upgrade to Python 3.10 and upgrade of several packages ([See: `../code/assets/python-env-20220914.txt`](./code/assets/python-env-20220914.txt)). 
     - Added new model and extended with engineered features.
 - June 2022: Textual changes
 - January 2022: Also retrieve inspection info (APK) from RDW
