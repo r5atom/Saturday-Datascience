@@ -58,6 +58,7 @@
 "first_reg_abroad", "Van\simport\safkomstig\.?\n"
 "no_nap", "(?i)(onvoldoende\sinfo\svoor\snap)|(nap\sgeen\soordeel)\.?\n"
 "key_fixed", "Sleutel\szit\svast\sin\shet\scontact\.?\n"
+"right_of_withdrawal", "Op\sdit\skavel\sgeldt\shet\sherroepingsrecht\.?\n"
 
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
 # "import22_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 22% invoerrechten en 21% BTW\.\n"
