@@ -9,6 +9,8 @@
 - Images can be used for classification.
 
 ## Change log
+- November 2022: 
+    - Added NHTSA data ([see their website](https://vpic.nhtsa.dot.gov/api/)).
 - September 2022: 
     - Upgrade to Python 3.10 and upgrade of several packages ([See: `../assets/python-env-20220914.txt`](./assets/python-env-20220914.txt)). 
     - Added new model and extended with engineered features.
