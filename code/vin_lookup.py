@@ -429,6 +429,9 @@ class Nhtsa_batch:
         for i_batch, batch in batches:
             if self.verboselevel_ > 0:
                 print(f'batch [{i_batch+1}/{self.nbatches_}]')
+            if self.verboselevel_ > 8:
+                print(batch.shape)
+                display(batch)
 
             # set post fields
             data = ';'.join(batch)
@@ -438,9 +441,11 @@ class Nhtsa_batch:
             rsp = requests.post(self.url_, data=post_fields).text;
             add = pd.read_json(rsp)
             add.loc[:, 'Batch'] = i_batch+1
-            assert any(add.Count.values == 0) == False
+            if self.verboselevel_ > 8:
+                display(add)
             if add.Message.str.lower().str.contains('error').any() == True:
                 display(add.Results.values)
+            assert any(add.Count.values == 0) == False
 
             # add to dataframe
             add = expand_results_columns(add)
@@ -514,9 +519,13 @@ class Nhtsa_batch:
         '''
         
         self.get_data()
+        if self.verboselevel_ > 8: print(self)
         self.multiindex_data()
+        if self.verboselevel_ > 8: print(self)
         self.adjust_index_counter()
+        if self.verboselevel_ > 8: print(self)
         self.flatten_index()
+        if self.verboselevel_ > 8: print(self)
 
         if self.verboselevel_ > 0:
             print(self)
