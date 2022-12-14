@@ -69,9 +69,7 @@ hidden_api_keys\.py
 *\.ipynb_checkpoints/
 
 # For now ignore data
-data/*\.csv
-data/*\.pkl
-data/images/*\.jpg
+data/
 
 # Ignore temp notebook files
 *\.clean\.ipynb
