@@ -410,6 +410,7 @@ class Nhtsa_batch:
             # already a vector
             return
         df_ = self.vins_
+        df_.iloc[:,0] = df_.iloc[:,0].apply(lambda x: re.sub(';','?', x) if ';' in x else x)
         df_.iloc[:,1] = df_.iloc[:,1].astype(str)
         df_ = df_.replace({'': np.NaN}).dropna(subset=df_.columns[0])
         self.vins_ = df_.fillna('').apply(','.join, axis=1)
@@ -438,7 +439,9 @@ class Nhtsa_batch:
             post_fields.update(data=data)
 
             # get response
-            rsp = requests.post(self.url_, data=post_fields).text;
+            rsp = requests.post(self.url_, data=post_fields).text
+            if self.verboselevel_ > 8:
+                print(rsp)
             add = pd.read_json(rsp)
             add.loc[:, 'Batch'] = i_batch+1
             if self.verboselevel_ > 8:
