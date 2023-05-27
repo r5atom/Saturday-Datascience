@@ -1,0 +1,86 @@
+Extended Data
+Field;Meaning
+aantal_cilinders;The number of cylinders
+aantal_deuren;The number of doors
+aantal_wielen;The number of Wheels
+aantal_zitplaatsen;The number of Seats
+afstand_hart_koppeling_tot_achterzijde_voertuig;Distance from the centre of the coupling (towbar) to rear of the vehicle
+afstand_voorzijde_voertuig_tot_hart_koppeling;Distance from the center of the coupling (towbar) to the front of the vehicle
+breedte;The Width
+bruto_bpm;The gross bpm
+catalogusprijs;The list price
+cilinderinhoud;The engine displacement
+datum_eerste_afgifte_nederland;The date of the first issue in the Netherlands
+datum_eerste_toelating;The date of the first admission in the Netherlands
+datum_tenaamstelling;The date of ascription
+eerste_kleur;The primary colour
+europese_voertuigcategorie;The European vehicle category
+export_indicator;The export indicator
+handelsbenaming;The commercial designation
+inrichting;The device
+lengte;The length
+massa_ledig_voertuig;The mass of the vehicle while empty
+massa_rijklaar;The Kerb weight
+maximum_massa_trekken_ongeremd;The maximum mass pull brakes
+maximum_trekken_massa_geremd;The maximum draw weight while braked
+merk;The make
+openstaande_terugroepactie_indicator;Any outstanding recall indicator
+plaats_chassisnummer;The chassis number location
+technische_max_massa_voertuig;The technical maximum mass of vehicle
+toegestane_maximum_massa_voertuig;The authorized maximum vehicle mass
+tweede_kleur;The secondary colour
+type;The type
+typegoedkeuringsnummer;The approval number
+uitvoering;The -
+variant;The variant
+vermogen_massarijklaar;The viable kerb weight
+vervaldatum_apk;The expiration of the general periodic inspection
+voertuigsoort;The vehicle type
+volgnummer_wijziging_eu_typegoedkeuring;The change code for EU approval
+wacht_op_keuren;waiting for approval
+wam_verzekerd;Motor Insurance Liability Act Insured
+wielbasis;The wheelbase
+zuinigheidslabel;The economy label
+Axes;See Table below
+Fuel;See Table below
+Body;See Table below
+SpecificBody;See Table below
+VehicleClass;See Table below
+Axis types
+Field;Meaning
+aantal_asse;nThe number of axes
+as_nummer;The axis number
+spoorbreedte;The guage
+technisch_toegestane_maximum_aslast;The technically permissible maximum axle load
+wettelijk_toegestane_maximum_aslast;The legal maximum axle load
+Fuel types
+Field;Meaning
+brandstof_omschrijving;The fuel definition
+brandstofverbruik_buiten;The fuel economy (highway)
+brandstofverbruik_gecombineerd;The fuel economy (mixed)
+brandstofverbruik_stad;The fuel economy (city)
+co2_uitstoot_gecombineerd;The CO2 emissions combined
+emissiecode_omschrijving;The emission code description
+geluidsniveau_rijdend;The noise level while moving
+geluidsniveau_stationair;The noise level while stationary
+milieuklasse_eg_goedkeuring_licht;The environmental class
+nettomaximumvermogen;The maximum net power
+toerental_geluidsniveau;The noise level while moving at speed
+uitstoot_deeltjes_licht;The emission of light particles
+Body types
+Field;Meaning
+carrosserie_volgnummer;The body number
+carrosserietype;The body type
+type_carrosserie_europese_omschrijving;The type of bodywork European definition
+Specific body types
+Field;Meaning
+carrosserie_voertuig_nummer_code_volgnummer;The vehicle body serial number index code
+carrosserie_voertuig_nummer_europese_omschrijving;The vehicle body number-European definition
+carrosserie_volgnummer;The body number
+carrosseriecode;The body code
+Vehicle Class types
+Field;Meaning
+carrosserie_klasse_volgnummer;The body class number
+carrosserie_volgnummer;The body number
+voertuigklasse;The vehicle class
+voertuigklasse_omschrijving;The vehicle class definition

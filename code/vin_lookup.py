@@ -38,6 +38,48 @@ def adjust_key_numbering(key_names):
         key_names[sel] = key_names[sel].apply(lambda x: x+'1' if x.endswith('_') else x)
     return key_names
 
+def get_image_url(VIN, MFY):
+    
+    '''
+    Get image url from websit
+    '''
+    import requests
+    from lxml import html
+    
+    url = 'https://vpic.nhtsa.dot.gov/decoder/Decoder'
+    xpaths = [
+        '//*[@id="imgVehicle"]',
+        '//*[@id="hdnImagePath"]',
+    ]
+
+    params = {
+        'VIN': VIN,
+        'ModelYear': MFY,
+    }
+    # request website and get IMG field
+    resp = requests.request('post', url, params=params)
+    tree = html.fromstring(resp.content)
+    for xpath in xpaths:
+        el = tree.xpath(xpath)
+        if 'hdnImagePath' in xpath:
+            url_field = 'value'
+        else:
+            url_field = 'src'
+        if len(el) > 0:
+            break
+    if len(el) == 0:
+        print(resp.content.decode())
+        raise
+        return None
+
+    img = el[0]
+    # look for "src" (source)
+    for f,v in img.items():
+        if f == url_field:
+            break
+    img_url = re.sub('(http.?\://.*?)/.*', r'\1', resp.url) + v
+    return img_url
+
 class Nhtsa:
     
     from http.client import InvalidURL
@@ -52,18 +94,37 @@ class Nhtsa:
         self.set_units_list(units='default')
 
     def __str__(self):
-        out = 'Nhtsa class contains'
+        
+        # When print() is called on object
+        
+        out = 'Class contains'
         for fld in dir(self):
             if fld.startswith('_'):
+                # ignore _fields
                 continue
-            if fld.endswith('_'):
-                val = getattr(self, fld)
-                if 'shape' in dir(val):
-                    out += '\n' + f'{fld}: {val.shape}'
+                
+            def val_field(name, val):
+                out = ''
+                if ('shape' in dir(val)) and not isinstance(val, str):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tshape={val.shape}'
+                elif isinstance(val, list):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tlen={len(val)}'
+                elif isinstance(val, dict):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tcontains fields {list(val.keys())}'
+                elif isinstance(val, str):
+                    if len(val) > 60:
+                        out += '\n\t' + f'{name} {type(val)}:\n\t\t{val[:30]} .. {val[-30:]}'
+                    else:
+                        out += '\n\t' + f'{name} {type(val)}:\n\t\t{val}'
                 else:
-                    out += '\n' + f'{fld}: {val}'
-        if self.succes_ == True:
-            out += f'\ndata (size): {self.data.shape}'
+                    out += val_field(name, val.__repr__())
+                return out
+                
+            if fld.endswith('_'):
+                # print fields_
+                val = getattr(self, fld)
+                out += val_field(fld, val)
+                
         return out
 
     def _checks(self, kind):
@@ -320,16 +381,36 @@ class Nhtsa_batch:
         self._prep_data()
         
     def __str__(self):
-        out = 'Nhtsa_batch class contains'
+        # When print() is called on object
+        
+        out = 'Class contains'
         for fld in dir(self):
             if fld.startswith('_'):
+                # ignore _fields
                 continue
-            if fld.endswith('_'):
-                val = getattr(self, fld)
-                if 'shape' in dir(val):
-                    out += '\n' + f'{fld}: {val.shape}'
+                
+            def val_field(name, val):
+                out = ''
+                if ('shape' in dir(val)) and not isinstance(val, str):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tshape={val.shape}'
+                elif isinstance(val, list):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tlen={len(val)}'
+                elif isinstance(val, dict):
+                    out += '\n\t' + f'{name} {type(val)}:\n\t\tcontains fields {list(val.keys())}'
+                elif isinstance(val, str):
+                    if len(val) > 60:
+                        out += '\n\t' + f'{name} {type(val)}:\n\t\t{val[:30]} .. {val[-30:]}'
+                    else:
+                        out += '\n\t' + f'{name} {type(val)}:\n\t\t{val}'
                 else:
-                    out += '\n' + f'{fld}: {val}'
+                    out += val_field(name, val.__repr__())
+                return out
+                
+            if fld.endswith('_'):
+                # print fields_
+                val = getattr(self, fld)
+                out += val_field(fld, val)
+                
         if self.succes_ == True:
             out += f'\ndata (size): {self.data.shape}'
         return out
@@ -529,6 +610,14 @@ class Nhtsa_batch:
         if self.verboselevel_ > 8: print(self)
         self.flatten_index()
         if self.verboselevel_ > 8: print(self)
+        
+        # self.data.loc[:,'image'] = ''
+        # for i, VIN_MFY in self.vins_.items():
+        #     VIN, MFY = VIN_MFY.split(',')
+        #     if self.verboselevel_ > 0:
+        #         print((self.data.loc[:,'image'].apply(len)>0).sum(), end = '')
+        #     self.data.loc[i, 'image'] = get_image_url(VIN,MFY)
 
         if self.verboselevel_ > 0:
             print(self)
+        

@@ -11,6 +11,8 @@
 "no_cvo", "(Certificaat van [O,o]vereenstemming \(CVO\)|CVO) niet aanwezig\.?\sBij\sregistratie/invoer voertuig kan door de RDW\som dit certificaat worden\sgevraagd(\.\sZie onze website, onder vraag en antwoord)?\.\n"
 "no_cvo", "CVO en bouwjaarverklaring dient te worden overlegd( bij de RDW)?\.?\n"
 "no_cvo", "Geen\sCVO\saanwezig\.?\n"
+"no_cvo", "CVO overleg(gen)? noodzakelijk\.?\n"
+"no_cvo", "CVO en bouwjaarverklaring ((overleggen bij RDW)|(dienen te worden overlegd))\.\n"
 "no_igk", "(&#194;&#147;)?(Let op\! )?Dit voertuig moet voor Europese typegoedkeuring worden\saangeboden bij de\safdeling IGK van de RDW te Lelystad(&#194;&#147;)?\.?\n"
 # older version:
 "no_igk", "(?i)(let op(\!|\,)? )?verplichte rdw[ ,-]?keuring via (afdeling )?(iks|igk|ttv\(2\))(\svoor\s(europeesche|europese) type(\s)?goedkeuring\.?)?(\sAlle kosten die hieruit voortvloeien zijn kosten koper)?\.?\n"
@@ -33,7 +35,7 @@
 "electric", "(?i)(?<!/)(elektrisch|elektriciteit)(?!/)\n"
 # benzine en lpg | benzine / lpg
 # lpg en benzine | lpg / benzine
-"lpg", "(?i)(benzine(( en )|( */ *))?)?lpg( g3( gas ?installatie)?)?( \(liquified\spetroleum\sgas\))?((( en )|( */ *))benzine)?\n"
+"lpg", "(?i)(benzine(( en )|( */ *))?)?((lpg)|(lpg g3)|(g3))( \(liquified\spetroleum\sgas\))?( gas ?installatie)?((( en )|( */ *))benzine)?\n"
 #"hybrid", "(?i)(?<![/, *]hybride)|(((diesel)|(benzine))/ *elektrisch))\n"
 "hybrid", "(?i)((?<![/, *])(ele[c,k]trisch|ele[c,k]triciteit|hybride)?!( (anker|kompas|bediend))( */ *(diesel|benzine|lpg))?)|((?<![/, *])(diesel|benzine|lpg) */ *(ele[c,k]trisch|ele[c,k]triciteit|hybride))\n"
 "cabriolet", "(?i)cabriolet\n"
@@ -60,7 +62,7 @@
 "key_fixed", "Sleutel\szit\svast\sin\shet\scontact\.?\n"
 "right_of_withdrawal", "Op\s(deze|dit)\skavel\s((geldt\shet\sherroepingsrecht)|(is\shet\sherroepingsrecht\svan\stoepassing))\.?\n"
 "no_right_of_withdrawal", "Op\s(deze|dit)\skavel\sis\shet\sherroepingsrecht\sniet\svan\stoepassing\.?\n"
-
+"wok", "Op dit voertuig zit een WOK melding \(Wacht Op Keuring\)\. Dit houdt in dat\shet voertuig na aankoop eerst hersteld en gekeurd moet worden voordat\sdeze op de openbare weg mag worden gebruikt\. Meer informatie hierover is\ste vinden op www\.rdw\.nl\.?(\sLIV loodje niet verwijderen\.?)?\n"
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
 # "import22_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 22% invoerrechten en 21% BTW\.\n"
 # "disclaim12", "De kavelomschrijving op de website wordt gemaakt op basis van de bij Domeinen Roerende Zaken bekende gegevens. Domeinen Roerende Zaken is geen garage- of herstelbedrijf en controleert niet of alles naar behoren functioneert."
