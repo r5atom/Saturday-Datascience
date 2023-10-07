@@ -16,6 +16,8 @@ def read_config(settings_fn = r'../code/assets/drz-auction-settings.ini'):
     closed_data_fields = cfg['latest'].get('query_close_data') # Also query closed data?
     CLOSEDDATA = (closed_data_fields is not None) and (closed_data_fields.lower() not in ['0', 'false'])
     SKIPSAVE = cfg['latest'].getboolean('skip_saving') # Do not save to files
+    data_root_dir = cfg['latest'].get('data_root_dir')
+    regex_root_dir = cfg['latest'].get('regex_root_dir')
 
     # Url to website with results
     url_section = cfg.get('latest', 'url_version') # based on date
@@ -54,6 +56,8 @@ def read_config(settings_fn = r'../code/assets/drz-auction-settings.ini'):
         CLOSEDDATA=CLOSEDDATA,
         closed_data_fields=closed_data_fields,
         SKIPSAVE=SKIPSAVE,
+        data_root_dir=data_root_dir,
+        regex_root_dir=regex_root_dir,
     )
 
     return out

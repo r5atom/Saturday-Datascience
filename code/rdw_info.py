@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import re
+from IPython.display import display
 
 def get_sub_apis(df):
     
@@ -279,7 +280,7 @@ class RdwInfo:
                 
             def val_field(name, val):
                 out = ''
-                if ('shape' in dir(val)) and not isinstance(val, np.str):
+                if ('shape' in dir(val)) and not isinstance(val, np.str_):
                     out += '\n\t' + f'{name} {type(val)}:\n\t\tshape={val.shape}'
                 elif isinstance(val, list):
                     out += '\n\t' + f'{name} {type(val)}:\n\t\tlen={len(val)}'
@@ -547,7 +548,7 @@ class RdwInfo:
         self.data_ = df
         
         assert df.index.is_unique
-    
+
 
 class OviInfo:
     '''
@@ -812,7 +813,7 @@ class OviInfo:
         self.data_['TimeStamp'] = pd.to_datetime(header['Date'])
         
         assert self.data_.index.is_unique    
-            
+
 if __name__ == "__main__":
     # Example
     import assets.hidden_api_keys as hidden_api_keys

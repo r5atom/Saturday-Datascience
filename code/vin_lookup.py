@@ -371,13 +371,17 @@ class Nhtsa:
 
 class Nhtsa_batch:
     
-    def __init__(self, vins, url = r'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValuesBatch', batch_size=50, verbose=0):
+    def __init__(self, vins, 
+                 url = r'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValuesBatch', 
+                 data_dict_fn = 'assets/nhtsa-data-dict.csv', 
+                 batch_size=50, 
+                 verbose=0):
         self.vins_ = vins
         self.url_ = url
         self.batch_size_ = batch_size
         self.verboselevel_ = verbose
         self.succes_ = None
-        self._data_dict()
+        self._data_dict(fn=data_dict_fn)
         self._prep_data()
         
     def __str__(self):
@@ -415,7 +419,7 @@ class Nhtsa_batch:
             out += f'\ndata (size): {self.data.shape}'
         return out
 
-    def _data_dict(self, fn = './assets/nhtsa-data-dict.csv'):
+    def _data_dict(self, fn):
         self.data_dict_ = pd.read_csv(fn, sep=';', index_col=0)
         
     def _checks(self, kind):

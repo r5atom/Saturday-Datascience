@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] slideshow={"slide_type": ""}
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # <a id='rdw_top'>
 
 # %% [markdown]
@@ -45,7 +45,7 @@ import re
 import json
 from IPython.display import display
 
-# %% slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""}
 with open('../assets/drz-settings-current.json', 'r') as fid:
     cfg = json.load(fid)
 
@@ -105,10 +105,13 @@ if OPBOD:
 if not os.path.isfile(file_name):
     # see if -without price- exists
     NO_PRICE = True
-    if OPBOD:
-        file_name = file_name.replace('-opbod.pkl', '-opbod-without-price.pkl')
-    else:
+    if NO_PRICE:
+        file_name = file_name.replace('auctions/results', 'auctions/without-price')
         file_name = file_name.replace('.pkl', '-without-price.pkl')
+    if OPBOD:
+        file_name = file_name.replace('-opbod-without-price.pkl', '-without-price-opbod.pkl')
+#     else:
+#         file_name = file_name.replace('.pkl', '-without-price.pkl')
 else:
     NO_PRICE = False
 
@@ -408,7 +411,7 @@ else:
 # # Data from rdw website (OVI)
 # Optionally get data from rdw website
 
-# %% slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 if OVIDATA == False:
     rdw_ovi = None
 else:
@@ -479,7 +482,7 @@ from vin_lookup import Nhtsa_batch
 # empty dictionary
 nhtsa_per_vin = dict()
 
-# %% slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 key = 'vpic'
 df_ =  drz.loc[:, ['Vin', 'Mfyear']].copy().replace({'': np.NaN, 'onbekend': np.NaN}) # copy from drz
 
@@ -677,8 +680,3 @@ else:
 # # Next: download images (or parallel)
 #
 # Because images might be taken down from the drz site, it is advisable to run the notebook that downloads images soon.
-
-# %% [raw] slideshow={"slide_type": ""}
-# assert False, 'Stop running. Below is to check if existing file has same dataframe.'
-
-# %% slideshow={"slide_type": ""}

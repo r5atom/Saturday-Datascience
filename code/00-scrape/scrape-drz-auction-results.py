@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] slideshow={"slide_type": ""}
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # <a id='auct_top'>
 
 # %% [markdown]
@@ -30,22 +30,22 @@
 #
 # - - - 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2023-0014" I "20230721" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2023-0019" I "20231007" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %% [markdown]
 # ### Read settings
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+import json
 import sys
 import os
 import re
-import json
 
 
-# %%
+# %% tags=["nbconvert_instruction:remove_all_outputs"]
 with open('../assets/drz-settings-current.json', 'r') as fid:
     cfg = json.load(fid)
 print(cfg['AUCTION'])
@@ -62,12 +62,16 @@ if cfg['AUCTION']['kind'] == 'inschrijving':
 elif cfg['AUCTION']['kind'] == 'opbod':
     month_counter = re.sub('(-)(\d{2})(\d{2})', '-\g<2>', AUCTION_ID)[5:8]
     URL = cfg['URL']['opbod']
+URL_DATA = cfg['URL.data']
 
 sys.path.insert(0, cfg['FILE_LOCATION']['code_dir'])
 
 EXTEND_URL = False
 VERBOSE = int(cfg['GENERAL']['verbose'])
 SAVE_METHOD = cfg['GENERAL']['save_method']
+
+# %% tags=["nbconvert_instruction:remove_all_outputs"]
+URL,URL_DATA,month_counter,auction_month
 
 # %%
 if SAVE_METHOD == 'skip_when_exist':
@@ -107,21 +111,24 @@ auct_dates = pd.read_csv('../../assets/20230120-auction-dates.csv', sep=';')
 auct_dates.loc[:, ['Start online veiling', 'Sluiting online veiling']] = \
 auct_dates.loc[:, ['Start online veiling', 'Sluiting online veiling']].applymap(lambda x: datetime.strptime('2023 ' + x, '%Y %d %B %H:%M uur'))
 auct_dates.set_index('Verkoop', inplace=True)
+for col in ['Start online veiling', 'Sluiting online veiling']:
+    auct_dates.loc[:,col] = auct_dates.loc[:,col].astype('datetime64[ns]')
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 now = pd.Timestamp.now()
 expected = pd.to_datetime(auction_month,format='%Y-%m')
 expected = auct_dates.loc[AUCTION_ID].values[0]
-print(f"Dates\nToday:    {now.strftime('%Y-%m') } ({now.strftime('%A %d %B')})\nSettings: {DATE} ({expected.strftime('%A %d %B')})")
+print(f"""Dates
+Today:    {now.strftime('%Y-%m') } ({now.strftime('%A %d %B')})
+Settings: {DATE} ({expected.strftime('%A %d %B')})""")
 if now.strftime('%Y-%m') != expected.strftime('%Y-%m'):
     warnings.warn(f'''
     Settings file has date set at [{DATE}] but expected [{now.strftime('%Y-%m')}]. Has <{cfg['FILE_LOCATION']['auction_settings_file']}> file been updated?
     With older auctions it sometimes works to add [url_add_veilingen=True]
     ''', RuntimeWarning)
     # If auction was in past. Url needs to be extended by setting `add_veilingen = True`:
-    add_veilingen = True
-    EXTEND_URL = add_veilingen
+    EXTEND_URL = True
     
 
 del(now)
@@ -131,7 +138,7 @@ del(now)
 # ### Functions
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
-def get_kavel_url(OPBOD, base_url, add_veilingen, lot_id):
+def get_kavel_url(OPBOD, base_url, url_data, lot_id):
     
     '''
     Create url
@@ -147,10 +154,13 @@ def get_kavel_url(OPBOD, base_url, add_veilingen, lot_id):
         urldata[''] = ''
     
     # Add auction id
-    if add_veilingen:
-        # get date from url
-        date_string = re.findall(r'_([0-9]{4}-[0-9]{4})', base_url)
-        urldata['veilingen'] = ''.join(date_string)
+    for k,v in URL_DATA.items():
+        urldata[k] = v
+    
+#     if add_veilingen:
+#         # get date from url
+#         date_string = re.findall(r'_([0-9]{4}-[0-9]{4})', base_url)
+#         urldata['veilingen'] = ''.join(date_string)
 
     # Status is specific for "opbod"
     if OPBOD:
@@ -177,22 +187,15 @@ ids = [
     f'K{auction_month[2:4]}00{month_counter}1004',
     f'K{auction_month[2:4]}00{month_counter}1009',
     f'K{auction_month[2:4]}00{month_counter}1031',
+    f'K{auction_month[2:4]}00{month_counter}1007',
 ]
 if OPBOD:
     ids = [f'K{auction_month[2:4]}{auction_month[-2:]}01{id[-4:]}' for id in ids]
 
 for example_lot_id in ids:
     example_url = URL
-    if 'add_veilingen' in locals():
-        _add_veiling = add_veilingen
-    else:
-        _add_veiling = False
-    print(get_kavel_url(OPBOD, example_url, _add_veiling, example_lot_id))
-    # if not OPBOD:
-    #     if int(month_counter) <= 12 and example_lot_id.endswith('1800'):
-    #         break
-    #     elif example_lot_id.endswith('1900'):
-    #         break
+    _add_veiling = EXTEND_URL
+    print(get_kavel_url(OPBOD, example_url, URL_DATA, example_lot_id))
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
@@ -1047,7 +1050,7 @@ for IX in out.index :
 # %% [markdown]
 # # Save results to disk
 
-# %%
+# %% tags=["nbconvert_instruction:remove_all_outputs"]
 file_name = f'{DATA_DIR}/auctions/results/drz-data-{auction_month}-{month_counter}.pkl'
 if NO_PRICE:
     file_name = file_name.replace('auctions/results', 'auctions/without-price')
@@ -1065,102 +1068,3 @@ else:
 # # Next: add rdw data
 #
 # Because rdw data changes constantly it is advisable to run the notebook that adds rdw data to the above results soon.
-
-# %% [raw] raw_mimetype="" tags=["nbconvert_instruction:remove_all_outputs"]
-# assert False, 'stop running, below is sandbox'
-
-# %% [raw] raw_mimetype=""
-# with pd.option_context('display.max_rows', 100):
-#     display(out.tail(1).T)
-
-# %% [raw]
-#
-
-# %% [raw]
-#
-
-# %% [raw]
-# # Compare results
-
-# %% [raw]
-# file_name = '../data/drz-data-{}.pkl'.format(auction_month)
-# out2 = pd.read_pickle(file_name)
-# out.drop(columns='lot_counter').fillna('nn').equals(out2.fillna('nn'))
-#
-
-# %% [raw]
-# import numpy as np
-# print(
-#     np.setdiff1d(out.columns, out2.columns),
-#     np.setdiff1d(out2.columns, out.columns)
-# )
-# print(
-#     np.setdiff1d(out.index, out2.index),
-#     np.setdiff1d(out2.index, out.index)
-# )
-
-# %% [raw]
-# iseq = out.drop(columns='lot_counter').fillna('nn').eq(out2.fillna('nn'))
-# print(
-#     out.drop(columns='lot_counter').index[(iseq == False).any(axis=1)],
-#     out.drop(columns='lot_counter').columns[(iseq == False).any(axis=0)]
-# )
-# col = 'Images'
-# pd.concat([
-#     out.loc[iseq[col] == False, col],
-#     out2.loc[iseq[col] == False, col]    
-# ], axis=1)
-#
-
-# %% [raw]
-# # Test regex on misbehaving fragment.
-
-# %% [raw]
-# import re
-# p = flagtags.set_index('Field').loc['lpg', 'Pattern']
-# print(p, end='\n\n')
-
-# %% [raw] raw_mimetype=""
-# p='''(?i)(benzine(( en )|( */ *))?)?(lpg )?(g3( gas ?installatie)?)?( \(liquified\spetroleum\sgas\))?((( en )|( */ *))benzine)?\n'''
-# s = '''2023-08-8023[G3 gasinstallatie]
-# '''
-#
-# s = re.sub('(\n?)[0-9, ,\-]{0,12}\[', r'\1', re.sub('\](\n?)', r'\1', s))
-# print(s.format())
-# M = re.search(p,s)
-# if M:
-#     print(M[0])
-# else:
-#     print('---')
-
-# %% [raw]
-# import re
-# p = tags.set_index('Field').loc['OpH', 'Pattern']
-# print(p,end='\n\n')
-# p = r'(?<! )([A,a]fgelezen )?[D,d]raaiuren(stand)?[:, ] *(?P<val>([0-9,\.,\s]+)|(onbekend))( ?uur)?'
-# s = '2015-02-7359[afgelezen draaiuren 3.045]'
-# s = re.sub('(\n?)[0-9, ,\-]{0,12}\[', r'\1', re.sub('\](\n?)', r'\1', s))
-# print(s.format())
-# M = re.search(p,s)
-# if M:
-#     print(M[0])
-# else:
-#     print('---')
-
-# %% [raw]
-# M.groups()
-
-# %% [raw]
-# df0 = out.copy()
-
-# %% [raw]
-# df = pd.read_pickle("/home/tom/data/satdatsci-data-link/cars-from-all-auctions.pkl")
-
-# %% [raw] raw_mimetype=""
-# rep = df0.query("Reg != ''").reset_index().merge(df.reset_index(), on='Reg', how='inner')
-#
-#
-# rep.groupby(['index_x', 'index_y']).first()
-
-# %% [raw]
-#
