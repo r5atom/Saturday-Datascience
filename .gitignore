@@ -76,3 +76,6 @@ data/
 *\.smudge\.ipynb
 *\.bup\.ipynb
 *\.notebook-cleaning/
+
+# VScode stuff
+*\.vscode/

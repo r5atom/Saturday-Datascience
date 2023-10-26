@@ -1,0 +1,6 @@
+# Auction files generated during pipeline
+image\-*\-*\.csv
+source\-*\-*\.csv
+status.txt
+status-bup.txt*
+
