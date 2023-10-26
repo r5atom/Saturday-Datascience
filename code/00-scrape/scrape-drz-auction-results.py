@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown] slideshow={"slide_type": ""}
 # <a id='auct_top'>
 
 # %% [markdown]
@@ -30,15 +30,18 @@
 #
 # - - - 
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2023-0019" I "20231007" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2023-0020" I "20231013" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+
+# %%
+auction_settings_file = '../assets/drz-settings-current.json'
 
 # %% [markdown]
 # ### Read settings
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% slideshow={"slide_type": ""}
 import json
 import sys
 import os
@@ -46,7 +49,7 @@ import re
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
-with open('../assets/drz-settings-current.json', 'r') as fid:
+with open(auction_settings_file, 'r') as fid:
     cfg = json.load(fid)
 print(cfg['AUCTION'])
 
@@ -70,8 +73,12 @@ EXTEND_URL = False
 VERBOSE = int(cfg['GENERAL']['verbose'])
 SAVE_METHOD = cfg['GENERAL']['save_method']
 
+# %%
+SAVE_METHOD='always_overwrite'
+
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 URL,URL_DATA,month_counter,auction_month
+
 
 # %%
 if SAVE_METHOD == 'skip_when_exist':

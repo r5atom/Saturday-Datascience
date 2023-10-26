@@ -19,13 +19,17 @@
 # Use the url from the auction result to download all images from the auction.
 
 # %%
+auction_settings_file = '../assets/drz-settings-current.json'
+#auction_settings_file = '../assets/drz-settings-2023-20.json'
+
+# %%
 import re
 import json
 import pandas as pd
 import os
 
 # %% slideshow={"slide_type": ""}
-with open('../assets/drz-settings-current.json', 'r') as fid:
+with open(auction_settings_file, 'r') as fid:
     cfg = json.load(fid)
 
 print(cfg['AUCTION'])
@@ -139,5 +143,3 @@ assert npic.equals(drz.N_images) | (npic.sum() == 0)
 # # Next: upload to cloud backup
 #
 # When images are stored locally it is advised to back them up in the cloud.
-
-# %%

@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown] slideshow={"slide_type": ""}
 # <a id='rdw_top'>
 
 # %% [markdown]
@@ -45,7 +45,7 @@ import re
 import json
 from IPython.display import display
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% slideshow={"slide_type": ""}
 with open('../assets/drz-settings-current.json', 'r') as fid:
     cfg = json.load(fid)
 
@@ -411,7 +411,7 @@ else:
 # # Data from rdw website (OVI)
 # Optionally get data from rdw website
 
-# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 if OVIDATA == False:
     rdw_ovi = None
 else:
@@ -447,10 +447,6 @@ else:
 # rdw_ovi
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
-out = rdw_ovi
-out
-
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
 file_name = f'{DATA_DIR}/auctions/enriched-results/rdw-ovi/rdw-ovi-0-data-{auction_month}-{month_counter}.pkl'
 
@@ -482,7 +478,7 @@ from vin_lookup import Nhtsa_batch
 # empty dictionary
 nhtsa_per_vin = dict()
 
-# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 key = 'vpic'
 df_ =  drz.loc[:, ['Vin', 'Mfyear']].copy().replace({'': np.NaN, 'onbekend': np.NaN}) # copy from drz
 
@@ -527,10 +523,6 @@ df_vins = pd.concat([
 # add timestamp
 df_vins.loc[:, 'TimeStamp'] = pd.Timestamp.now().strftime('%Y%m%d')
 df_vins = df_vins.reset_index().set_index(['VIN', 'MFY'])
-
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
-out = df_vins
-out
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
@@ -635,7 +627,7 @@ print(rich.shape)
 
 #rich.columns.map(lambda x: '_'.join(x))
 
-rich
+#rich
 
 # %%
 existing = pd.concat([drz], keys=[''], axis=1)
@@ -655,13 +647,6 @@ enriched = pd.merge(
 
 # %% [markdown]
 # # Saving
-
-# %% [raw]
-# file_name = file_name.replace('pdf', 'rdw')
-
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
-out = enriched
-out
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 file_name = f'{DATA_DIR}/auctions/enriched-results/rdw-data-{auction_month}-{month_counter}.pkl'

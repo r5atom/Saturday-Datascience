@@ -63,7 +63,7 @@
 "right_of_withdrawal", "Op\s(deze|dit)\skavel\s((geldt\shet\sherroepingsrecht)|(is\shet\sherroepingsrecht\svan\stoepassing))\.?\n"
 "no_right_of_withdrawal", "Op\s(deze|dit)\skavel\sis\shet\sherroepingsrecht\sniet\svan\stoepassing\.?\n"
 "wok", "Op dit voertuig zit een WOK melding \(Wacht Op Keuring\)\. Dit houdt in dat\shet voertuig na aankoop eerst hersteld en gekeurd moet worden voordat\sdeze op de openbare weg mag worden gebruikt\. Meer informatie hierover is\ste vinden op www\.rdw\.nl\.?(\sLIV loodje niet verwijderen\.?)?\n"
-"wok", "WOK\svoor\s((schade)|(technische\sgebreken)|(permanente\seisen))\.?\n"
+"wok", "WOK\svoor\s((schade)|(technische\sgebreken)|(permanente\seisen)|(snelheid))\.?\n"
 "is_cancelled", "Het\svoertuig\swordt\sin\sde\shuidige\sveiling\sniet\sverkocht\.?\n"
 "trunk_shut", "Kofferbak\sgaat\sniet\sopen\.?\n"
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
