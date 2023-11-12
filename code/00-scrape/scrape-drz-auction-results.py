@@ -33,7 +33,7 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2023-0020" I "20231013" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2023-0021" I "20231111" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
@@ -94,6 +94,15 @@ else:
 # ### Import modules
 
 # %%
+# virtualenv
+M = re.match('\((.*?)\) ', os.popen('echo $PS1').read())
+# os.popen('echo -n $VIRTUAL_ENV').read()
+if M is not None:
+    print(f'Virtual environment: {M[1]}')
+else:
+    print('Virtual environment not activated')
+
+# %%
 import pandas as pd
 from datetime import datetime
 import warnings
@@ -105,13 +114,7 @@ try:
 except:
     locale.setlocale(locale.LC_TIME,'nl_NL.utf8')
 
-# virtualenv
-M = re.match('\((.*?)\) ', os.popen('echo $PS1').read())
-# os.popen('echo -n $VIRTUAL_ENV').read()
-if M is not None:
-    print(f'Virtual environment: {M[1]}')
-else:
-    print('Virtual environment not activated')
+
 
 # %%
 auct_dates = pd.read_csv('../../assets/20230120-auction-dates.csv', sep=';')
@@ -1075,3 +1078,6 @@ else:
 # # Next: add rdw data
 #
 # Because rdw data changes constantly it is advisable to run the notebook that adds rdw data to the above results soon.
+
+# %% [markdown]
+#

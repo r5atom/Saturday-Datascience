@@ -625,9 +625,9 @@ rich = rich.reset_index().merge(
 rich.index.name = 'lot_index'
 print(rich.shape)
 
-#rich.columns.map(lambda x: '_'.join(x))
-
-#rich
+# %%
+rich.columns.map(lambda x: '_'.join(x))
+rich
 
 # %%
 existing = pd.concat([drz], keys=[''], axis=1)
@@ -657,7 +657,7 @@ if OPBOD:
     
 if (SKIPSAVE==False) and (not(os.path.isfile(file_name))):
     print(file_name)
-    out.to_pickle(file_name)
+    enriched.to_pickle(file_name)
 else:
     print(f'Skip. {file_name} exists or saving is disabled in settings.')
 

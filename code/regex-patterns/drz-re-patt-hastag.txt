@@ -46,7 +46,7 @@
 "no_nlreg193", "(?i)geen( \(?geldig\)?)? nederlands kenteken\.\szie artikel\s19\.3 van de algemene voorwaarden(\sverkoop roerende zaken)?\.\n"
 "no_nlreg194", "(?i)geen( \(?geldig\)?)? nederlands kenteken\.\szie artikel\s19\.4 van de algemene voorwaarden(\sverkoop roerende zaken)?\.\n"
 "no_nlreg19", "Geen Nederlands kenteken aanwezig bij dit voertuig\.\sMeer informatie leest u in de Algemene Voorwaarden artikel 1(6|9)\.\n"
-"no_regneeded", "(?i)niet kentekenplichtig\n"
+"no_regneeded", "(?i)(voertuig is )?niet kentekenplichtig\.?\n"
 "rhd", "(([V,v]oertuig (met|(is voorzien van een)) )?rechts ?geplaatst stuurwiel)|(stuur rechts)\n"
 "no_odo", "(?i)(afgelezen )?((km|((?<!/)mijlen))|(km-?/mijlen)|([K,k]ilometer))[ ,-]?stand onbekend\n"
 "no_road", "(?i)niet (geschikt )?voor (op )?(de )?openbare weg\n"
