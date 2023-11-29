@@ -139,7 +139,7 @@ print(npic.sum(), 'pictures')
 assert npic.equals(drz.N_images) | (npic.sum() == 0)
 
 
-# %% [markdown] slideshow={"slide_type": ""}
+# %% [markdown] slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # # Next: upload to cloud backup
 #
 # When images are stored locally it is advised to back them up in the cloud.

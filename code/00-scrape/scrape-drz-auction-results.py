@@ -33,7 +33,7 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2023-0021" I "20231111" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2023-0022" I "20231129" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
@@ -271,7 +271,7 @@ gettree(
 )
 
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 class Lot:
     
     
@@ -1078,6 +1078,3 @@ else:
 # # Next: add rdw data
 #
 # Because rdw data changes constantly it is advisable to run the notebook that adds rdw data to the above results soon.
-
-# %% [markdown]
-#
