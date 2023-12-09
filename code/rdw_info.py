@@ -201,7 +201,7 @@ class RdwInfo:
             'vezc-m2t6': 'carrosserie_volgnummer',
             'jhie-znh9': ['carrosserie_volgnummer', 'carrosserie_voertuig_nummer_code_volgnummer'],
             'kmfi-hrps': ['carrosserie_volgnummer', 'carrosserie_klasse_volgnummer'],
-            'sgfe-77wx': ['meld_datum_door_keuringsinstantie_dt'],
+            'sgfe-77wx': ['meld_datum_door_keuringsinstantie_dt', 'soort_erkenning_keuringsinstantie'],
             'a34c-vvps': ['meld_datum_door_keuringsinstantie_dt', 'gebrek_identificatie'],
             'sghb-dzxx': ['montagedatum', 'demontagedatum'],
             'ahsi-8uyu': 'asnummer',
@@ -519,7 +519,7 @@ class RdwInfo:
         # pivot
         # create df with unique rows
         df_uniq_idx = df.reset_index().set_index(prim_key + cols)
-        assert df_uniq_idx.index.is_unique
+        assert df_uniq_idx.index.is_unique, f'During {api_name}.'
 
         # rank values in pivot columns to get a sorted index number (0, 1, 2, ..) 
         for i, col in enumerate(cols):
