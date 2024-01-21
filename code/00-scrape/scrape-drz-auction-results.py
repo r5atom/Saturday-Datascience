@@ -33,7 +33,7 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2023-0023" I "20231209" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2024-0001" I "20240114" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
