@@ -446,6 +446,9 @@ else:
 # rdw_ovi.columns = [re.sub(r'^_','', c) for c in rdw_ovi.columns]
 # rdw_ovi
 
+# %%
+out = rdw_ovi.copy()
+
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
 file_name = f'{DATA_DIR}/auctions/enriched-results/rdw-ovi/rdw-ovi-0-data-{auction_month}-{month_counter}.pkl'
