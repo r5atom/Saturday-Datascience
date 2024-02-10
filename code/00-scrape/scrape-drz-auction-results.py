@@ -33,7 +33,7 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2024-0001" I "20240114" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2024-0003" I "20240209" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
@@ -117,12 +117,17 @@ except:
 
 
 # %%
-auct_dates = pd.read_csv('../../assets/20230120-auction-dates.csv', sep=';')
-auct_dates.loc[:, ['Start online veiling', 'Sluiting online veiling']] = \
-auct_dates.loc[:, ['Start online veiling', 'Sluiting online veiling']].applymap(lambda x: datetime.strptime('2023 ' + x, '%Y %d %B %H:%M uur'))
+auct_dates = pd.read_csv('../../assets/20240209-auction-dates.csv', sep=';')
+for fld in ['Start online veiling', 'Sluiting online veiling']:
+    auct_dates.loc[:, fld] = \
+    auct_dates.loc[:, ['Verkoop', fld]].apply(
+        lambda x: datetime.strptime(f'{x.Verkoop.split("-")[0]} {x.loc[fld]}', '%Y %d %B %H:%M uur')
+        , axis=1
+)
 auct_dates.set_index('Verkoop', inplace=True)
 for col in ['Start online veiling', 'Sluiting online veiling']:
     auct_dates.loc[:,col] = auct_dates.loc[:,col].astype('datetime64[ns]')
+
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
