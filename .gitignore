@@ -70,6 +70,7 @@ hidden_api_keys\.py
 
 # For now ignore data
 data/
+*\.shelve
 
 # Ignore temp notebook files
 *\.clean\.ipynb
