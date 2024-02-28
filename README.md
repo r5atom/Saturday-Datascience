@@ -9,6 +9,9 @@
 - Images can be used for classification.
 
 ## Change log
+- February 2024:
+    - Do prediction of price with separate notebooks. Use "shelve" to store models between notebooks.
+    - Add tree model to predict price.
 - November 2022: 
     - Added NHTSA data ([see their website](https://vpic.nhtsa.dot.gov/api/)).
 - September 2022: 
