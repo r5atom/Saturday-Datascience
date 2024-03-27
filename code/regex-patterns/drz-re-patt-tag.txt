@@ -15,4 +15,4 @@
 "APKdate", "(?<! )(APK|apk) geldig tot *(?P<val>[0-9,\.,-]+)\n"
 "BTW", "(?<! )BTW: (?P<val>.+) *\n"
 "ForeignReg", "(?<! )(?P<val>\w*) [K,k]enteken *\n"
-"Vin", "(Vin|Chassis(nummer|nr\.)|Romp(nummer|nr\.)) (?P<val>.+)\n"
+"Vin", "(Vin|VIN|Chassis(nummer|nr\.)|Romp(nummer|nr\.)) (?P<val>.+)\n"

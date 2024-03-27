@@ -33,7 +33,7 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2024-0005" I "20240309" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; python3 assets/make_auction_setting_file.py "2024-0006" I "20240323" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
@@ -868,7 +868,7 @@ if '2022-02-4006' in out.index:
     out.drop('2022-02-4006', inplace=True) # page is empty
 
 # %% [raw]
-# file_name = '/home/tom/data/satdatsci-data-link/auctions/temp-results/drz-data-unparsed-2023-07-07-opbod.pkl'; OPBOD=True
+# file_name = '/home/tom/data/satdatsci-data-link/auctions/temp-results/drz-data-unparsed-2024-03-06.pkl'; OPBOD=True
 # out = pd.read_pickle(file_name)
 # VERBOSE = 1
 # out, out.Raw_text[0]
@@ -977,7 +977,7 @@ for IX in out.index :
     # Pattern in full text? (flagtag)
     for Tag,Field in zip(flagtags.Pattern,flagtags.Field):
         # flagtags might occur more than once, hence a list of finditer results
-        Ms = list(re.finditer(Tag,'\n'.join(rt)))
+        Ms = list(re.finditer(Tag,'\n'.join(rt)))    
         if Ms:
             Val = True
             for M in Ms:
