@@ -27,7 +27,7 @@ _log_message = lambda fn, msg: logging_helper.log_message(fn, f'{sys.argv[0]} {m
 cfg = configparser.ConfigParser(interpolation=configparser.ExtendedInterpolation())
 with settings_fid as fid:
     cfg.read_file(fid)
-    
+
 status_file = cfg['FILE_LOCATION']['log_file']
 max_wait = cfg['GENERAL']['max_wait_between_auctions']
 end_time = pd.Timestamp.now() + pd.Timedelta(max_wait)

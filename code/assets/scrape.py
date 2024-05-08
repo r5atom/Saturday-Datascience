@@ -16,8 +16,8 @@ def get_tree(url):
         except:
             # catch glitch
             tried +=1
+            print(f'try {url} again after pause: {tried}')
             sleep(1)
-            print(f'try again {tried}')
             if tried > 10:
                 raise
 
