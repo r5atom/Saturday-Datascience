@@ -117,7 +117,7 @@ def get_metadata(api_name, token=''):
     # typecast
     cast_as = {
         ('field_info', 'position'): int,
-        ('field_info', 'width'): pd.Int64Dtype(),
+        ('field_info', 'width'): 'Int64',
         ('field_content', 'non_null'): int,
         ('field_content', 'not_null'): int,
         ('field_content', 'null'): int,
@@ -128,8 +128,10 @@ def get_metadata(api_name, token=''):
     }
     for fld,dtype in cast_as.items():
         if fld not in md.columns:
+            print(fld)
             continue
         md.loc[:,fld] = md.loc[:,fld].astype(dtype)
+        
 
     # set index as field name (column name)
     md.set_index(('field_info','fieldName'), inplace=True)
@@ -393,7 +395,7 @@ class RdwInfo:
         soda_to_python = {
             'text': str,
             'number': float,
-            'floating_timestamp':np.datetime64
+            'floating_timestamp':'datetime64[ns]'
         }
         dtypes = self.get_dtypes_from_header()
         not_implemented = {k:v for k,v in dtypes.items() if v not in soda_to_python.keys()}
@@ -517,6 +519,7 @@ class RdwInfo:
         prim_key = [prim_key] if isinstance(prim_key, str) else prim_key       
         
         # pivot
+        
         # create df with unique rows
         df_uniq_idx = df.reset_index().set_index(prim_key + cols)
         assert df_uniq_idx.index.is_unique, f'During {api_name}.'
@@ -524,13 +527,15 @@ class RdwInfo:
         # rank values in pivot columns to get a sorted index number (0, 1, 2, ..) 
         for i, col in enumerate(cols):
             ranks = df_uniq_idx.reset_index().groupby(df.index)[col].apply(lambda x: x.rank(method='dense')).astype(int).astype(str)
+            # Add to df_uniq_idx
+            ranks.sort_index(level=-1, inplace=True)
             ranks.index = df_uniq_idx.index
-            df_uniq_idx.loc[:, f'indexno{i}'] = ranks
+            ranks.name = f'indexno{i}'
+            df_uniq_idx = df_uniq_idx.join(ranks, how='left')
 
+        # Save for output
         df = df_uniq_idx.reset_index().set_index(prim_key).pivot(columns=[f'indexno{i}' for i in range(len(cols))])
-        
-        # flatten column names
-        df.columns = df.columns.map(lambda x: '_'.join(x).rstrip('_'))
+        df.columns = df.columns.map(lambda x: '_'.join(x).rstrip('_')) # flatten column names
         
         self.data_ = df
         

@@ -237,7 +237,7 @@ df_left = rdw_per_reg['geconstateerde_gebreken'].copy()
 df_right = rdw_per_reg['gebreken'].copy()
 on_column = 'gebrek_identificatie'
 
-for left_column, left in df_left.loc[:, df_left.columns.str.startswith(on_column)].iteritems():
+for left_column, left in df_left.loc[:, df_left.columns.str.startswith(on_column)].items():
     suffix = re.sub(on_column, '', left_column)
     df_merge = pd.merge(
         left=left.reset_index(),
