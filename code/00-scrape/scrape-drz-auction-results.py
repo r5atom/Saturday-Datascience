@@ -33,7 +33,52 @@
 # %% slideshow={"slide_type": ""}
 # First create a settings file for current auction.
 # This file may already exist.
-# !cd ..; python3 assets/make_auction_setting_file.py "2024-0009" I "20240515" -v -c assets/drz-settings.ini -s assets/drz-settings-current.json
+# !cd ..; \
+# python3 assets/make_auction_setting_file.py "2024-0010" I "20240525" \
+# -v -c assets/drz-settings.ini \
+# -s assets/drz-settings-current.json
+
+# %%
+def piplist2dict(lst, QUIET=True):
+    out={};
+    for i,l in enumerate(lst):
+        if i==0 and l.startswith('Package'):
+            if not QUIET: print(l)
+            continue
+        elif i==1 and l.startswith('---'):
+            if not QUIET: print(l)
+            continue
+        item = (l.split(' ')[0], l.split(' ')[-1])
+        out[item[0]] = item[1]
+    if not QUIET: print(f'{len(out)} packages in list.')
+    return out
+
+def diffpipdict(old, new, QUIET=True):
+    isequal=True
+    for i,v in new.items():
+        if i not in old:
+            if not QUIET: print(f'{i} not in old')
+            isequal = False
+            continue
+        if v == old[i]:
+            if not QUIET: print(f'{i} equal')
+            continue
+        if not QUIET: print(i, dcur[i], v)
+        isequal = False
+    return isequal
+
+with open("../../assets/python-env-current.txt",'r') as fid:
+    current = fid.read()
+current = current.splitlines()
+# new = !pip list
+
+dcur = piplist2dict(current)
+dnew = piplist2dict(new)
+if diffpipdict(dcur, dnew) == False:
+    print('Replace pip list')
+    # !mv --backup=numbered ../../assets/python-env-current.txt ../../assets/python-env-bup.txt
+    with open("../../assets/python-env-current.txt",'w') as fid:
+        fid.write('\n'.join(new))
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
