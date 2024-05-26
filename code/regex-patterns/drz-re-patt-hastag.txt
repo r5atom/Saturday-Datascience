@@ -71,6 +71,7 @@
 "no_charger_cable", "Geen\slaadkabel\saanwezig\.?\n"
 "not_complete", "Voertuig\sis\smogelijk\sdeels\sgedemonteerd\sen/of\sincompleet\.?\n"
 "no_plates", "Kentekenplaten\sniet\saanwezig\.?\n"
+"no_plates", "Geen\skentekenplaten\saanwezig\sbij\sdit\svoertuig\.?\n"
 # "import27_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 2[\,,\.]7% invoerrechten en 21% BTW\.\n"
 # "import22_btw21", "Bij \(erkend\) Douane Expediteur \(zelf te selecteren/in te schakelen\) te betalen 22% invoerrechten en 21% BTW\.\n"
 # "disclaim12", "De kavelomschrijving op de website wordt gemaakt op basis van de bij Domeinen Roerende Zaken bekende gegevens. Domeinen Roerende Zaken is geen garage- of herstelbedrijf en controleert niet of alles naar behoren functioneert."
