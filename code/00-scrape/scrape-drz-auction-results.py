@@ -117,9 +117,10 @@ sys.path.insert(0, cfg['FILE_LOCATION']['code_dir'])
 EXTEND_URL = False
 VERBOSE = int(cfg['GENERAL']['verbose'])
 SAVE_METHOD = cfg['GENERAL']['save_method']
+RUN_EXAMPLES = True # Run examples after defining functions. These might result in errors, so supressing them here avoids breaking the script.
 
 # %%
-SAVE_METHOD='always_overwrite'
+SAVE_METHOD='always_overwrite' # override setting, because this is the first step
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 URL,URL_DATA,month_counter,auction_month
@@ -235,27 +236,28 @@ def get_kavel_url(OPBOD, base_url, url_data, lot_id):
     return kavel_url
 
 # example
-ids = [
-    f'K{auction_month[2:4]}00{month_counter}1800', 
-    f'K{auction_month[2:4]}00{month_counter}1801', 
-    f'K{auction_month[2:4]}00{month_counter}1900', 
-    f'K{auction_month[2:4]}00{month_counter}1901', 
-    f'K{auction_month[2:4]}00{month_counter}1000', 
-    f'K{auction_month[2:4]}00{month_counter}1001',
-    f'K{auction_month[2:4]}00{month_counter}1002',
-    f'K{auction_month[2:4]}00{month_counter}1003',
-    f'K{auction_month[2:4]}00{month_counter}1004',
-    f'K{auction_month[2:4]}00{month_counter}1009',
-    f'K{auction_month[2:4]}00{month_counter}1031',
-    f'K{auction_month[2:4]}00{month_counter}1007',
-]
-if OPBOD:
-    ids = [f'K{auction_month[2:4]}{auction_month[-2:]}01{id[-4:]}' for id in ids]
-
-for example_lot_id in ids:
-    example_url = URL
-    _add_veiling = EXTEND_URL
-    print(get_kavel_url(OPBOD, example_url, URL_DATA, example_lot_id))
+if RUN_EXAMPLES:
+    ids = [
+        f'K{auction_month[2:4]}00{month_counter}1800', 
+        f'K{auction_month[2:4]}00{month_counter}1801', 
+        f'K{auction_month[2:4]}00{month_counter}1900', 
+        f'K{auction_month[2:4]}00{month_counter}1901', 
+        f'K{auction_month[2:4]}00{month_counter}1000', 
+        f'K{auction_month[2:4]}00{month_counter}1001',
+        f'K{auction_month[2:4]}00{month_counter}1002',
+        f'K{auction_month[2:4]}00{month_counter}1003',
+        f'K{auction_month[2:4]}00{month_counter}1004',
+        f'K{auction_month[2:4]}00{month_counter}1009',
+        f'K{auction_month[2:4]}00{month_counter}1031',
+        f'K{auction_month[2:4]}00{month_counter}1007',
+    ]
+    if OPBOD:
+        ids = [f'K{auction_month[2:4]}{auction_month[-2:]}01{id[-4:]}' for id in ids]
+    
+    for example_lot_id in ids:
+        example_url = URL
+        _add_veiling = EXTEND_URL
+        print(get_kavel_url(OPBOD, example_url, URL_DATA, example_lot_id))
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
@@ -315,10 +317,11 @@ def gettree(kavel_url, disp=False):
 
 
 # Example
-gettree(
-    get_kavel_url(False, example_url, False, example_lot_id),
-    True
-)
+if RUN_EXAMPLES:
+    gettree(
+        get_kavel_url(False, example_url, False, example_lot_id),
+        True
+    )
 
 
 # %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
@@ -684,42 +687,43 @@ class Lot:
         self.nextlot_ = nextLot
             
 # Example
-c = 0
-OK = False
-while OK == False:
+if RUN_EXAMPLES:
+    c = 0
+    OK = False
+    while OK == False:
+        try:
+            example_lot_id = ids[c]
+            kavel_url = get_kavel_url(OPBOD, example_url, _add_veiling, example_lot_id)
+            print(kavel_url)
+            tree = gettree(kavel_url, True)
+            Item = Lot(tree, OPBOD)
+            print(Item)
+            Item.get_index()
+            OK = True
+        except IndexError:
+            c = c + 1
+            if c > len(ids): raise RuntimeError
+            OK = False
+    print(Item)
+    Item.get_date()
+    print(Item)
+    Item.get_title()
+    print(Item)
+    Item.get_nextlot()
+    print(Item)
+    Item.get_images()
+    print(Item)
+    Item.get_text()
+    print(Item)
     try:
-        example_lot_id = ids[c]
-        kavel_url = get_kavel_url(OPBOD, example_url, _add_veiling, example_lot_id)
-        print(kavel_url)
-        tree = gettree(kavel_url, True)
-        Item = Lot(tree, OPBOD)
-        print(Item)
-        Item.get_index()
-        OK = True
-    except IndexError:
-        c = c + 1
-        if c > len(ids): raise RuntimeError
-        OK = False
-print(Item)
-Item.get_date()
-print(Item)
-Item.get_title()
-print(Item)
-Item.get_nextlot()
-print(Item)
-Item.get_images()
-print(Item)
-Item.get_text()
-print(Item)
-try:
-    # This might throw an error if auction is still open
-    Item.disp=True
-    Item.get_price()
-except:
-    print('Ignore error in retrieving price.')
-    Item.price_ = -1
-print(Item)
-Item.has_result, Item.price_, 
+        # This might throw an error if auction is still open
+        Item.disp=True
+        Item.get_price()
+    except:
+        print('Ignore error in retrieving price.')
+        Item.price_ = -1
+    print(Item)
+    Item.has_result, Item.price_, 
 
 
 # %% [markdown]
