@@ -128,7 +128,7 @@ def get_metadata(api_name, token=''):
     }
     for fld,dtype in cast_as.items():
         if fld not in md.columns:
-            print(f'skip {fld}, because it is not in metadata of {api_name}')
+            # print(f'skip {fld}, because it is not in metadata of {api_name}')
             continue
         md.loc[:,fld] = md.loc[:,fld].astype(dtype)
         

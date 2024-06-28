@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+q# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -80,3 +80,6 @@ data/
 
 # VScode stuff
 *\.vscode/
+
+# backup of env list
+assets/python-env-bup\.txt
