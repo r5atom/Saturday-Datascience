@@ -34,7 +34,7 @@
 # First create a settings file for current auction.
 # This file may already exist.
 # !cd ..; \
-# python3 assets/make_auction_setting_file.py "2024-0012" I "20240627" \
+# python3 assets/make_auction_setting_file.py "2024-0013" I "20240706" \
 # -v -c assets/drz-settings.ini \
 # -s assets/drz-settings-current.json
 
@@ -163,7 +163,7 @@ except:
 
 
 # %%
-auct_dates = pd.read_csv('../../assets/20240209-auction-dates.csv', sep=';')
+auct_dates = pd.read_csv('../../assets/auction-dates-current.csv', sep=';')
 for fld in ['Start online veiling', 'Sluiting online veiling']:
     auct_dates.loc[:, fld] = \
     auct_dates.loc[:, ['Verkoop', fld]].apply(
@@ -250,6 +250,7 @@ if RUN_EXAMPLES:
         f'K{auction_month[2:4]}00{month_counter}1009',
         f'K{auction_month[2:4]}00{month_counter}1031',
         f'K{auction_month[2:4]}00{month_counter}1007',
+        f'K{auction_month[2:4]}00{month_counter}1005',
     ]
     if OPBOD:
         ids = [f'K{auction_month[2:4]}{auction_month[-2:]}01{id[-4:]}' for id in ids]
