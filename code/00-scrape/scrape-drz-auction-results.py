@@ -34,7 +34,7 @@
 # First create a settings file for current auction.
 # This file may already exist.
 # !cd ..; \
-# python3 assets/make_auction_setting_file.py "2024-0013" I "20240706" \
+# python3 assets/make_auction_setting_file.py "2024-0014" I "20240719" \
 # -v -c assets/drz-settings.ini \
 # -s assets/drz-settings-current.json
 
