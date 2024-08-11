@@ -20,7 +20,6 @@
 
 # %%
 auction_settings_file = '../assets/drz-settings-current.json'
-#auction_settings_file = '../assets/drz-settings-2023-20.json'
 
 # %%
 import re
@@ -50,6 +49,14 @@ elif cfg['AUCTION']['kind'] == 'opbod':
 VERBOSE = int(cfg['GENERAL']['verbose'])
 #SAVE_METHOD = cfg['GENERAL']['save_method']
 
+
+
+# %%
+print('Use this to copy from raspberry pi to local:\n')
+sub = 'opbod/' if OPBOD else ''
+remote_dir = f'/home/pi/data/satdatsci-images/{sub}{DATE[:4]}/{month_counter}/'
+local_dir = remote_dir.replace('pi', 'tom')
+print(f"rsync -avr --dry-run 'pi@rpi4b.local:{remote_dir}' '{local_dir}'")
 
 
 # %% slideshow={"slide_type": ""}

@@ -34,7 +34,7 @@
 # First create a settings file for current auction.
 # This file may already exist.
 # !cd ..; \
-# python3 assets/make_auction_setting_file.py "2024-0014" I "20240719" \
+# python3 assets/make_auction_setting_file.py "2024-0015" I "20240811" \
 # -v -c assets/drz-settings.ini \
 # -s assets/drz-settings-current.json
 
@@ -271,6 +271,7 @@ def gettree(kavel_url, disp=False):
     import requests
     import codecs
     from lxml import html, etree
+    import time
     
     # Request page
     
