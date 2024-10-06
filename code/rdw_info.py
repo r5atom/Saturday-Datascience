@@ -130,7 +130,9 @@ def get_metadata(api_name, token=''):
         if fld not in md.columns:
             # print(f'skip {fld}, because it is not in metadata of {api_name}')
             continue
-        md.loc[:,fld] = md.loc[:,fld].astype(dtype)
+        type_casted = md.loc[:,fld].astype(dtype)
+        del md[fld] # to avoid "dtype incompatible" warnings
+        md.loc[:,fld] = type_casted
         
 
     # set index as field name (column name)
@@ -138,7 +140,8 @@ def get_metadata(api_name, token=''):
     md.index.name='fieldName'
 
     # low cardinality could point to categorical data (factors)
-    md.loc[:, ('field_content', 'factors')] = np.NaN
+    # create a new empty "object" column
+    md.loc[:, ('field_content', 'factors')] = pd.Series(index=md.index, dtype='object', data=np.NaN) 
     
     if ('field_content', 'cardinality') not in md:
         # there is no cardinality info stop here
