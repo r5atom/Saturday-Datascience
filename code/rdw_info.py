@@ -151,25 +151,30 @@ def get_metadata(api_name, token=''):
         # there is no cardinality info stop here
         return md
 
-    n_category_max = max(md.loc[:, ('field_content', 'top')].apply(lambda x: len(x) if isinstance(x, list) else x)) # twenty
-    is_cat = (md.loc[:, ('field_content', 'cardinality')] < n_category_max) & (md.loc[:, ('field_content', 'cardinality')] > 1)
+    n_category_max = max(md.loc[:, ('field_content', 'top')].apply(lambda x: len(x) if isinstance(x, list) else x)) # default max is twenty top observations
+    is_cat = (md.loc[:, ('field_content', 'cardinality')] < n_category_max) & (md.loc[:, ('field_content', 'cardinality')] > 1) # 19 or less indicates category
     is_str = md.loc[:, ('field_info', 'dataTypeName')] == 'text'
     is_num = md.loc[:, ('field_info', 'dataTypeName')] == 'number'
     
     # string categories
-    md.loc[:, ('field_content', 'factors')].update(md.loc[is_cat&is_str, ('field_content', 'top')].apply(lambda x: [i['item'] for i in x]))
+    factors = md.loc[is_cat&is_str, ('field_content', 'top')].apply(lambda x: [i['item'] for i in x])
+    factors.name = ('field_content', 'factors')
+    md.update(factors)
     
     # integer categories
     uniq_values = md.loc[is_cat&is_num, ('field_content', 'top')].apply(lambda x: [(i['item']) for i in x])
     is_int = is_num.copy()
     is_int &= uniq_values.apply(lambda x: all([v.isnumeric() for v in x]))
-    md.loc[:, ('field_content', 'factors')].update(uniq_values[is_int].apply(lambda x: [int(v) for v in x]))
+    factors = uniq_values[is_int].apply(lambda x: [int(v) for v in x])
+    factors.name = ('field_content', 'factors')
+    md.update(factors)
     
     # counters (range)
     is_cnt = is_int.copy()
     is_cnt &= md.loc[is_int, ('field_content', 'factors')].apply(lambda x: max(x) == (min(x) + len(x)-1))
-    md.loc[:, ('field_content', 'factors')].update(md.loc[is_cnt, ('field_content', 'factors')].apply(lambda x: range(min(x), max(x)+1)))
-    md.loc[:, ('field_content', 'factors')]
+    factors = md.loc[is_cnt, ('field_content', 'factors')].apply(lambda x: range(min(x), max(x)+1))
+    factors.name = ('field_content', 'factors')
+    md.update(factors)
 
     # output
     assert (md.loc[:, [('field_info', 'renderTypeName'), ('field_info', 'dataTypeName')]].nunique(axis=1)==1).all()
