@@ -84,14 +84,18 @@ def long_to_short_conf(long_codes):
     q = f"select={flds}%20where%20typegoedkeuringsnummer%20in%20({codes})"
     url = r"https://opendata.rdw.nl/resource/55kv-xf7m.csv?$" + q
 
-    # Perform query
-    table = pd.read_csv(url, sep=',', header=0, index_col=None, dtype=str)
-    # Some have duplicate, sort alphabetically
-    table = table.sort_values(by='eu_type_goedkeuringssleutel', ascending=False).groupby('typegoedkeuringsnummer').first()
-    # Add to output
-    out = out.merge(table, how='left', right_on='typegoedkeuringsnummer', left_index=True)
-    # When no result return input
-    out = out.reset_index().ffill(axis=1).set_index('typegoedkeuringsnummer')
+    try:
+        # Perform query
+        table = pd.read_csv(url, sep=',', header=0, index_col=None, dtype=str)
+        # Some have duplicate, sort alphabetically
+        table = table.sort_values(by='eu_type_goedkeuringssleutel', ascending=False).groupby('typegoedkeuringsnummer').first()
+        # Add to output
+        out = out.merge(table, how='left', right_on='typegoedkeuringsnummer', left_index=True)
+        # When no result return input
+        out = out.reset_index().ffill(axis=1).set_index('typegoedkeuringsnummer')
+    except:
+        print(url)
+        raise
     
     return out.drop(columns='index')
 
