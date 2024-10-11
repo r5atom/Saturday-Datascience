@@ -68,6 +68,123 @@ def long_to_short_conf(long_codes):
     
     '''
     Convert short conformity code to long code
+    Example 
+        long: typegoedkeuringsnummer       = e4*2007/46*0996*04
+        short: eu_type_goedkeuringssleutel = e4*07/46*0996*04
+    Example: e11*2007/2046*0004*02
+    src: https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:31992L0053&from=en
+    APPROVAL CERTIFICATE NUMBERING SYSTEM 
+    1. In the case of an approval for a system, component or separate technical unit: the number consists of five sections separated by the '*' character:
+        Section 1: the lowercase letter 'e' followed by the distinguishing letter(s) or number of the Member States issuing the approval:
+            1 Germany,
+            2 France,
+            3 Italy,
+            4 the Netherlands,
+            5 Zweden
+            6 Belgium,
+            7 Hongarije
+            8 Tjechie
+            9 Spain,
+            10 --
+            11 the United Kingdom,
+            12 Oostenrijk
+            13 Luxembourg,
+            14 --
+            15 --
+            16 --
+            17 Finland
+            18 Denmark,
+            19 Roemenie
+            20 Polen
+            21 Portugal,
+            22 --
+            23 Griekenland
+            24 Ierland
+            25 --
+            26 Slovenie
+            27 Slowakije
+            28 --
+            29 Estland
+            30 --
+            31 --
+            32 Letland
+            33 --
+            34 Bulgarije
+            35 --
+            36 Litouwen
+            37 --
+            ..
+            49 Cyprus
+            50 Malta
+            EL Greece,
+            IRL Ireland.
+        (Section 2: the number of the base Directive.)
+        Section 3: the number of the latest amending Directive applicable to the approval. Should a Directive contain different implementation dates referring to different technical standards, an alphabetical character is to be added. This charracter will refer to the specific technical requirement on the basis of which type-approval was granted.
+        Section 4: a four-digit sequential number (with leading zeros as applicable) to denote the base approval number. The sequence starts from 0001 for each base Directive.
+        Section 5: a two-digit sequential number (with a leading zero if applicable) to denote the extension. The sequence starts from 01 for each base approval number.
+    2. In the case of an approval for a vehicle Section 2 is omitted.
+    3. Example of the third approval (with, as yet, no extension) issued by France to the braking Directive:
+        e2*
+        71/320*
+        88/194*
+        0003*
+        00
+        or in the case of a Directive with two implementation stages A and B.
+        e2*
+        88/77*
+        91/542A*
+        0003*
+        00 
+    4. Example of the second extension to the fourth vehicle approval issued by the United Kingdom:
+        e11*
+        91/???*
+        0004*
+        02.
+
+    Resume for vehicles
+    1: Country - "e" followed by country code issuing the type.
+        e11* is the United Kingdom.
+    2: Regulation no. - omitted
+    3: Amending body - Number of the last amending directive or regulation. 
+        *2007/2046* is an approval under Commission Regulation No. 2007/2046.
+    5: Sequence - Four-digit sequential number designating the base approval number. The sequence starts from 0001 for each basic directive or regulation. 
+        *0004* the 4th type-approval.
+    5: Extension - Two-digit sequential number to designate the extension of type approval. The sequence starts from 00 for each base approval number. 
+        *02 the 2nd extension of approval.
+
+    Before this was done by using a lookup table available by querying 55kv-xf7m, but this table no longer exist as of March 2024.
+    Here we simply split the code and remove the trailing milenium.
+    '''   
+
+    # select codes with correct format 
+    func = lambda x:  3==(len(re.findall('\*', x)) if isinstance(x,str) else -1)
+    sel = [func(c) for c in long_codes]
+
+    # split codes
+    func = lambda x: x.split('*')
+    sections = [func(c) if s else 4*[''] for c,s in zip(long_codes,sel) ]
+
+    # Prepare output
+    out = pd.DataFrame(index = long_codes, columns=[f'eu_approval_no_section{i}' for i in [1, 3, 4, 5]], data=sections)
+
+    # *2001/116* -> *01/116* 
+    # *2007/46* -> *07/46*
+    # *2018/858* -> *18/858*
+    out.replace({'eu_approval_no_section3': r'^20([0-9][0-9]/)'}, r'\1', regex=True, inplace=True)
+    # *168/2013* -> *168/13*
+    out.replace({'eu_approval_no_section3': r'/20([0-9][0-9])$'}, r'/\1', regex=True, inplace=True)
+    # *KS07/46* -> *07E46*
+    out.replace({'eu_approval_no_section3': r'^KS([0-9][0-9])/'}, r'\1E', regex=True, inplace=True)
+
+    # add concatenated to dataframe
+    out['eu_type_goedkeuringssleutel'] = out.apply(lambda x: x.str.cat(sep='*'), axis=1)
+    
+    return out
+
+def long_to_short_conf_v0(long_codes):
+    
+    '''
+    Convert short conformity code to long code by querying 55kv-xf7m
     '''   
     # Prepare output
     out = pd.DataFrame(index = long_codes)
