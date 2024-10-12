@@ -3,6 +3,49 @@ import numpy as np
 import re
 from IPython.display import display
 
+def get_apis_with_search(query, title_start='Open Data RDW: '):
+
+    import re
+
+    # Get dataset by querying open data site
+    resp = web_request(
+        'https://data.overheid.nl/data/api/3/action/package_search', 
+        {'q': query, 
+        'rows':1001 #upper limit is 1000
+        }
+    )
+    tgk = resp.json()
+
+    # Check result
+    if not tgk['success']:
+        print(resp.url)
+        print(tgk)
+        raise RuntimeError('API function raised an exception.')
+    n_tgk = tgk['result']['count']
+    if len(tgk['result']['results']) != n_tgk:
+        print(resp.url)
+        raise OverflowError(f"Number of results is expected to be {n_tgk}, but is in fact {len(tgk['result']['results'])}")
+    if n_tgk == 0:
+        print(resp.url)
+        raise OverflowError(f"Number of results is expected to more than 0")
+    
+    # Retrieve url from results
+    api_urls = [r['url'] if 'url' in r else r['identifier'] for r in tgk['result']['results']]
+    # Retrieve name and trim first part of title
+    api_full_names = [re.sub('\s', '_', re.sub(f'^{title_start}', 'api_', r['title']).lower()) for r in tgk['result']['results']]
+    # Get api_names (like "m9d7-ebf2")
+    patterns = [
+        '^https://opendata.rdw.nl/d/(.*)$',
+    ];
+    # try different regexp patterns, stop when all are successfull
+    for pattern in patterns:  
+        api_names = [re.findall(pattern, url) for url in api_urls]        
+        if all([len(itm) > 0 for itm in api_names]):
+            api_names = np.array([n[0] for n in api_names])
+            break
+    
+    return api_names, api_full_names, api_urls
+
 def get_sub_apis(df):
     
     import re
@@ -46,7 +89,7 @@ def web_request(url, params):
     resp = requests.request('GET', url, params=params)
     
     if resp.status_code != 200:
-        print(f'\n{url}\nStatus: {resp.status_code}')
+        print(f'\n{url}\n{params}\nStatus: {resp.status_code}')
     
     return resp
 
@@ -65,7 +108,7 @@ def soda_request(api_url, token, params):
     return resp
 
 def long_to_short_conf(long_codes):
-    
+
     '''
     Convert short conformity code to long code
     Example 
@@ -542,6 +585,7 @@ class RdwInfo:
         
         api_name = self.get_api_name()
         
+        # Use different type of queries per 
         if self.metadata_['primary_keys'][api_name] == 'kenteken':
             reg_list =  ','.join([f'"{r}"' for r in self.get_idx()])
         
