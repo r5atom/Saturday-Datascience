@@ -103,7 +103,7 @@ def soda_request(api_url, token, params):
     resp = requests.request('GET', api_url, headers={'X-App-Token': token}, params=params)
     
     if resp.status_code != 200:
-        print(f'\n{api_url}\nStatus: {resp.status_code}')
+        print(f'\n{resp.url}\nStatus: {resp.status_code}')
     
     return resp
 
@@ -282,11 +282,11 @@ def get_metadata(api_name, token=''):
     cast_as = {
         ('field_info', 'position'): int,
         ('field_info', 'width'): 'Int64',
-        ('field_content', 'non_null'): int,
+        ('field_content', 'non_null'): 'Int64',
         ('field_content', 'not_null'): int,
-        ('field_content', 'null'): int,
-        ('field_content', 'count'): int,
-        ('field_content', 'cardinality'): int,
+        ('field_content', 'null'): 'Int64',
+        ('field_content', 'count'): 'Int64',
+        ('field_content', 'cardinality'): 'Int64',
         ('field_content', 'average'): float,
         ('field_content', 'sum'): float,
     }
@@ -372,6 +372,7 @@ class RdwInfo:
         self.metadata_['pivot_columns'] = {
             '3huj-srit': 'as_nummer',
             '8ys7-d773': 'brandstof_volgnummer',
+            'gr7t-qfnb': 'volgnummerenergiebron',
             'vezc-m2t6': 'carrosserie_volgnummer',
             'jhie-znh9': ['carrosserie_volgnummer', 'carrosserie_voertuig_nummer_code_volgnummer'],
             'kmfi-hrps': ['carrosserie_volgnummer', 'carrosserie_klasse_volgnummer'],
@@ -379,21 +380,31 @@ class RdwInfo:
             'a34c-vvps': ['meld_datum_door_keuringsinstantie_dt', 'gebrek_identificatie'],
             'sghb-dzxx': ['montagedatum', 'demontagedatum'],
             'ahsi-8uyu': 'asnummer',
+            'xhyb-w7xt': 'volgnummeras',
             'q7fi-ijjh': ['carrosserie_volgnummer', 'carrosserie_klasse_volgnummer'],
             'w2qp-idms': 'carrosserie_volgnummer',
+            'ky2r-jqad': ['volgnummercarrosserietype'],
             'nypm-t8hx': ['carrosserie_volgnummer', 'carrosserie_uitvoering_numeriek_volgnummer'],
             'mdqe-txpd': 'volgnummer',
+            'x5v3-sewk': 'volgnummerhandelsbenamingfabr',
             'fj7t-hhik': 'merkcode', 
+            'kyri-nuah': 'volgnummermerk',
             'g2s6-ehxa': 'volgnummer',
+            '4by9-ammk': 'volgnummeraandrijving',
             '5w6t-p66a': ['volgnummer','brandstof_volgnummer'], 
             'mt8t-4ep4': 'plaats_aanduiding_volgnummer',
             'h9pa-e9ta': 'subcategorie_uitvoering_volgnr',
+            'm692-vvff': 'volgnummerspecialedoeleinden',
             '2822-t8sx': 'uitvgavenummer_verbruikboek',
             'r7cw-67gs': 'volgnummer',
+            '7rjk-eycs': 'volgnummerversnelling',
             '3xwf-ince': 'rupsband_set_volgnr',
+            'xn6e-huse': 'volgnummerrupsbandset',
             '2ba7-embk': 'subcategorie_voertuig_volgnummer',
             '7ug8-2dtt': 'bijzonderheid_volgnummer',
             't49b-isb7': 'referentiecode_rdw',
+            'd3ex-xghj': 'volgnummerkoppeling', 
+            '9s6a-b42z': 'volgnummerintrekkingtgk',
 
 
             }
@@ -437,6 +448,18 @@ class RdwInfo:
             'h9pa-e9ta': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
             '2822-t8sx': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
             'r7cw-67gs': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
+            'xhyb-w7xt': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # as_uitvoering
+            'x5v3-sewk': ['typegoedkeuringsnummer', 'codevariantgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Handelsbenaming Fabrikant
+            'ky2r-jqad': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # carrosserie_uitvoering
+            'gr7t-qfnb': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Energiebron Uitvoering
+            'd3ex-xghj': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Koppeling Uitvoering
+            'byxc-wwua': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Basis Uitvoering
+            'm692-vvff': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Speciale Doeleinden
+            'kyri-nuah': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Merk Uitvoering
+            '7rjk-eycs': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Versnelling Uitvoering
+            '4by9-ammk': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Aandrijving Uitvoering
+            'xn6e-huse': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Rupsbandset Uitvoering
+            '9s6a-b42z': 'typegoedkeuringsnummer', # Intrekking Typegoedkeuring
             }
         if (api_name in self.metadata_['primary_keys']) and (self.metadata_['primary_keys'][api_name] == 'kenteken'):
             self.clean_reg() # Capitals and no fillers
@@ -585,7 +608,10 @@ class RdwInfo:
         
         api_name = self.get_api_name()
         
-        # Use different type of queries per 
+        # Use different type of queries per api
+        if api_name not in self.metadata_['primary_keys']:
+            raise NotImplementedError(f'Api <{api_name}> has not primary_key listed in metadata. Please add.')
+
         if self.metadata_['primary_keys'][api_name] == 'kenteken':
             reg_list =  ','.join([f'"{r}"' for r in self.get_idx()])
         
@@ -602,6 +628,14 @@ class RdwInfo:
                 self._key,
                 {'$where': f'eu_type_goedkeuringssleutel in ({conf_list})'}
             )
+        elif self.metadata_['primary_keys'][api_name] == 'typegoedkeuringsnummer':
+            conf_list =  ','.join([f'"{r}"' for r in self.get_idx()])
+            
+            resp = soda_request(
+                self.get_api_url(key=None), # key not in url use header
+                self._key,
+                {'$where': f'typegoedkeuringsnummer in ({conf_list})'}
+            )
         elif isinstance(self.metadata_['primary_keys'][api_name], list):
             
             sep = '.' # separator between index fields
@@ -609,7 +643,7 @@ class RdwInfo:
             idx = self.get_idx()
 
             # if primary key is a list of key we need to make a composite key
-            assert idx.applymap(lambda x: sep not in x).all().all() # It could complicate things it sep is already present
+            assert idx.map(lambda x: sep not in x).all().all() # It could complicate things if sep is already present
             
             # make composite key 
             composite_key = idx.apply(lambda x: sep.join(x), axis=1)
@@ -634,7 +668,7 @@ class RdwInfo:
                 )
             
         else:
-            raise NotImplementedError(f'Api <{api_name}> has unregognized primary_key: {self.metadata_["primary_keys"][api_name]}')
+            raise NotImplementedError(f'Api <{api_name}> has unrecognized primary_key: {self.metadata_["primary_keys"][api_name]}')
 
         self._resp = resp
         self.resp_status_ = resp.status_code
