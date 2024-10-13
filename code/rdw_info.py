@@ -3,7 +3,7 @@ import numpy as np
 import re
 from IPython.display import display
 
-def get_apis_with_search(query, title_start='Open Data RDW: '):
+def get_apis_with_search(query):
 
     import re
 
@@ -32,7 +32,7 @@ def get_apis_with_search(query, title_start='Open Data RDW: '):
     # Retrieve url from results
     api_urls = [r['url'] if 'url' in r else r['identifier'] for r in tgk['result']['results']]
     # Retrieve name and trim first part of title
-    api_full_names = [re.sub('\s', '_', re.sub(f'^{title_start}', 'api_', r['title']).lower()) for r in tgk['result']['results']]
+    api_full_names = [r['title'] for r in tgk['result']['results']]
     # Get api_names (like "m9d7-ebf2")
     patterns = [
         '^https://opendata.rdw.nl/d/(.*)$',
@@ -41,7 +41,7 @@ def get_apis_with_search(query, title_start='Open Data RDW: '):
     for pattern in patterns:  
         api_names = [re.findall(pattern, url) for url in api_urls]        
         if all([len(itm) > 0 for itm in api_names]):
-            api_names = np.array([n[0] for n in api_names])
+            api_names = [n[0] for n in api_names]
             break
     
     return api_names, api_full_names, api_urls
