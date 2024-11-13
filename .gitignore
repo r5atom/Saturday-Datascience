@@ -1,4 +1,4 @@
-q# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -59,7 +59,8 @@ target/
 
 # Mac stuff
 # Note: ctrl-alt-enter is <CR> in textmate
-*Icon[]
+*Icon[
+]
 *\.DS_Store
 
 # Prevent keys from being visible in notebooks
@@ -82,4 +83,4 @@ data/
 *\.vscode/
 
 # backup of env list
-assets/python-env-bup\.txt
+assets/python-env-bup\.txt*
