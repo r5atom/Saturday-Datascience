@@ -81,13 +81,13 @@ numpy                     1.26.4
 odfpy                     1.4.1
 overrides                 7.3.1
 packaging                 21.3
-pandas                    2.2.2
+pandas                    2.2.3
 pandocfilters             1.5.0
 parso                     0.8.3
 pexpect                   4.8.0
 pickleshare               0.7.5
 Pillow                    9.2.0
-pip                       24.0
+pip                       24.2
 platformdirs              3.2.0
 prometheus-client         0.14.1
 prompt-toolkit            3.0.43
@@ -140,6 +140,3 @@ wheel                     0.37.1
 widgetsnbextension        4.0.7
 y-py                      0.5.9
 ypy-websocket             0.8.2
-
-[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m A new release of pip is available: [0m[31;49m24.0[0m[39;49m -> [0m[32;49m24.1.1[0m
-[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m To update, run: [0m[32;49mpip install --upgrade pip[0m

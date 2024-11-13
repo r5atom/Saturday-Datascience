@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] slideshow={"slide_type": ""}
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # <a id='auct_top'>
 
 # %% [markdown]
@@ -30,15 +30,15 @@
 #
 # - - - 
 
-# %% slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""} tags=["remove_when_contains:image"]
 # First create a settings file for current auction.
 # This file may already exist.
 # !cd ..; \
-# python3 assets/make_auction_setting_file.py "2024-0015" I "20240811" \
+# python3 assets/make_auction_setting_file.py "2024-0021" I "20241109" \
 # -v -c assets/drz-settings.ini \
 # -s assets/drz-settings-current.json
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["remove_when_contains:image"]
 def piplist2dict(lst, QUIET=True):
     out={};
     for i,l in enumerate(lst):
@@ -122,7 +122,7 @@ RUN_EXAMPLES = True # Run examples after defining functions. These might result 
 # %%
 SAVE_METHOD='always_overwrite' # override setting, because this is the first step
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 URL,URL_DATA,month_counter,auction_month
 
 
@@ -198,7 +198,7 @@ del(now)
 # %% [markdown]
 # ### Functions
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 def get_kavel_url(OPBOD, base_url, url_data, lot_id):
     
     '''
@@ -326,7 +326,7 @@ if RUN_EXAMPLES:
     )
 
 
-# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 class Lot:
     
     
@@ -914,11 +914,23 @@ out = pd.read_pickle(file_name)
 
 
 # %%
-
+# Dropping misbehaving lots before continuing
+sel_empty = out.Raw_text.apply(len) == 0;
+if any(sel_empty):
+    print('These lots contain no data:')
+    print(out.loc[sel_empty].index)
+    
 if '2022-02-4006' in out.index:
     out.drop('2022-02-4006', inplace=True) # page is empty
 if '2024-07-7158' in out.index:
     out.drop('2024-07-7158', inplace=True) # has pictures (Audi A1) and a 4400 price, but nothing more.
+if '2024-16-7037' in out.index:
+    out.drop('2024-16-7037', inplace=True) # page is empty
+    sel_empty.drop('2024-16-7037', inplace=True)
+
+if any(sel_empty):
+    raise RuntimeError('No data in lot')
+
 
 
 # %% [raw]
@@ -927,7 +939,7 @@ if '2024-07-7158' in out.index:
 # VERBOSE = 1
 # out, out.Raw_text[0]
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # parse raw text
 for IX in out.index :
     
@@ -1133,7 +1145,7 @@ else:
     print(f'Skip. {file_name} exists or saving is disabled in settings.')
 
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Next: add rdw data
 #
 # Because rdw data changes constantly it is advisable to run the notebook that adds rdw data to the above results soon.
