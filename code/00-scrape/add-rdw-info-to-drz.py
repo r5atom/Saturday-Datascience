@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# %% [markdown] slideshow={"slide_type": ""}
+# %% [markdown] slideshow={"slide_type": ""} editable=true
 # <a id='rdw_top'>
 
 # %% [markdown]
@@ -45,7 +45,7 @@ import re
 import json
 from IPython.display import display
 
-# %% slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""}
 with open('../assets/drz-settings-current.json', 'r') as fid:
     cfg = json.load(fid)
 
@@ -66,7 +66,7 @@ SKIPSAVE = False
 OVIDATA = True
 VERBOSE = 1
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Modules and functions
 
 # %%
@@ -79,13 +79,42 @@ import assets.hidden_api_keys as hidden_api_keys
 from rdw_info import *
 
 # %% slideshow={"slide_type": ""}
-main_api = 'm9d7-ebf2'
-keur_api = 'vkij-7mwc'
-apk_api = 'sgfe-77wx'
-gebr_api = 'hx2c-gt7k'
-toe_api = 'sghb-dzxx'
+main_api = 'm9d7-ebf2' # gekentekende_voertuigen
+keur_api = 'vkij-7mwc' # keuringen
+apk_api = 'sgfe-77wx' # meldingen_keuringsinstantie
+gebr_api = 'hx2c-gt7k' # gebreken
+toe_api = 'sghb-dzxx' # toegevoegde_objecten
 
-conf_api = '55kv-xf7m'
+conf_api = '55kv-xf7m' # EEG_Voertuigtypegoedkeuring
+
+# g2s6-ehxa Motor-Uitvoering
+
+# byxc-wwua TGK Basis Uitvoering
+# kyri-nuah TGK Merk Uitvoering
+# xn6e-huse TGK-Rupsbandset-Uitvoering
+# d3ex-xghj TGK-Koppeling-Uitvoering
+# 4by9-ammk TGK-Aandrijving-Uitvoering
+# m692-vvff TGK-Speciale-Doeleinden
+# gr7t-qfnb TGK-Energiebron-Uitvoering
+# 9s6a-b42z TGK-Intrekking-Typegoedkeuring
+
+# wx3j-69ie     Basisgegevens_EEG_Uitvoering
+# ahsi-8uyu     AS_Gegevens_EEG_Uitvoering
+#  xhyb-w7xt     TGK-As-Uitvoering
+# q7fi-ijjh     Carrosserie_Uitvoering_Klasse
+# w2qp-idms     Carrosserie_Uitvoering
+#  ky2r-jqad     TGK-Carrosserie-Uitvoering
+# nypm-t8hx     Carrosserie_Uitvoering_Nummerieke_Co
+# mdqe-txpd     Handelsbenaming_Uitvoering
+#  x5v3-sewk     TGK-Handelsbenaming-Fabrikant
+# fj7t-hhik     Merk_Uitvoering_Toegestaan
+# g2s6-ehxa     Motor_Uitvoering
+# 5w6t-p66a     Motor_Uitvoering_Brandstof
+# mt8t-4ep4     Plaatsaanduiding_Uitvoering
+# h9pa-e9ta     Subcategorie_Uitvoering
+# 2822-t8sx     Uitvoering_Gebruiksgegevens_Per_Uitg
+# r7cw-67gs     Versnellingsbak_Uitvoering
+#  7rjk-eycs     TGK-Versnelling-Uitvoering
 
 # %% [markdown]
 # ### Load auction results
@@ -98,7 +127,7 @@ conf_api = '55kv-xf7m'
 # file_name = f'../data/pdf-data-{auction_month}.pkl'
 #
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 file_name = f'{DATA_DIR}/auctions/results/drz-data-{auction_month}-{month_counter}.pkl'
 if OPBOD:
     file_name = file_name.replace('.pkl', '-opbod.pkl')
@@ -173,7 +202,7 @@ if any(vc > 1):
 #
 # The main api: `api_gekentekende_voertuigen` points to subsequent apis.
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # empty dictionary
 rdw_per_reg = dict()
 
@@ -202,12 +231,13 @@ print(Info)
 # %% [markdown]
 # Sub apis
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # Get sub apis from main api
 from_key = 'gekentekende_voertuigen'
 sub_apis,_,_ = get_sub_apis(rdw_per_reg[from_key])
 # add extra apis
 sub_apis += ['3xwf-ince', '2ba7-embk', '7ug8-2dtt', 't49b-isb7', keur_api, apk_api, toe_api] #,'a34c-vvps', # some extra apis with registrations
+print(f'{from_key}')
 for api_name in sub_apis:
     Info.set_api_name(api_name)
     Info.process_api()
@@ -219,6 +249,7 @@ for api_name in sub_apis:
 # Get apis from apk api
 from_key = 'meldingen_keuringsinstantie'
 sub_apis,_,_ = get_sub_apis(rdw_per_reg[from_key])
+print(f'{from_key}')
 for api_name in set(sub_apis):
     Info.set_api_name(api_name)
     Info.process_api()
@@ -227,9 +258,6 @@ for api_name in set(sub_apis):
     rdw_per_reg[key] = Info.get_df().copy()
     print(api_name, key)
 
-
-# %% [markdown]
-# add info from reference tables
 
 # %%
 # Use reference table to add info
@@ -285,7 +313,7 @@ else:
 # %% [markdown]
 # # Conformity codes
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # empty dict
 rdw_per_confcode = dict()
 # Conformity codes consists of four fields that make a composite key
@@ -295,7 +323,10 @@ conf = rdw_per_reg['gekentekende_voertuigen'][[
     'variant', 
     'volgnummer_wijziging_eu_typegoedkeuring'
 ]].copy()
+
+# drop nan
 conf.dropna(inplace=True)
+conf = conf.query('typegoedkeuringsnummer != "nan"')
 
 # Add shorter key "eu_type_goedkeuringssleutel"
 conf = conf.merge(
@@ -311,8 +342,6 @@ conf.rename(columns={
     'variant': 'eeg_variantcode',
     'volgnummer_wijziging_eu_typegoedkeuring': 'uitvoering_wijzigingsnummer',
 }, inplace=True)
-# drop nan
-conf = conf.query('typegoedkeuringsnummer != "nan"')
 
 # duplicates
 display(
@@ -336,42 +365,50 @@ short_confs = rdw_per_confcode['conformity_codes'].reset_index()\
 .set_index('typegoedkeuringsnummer').eu_type_goedkeuringssleutel
 full_confs = rdw_per_confcode['conformity_codes'].reset_index()\
 .set_index('typegoedkeuringsnummer').loc[:, ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer']]
+full_confs_with_long = full_confs.reset_index().drop(columns=['eu_type_goedkeuringssleutel'])
 
-# %%
-# Main conformity code api
-Info = RdwInfo(short_confs, conf_api, hidden_api_keys.socrata_apptoken)
-Info.process_api()
-key = re.sub('\s', '_', Info.metadata_['name'].lower())
-key = re.sub(f'^{from_key}_', '', key)
-rdw_per_confcode[key] = Info.get_df().copy()
-print(key)
+# %% [raw] editable=true raw_mimetype="" slideshow={"slide_type": ""}
+# # Main conformity code api
+# Info = RdwInfo(short_confs, conf_api, hidden_api_keys.socrata_apptoken)
+# Info.process_api()
+# key = re.sub('\s', '_', Info.metadata_['name'].lower())
+# key = re.sub(f'^{from_key}_', '', key)
+# rdw_per_confcode[key] = Info.get_df().copy()
+# print(key)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # Get sub apis from main api
-from_key = 'eeg_voertuigtypegoedkeuring'
-sub_apis,_,_ = get_sub_apis(rdw_per_confcode[from_key])
-Info = RdwInfo(full_confs, sub_apis[0], hidden_api_keys.socrata_apptoken)
+from_key = 'tgk'
+sub_apis,_,_ = get_apis_with_search('title:"Open Data RDW: TGK"')
+print(f'{from_key}')
 for api_name in sub_apis:
-    Info.set_api_name(api_name)
+    if api_name == '9s6a-b42z':
+        # This api only needs one field as an index
+        Info = RdwInfo(full_confs_with_long.typegoedkeuringsnummer, api_name, hidden_api_keys.socrata_apptoken)
+    else:
+        Info = RdwInfo(full_confs_with_long, api_name, hidden_api_keys.socrata_apptoken)
     Info.process_api()
     key = re.sub('\s', '_', Info.metadata_['name'].lower())
     key = re.sub(f'^{from_key}_', '', key)
     rdw_per_confcode[key] = Info.get_df().copy()
+    if key == 'handelsbenaming_fabrikant':
+        # rename typo codevariantgk -> codevarianttgk (missing 't')
+        rdw_per_confcode[key].index.names = [re.sub('codevariantgk', 'codevarianttgk', n) for n in rdw_per_confcode[key].index.names]
     print(api_name, key)
 
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # Merge dataframes from conformity codes apis
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 print('x: Data can be merged. (should be unique, 4 level key and contain data)')
 full_codes = dict()
 for k, df in rdw_per_confcode.items():
     if (k != 'conformity_codes') and (df.index.nlevels == 4) and (df.index.is_unique):
-        assert df.index.names == ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer']
+        assert df.index.names == ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering']
         df.reset_index(inplace=True)
-        df.uitvoering_wijzigingsnummer = df.uitvoering_wijzigingsnummer.astype(int).astype(str)
-        df.set_index(['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], inplace=True)
+        df.volgnummerrevisieuitvoering = df.volgnummerrevisieuitvoering.astype(int).astype(str)
+        df.set_index(['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], inplace=True)
         full_codes[k] = df
         print(f'[x] {k:64s}', end='')
     else:
@@ -382,12 +419,12 @@ for k, df in rdw_per_confcode.items():
           f'[shape: {df.shape[0]:3.0f},{df.shape[1]:3.0f}]'
          )
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # merge
 out = pd.concat(full_codes, axis=1)
 display(out.loc[:, (slice(None), 'TimeStamp')].bfill(axis=0).iloc[0,:].to_frame())
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
 file_name = f'{DATA_DIR}/auctions/enriched-results/rdw-conf/rdw-conf-0-data-{auction_month}-{month_counter}.pkl'
 
@@ -407,11 +444,11 @@ else:
 #
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Data from rdw website (OVI)
 # Optionally get data from rdw website
 
-# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 if OVIDATA == False:
     rdw_ovi = None
 else:
@@ -438,15 +475,7 @@ else:
     else:
         print(rdw_ovi.shape)
 
-# %% [raw]
-# rdw_ovi = Info.data_.copy()
-# # make fields lowercase and add "ovi_"
-# rdw_ovi.index.name='kenteken'
-# rdw_ovi.columns = [re.sub(r'([A-Z])',r'_\1', c).lower() if c != 'TimeStamp' else c for c in rdw_ovi.columns]
-# rdw_ovi.columns = [re.sub(r'^_','', c) for c in rdw_ovi.columns]
-# rdw_ovi
-
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 out = rdw_ovi.copy()
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
@@ -474,14 +503,14 @@ else:
 # Based on VIN. Product Information Catalog and Vehicle Listing (vPIC)
 # https://vpic.nhtsa.dot.gov/api/
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 from vin_lookup import Nhtsa_batch
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # empty dictionary
 nhtsa_per_vin = dict()
 
-# %% slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 key = 'vpic'
 df_ =  drz.loc[:, ['Vin', 'Mfyear']].copy().replace({'': np.NaN, 'onbekend': np.NaN}) # copy from drz
 
@@ -502,9 +531,10 @@ Batch = Nhtsa_batch(nhtsa_per_vin[key].iloc[:,:2].dropna(subset='VIN'),
                     data_dict_fn = f"{cfg['FILE_LOCATION']['code_dir']}/assets/nhtsa-data-dict.csv",
                     verbose=VERBOSE)
 Batch.full_parse()
-out = Batch.data.copy()
 
 # store in dict
+out = Batch.data.copy()
+out.loc[:, 'TimeStamp'] = pd.Timestamp.now().strftime('%Y%m%d')
 nhtsa_per_vin[key] = pd.concat([
     nhtsa_per_vin[key],
     out.drop(columns=out.columns[out.columns.str.startswith('system') | out.columns.str.startswith('internal')])
@@ -516,7 +546,7 @@ else:
     print('\n'.join(nhtsa_per_vin.keys()))
 
 # %%
-# Merge with input
+# Merge with input and potentential other sources
 nhtsa_per_vin['vpic'].index.name = 'lot_index'
 Batch.data.index.name = 'lot_index'
 df_vins = pd.concat([
@@ -525,7 +555,11 @@ df_vins = pd.concat([
 ], axis = 1)
 # add timestamp
 df_vins.loc[:, 'TimeStamp'] = pd.Timestamp.now().strftime('%Y%m%d')
+# Set index to vin/mfy
 df_vins = df_vins.reset_index().set_index(['VIN', 'MFY'])
+
+# %%
+out = df_vins.copy()
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
@@ -562,12 +596,12 @@ else:
 # 6. Merge with auction results
 #
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # Merge first set
 rich = pd.concat(rdw_per_reg, axis=1)
 rich = pd.concat([rich], keys=['rdw'], axis=1)
 rich.index.name='kenteken'
-print(rich.shape, )
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name} ')
 
 # Add conformity_codes
 codes = rdw_per_confcode['conformity_codes'].reset_index().set_index('kenteken')
@@ -579,32 +613,42 @@ rich = rich.merge(
     left_index = True,
     right_index = True,
 )
-print(rich.shape)
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name}')
 
-# Add basic conformity info
-codes = rdw_per_confcode['eeg_voertuigtypegoedkeuring'].reset_index()
-# add levels
-codes = pd.concat([codes], keys=['eeg_voertuigtypegoedkeuring'], axis=1)
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# Add data with one level EU keys
+codes = rdw_per_confcode['intrekking_typegoedkeuring'].reset_index()
+# add levels to dataframe
+codes = pd.concat([codes], keys=['intrekking_typegoedkeuring'], axis=1)
 codes = pd.concat([codes], keys=['rdw'], axis=1)
 rich = rich.reset_index().merge(
     codes, 
     how='outer',
     left_on = [('rdw', 'conformity_codes', 'typegoedkeuringsnummer')],
-    right_on = [('rdw', 'eeg_voertuigtypegoedkeuring', 'typegoedkeuringsnummer')],
+    right_on = [('rdw', 'intrekking_typegoedkeuring', 'typegoedkeuringsnummer')],
 ).set_index('kenteken')
-print(rich.shape)
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name}')
 
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # Add full_codes
 codes = pd.concat(full_codes, axis=1)#.drop(columns='conformity_codes')
 codes = pd.concat([codes], keys=['rdw'], axis=1)
+# rename index names to match existing
+existing_idx_names = [{
+    'typegoedkeuringsnummer': 'typegoedkeuringsnummer',
+    'codevarianttgk': 'eeg_variantcode',
+    'codeuitvoeringtgk': 'eeg_uitvoeringscode',
+    'volgnummerrevisieuitvoering': 'uitvoering_wijzigingsnummer'}[c] for c in codes.index.names]
+codes.index.names = existing_idx_names
 rich = rich.merge(
     codes,
     how='outer',
     left_on = [('rdw', 'conformity_codes', c) for c in codes.index.names],
     right_index=True
 )
-print(rich.shape)
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name}')
 
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # Add ovi
 codes = pd.concat([rdw_ovi], keys=['ovi'], axis=1)
 codes = pd.concat([codes], keys=['rdw'], axis=1)
@@ -614,8 +658,9 @@ rich = rich.merge(
     left_index = True,
     right_index = True,
 )
-print(rich.shape)
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name}')
 
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # Add vpic
 codes = pd.concat(nhtsa_per_vin, axis=1)
 codes = pd.concat([codes], keys=['nhtsa'], axis=1)
@@ -624,17 +669,20 @@ rich = rich.reset_index().merge(
     how='outer',
     left_on = [('rdw', 'registrations', 'lot_index')],
     right_index = True,
-).set_index(('rdw', 'registrations', 'lot_index'))
-rich.index.name = 'lot_index'
-print(rich.shape)
+).set_index(('rdw', 'registrations', 'lot_index')) # set to 3d index
+rich.index.name = 'lot_index' # make 1d index again
+print(f'{rich.shape[1]} columns {rich.shape[0]} {rich.index.name}')
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 rich.columns.map(lambda x: '_'.join(x))
 rich
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
+# Three level column index
 existing = pd.concat([drz], keys=[''], axis=1)
 existing = pd.concat([existing], keys=['drz'], axis=1)
+print(f'{existing.shape[1]} columns {existing.shape[0]} {existing.index.name}')
+# Add rich to existing to make enriched
 enriched = pd.merge(
     left = existing,
     right = rich,
@@ -642,16 +690,17 @@ enriched = pd.merge(
     left_index = True,
     right_index = True
 )
+print(f'{enriched.shape[1]} columns {enriched.shape[0]} {enriched.index.name}')
 
 # %% [markdown]
 # <a href="#rdw_top" id='rdw_save'><font size=+1><center>^^ TOP ^^</center></font></a>
 #
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Saving
 
-# %% tags=["nbconvert_instruction:remove_all_outputs"]
+# %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 file_name = f'{DATA_DIR}/auctions/enriched-results/rdw-data-{auction_month}-{month_counter}.pkl'
 if NO_PRICE:
     file_name = file_name.replace('.pkl', '-without-price.pkl')
@@ -664,7 +713,7 @@ if (SKIPSAVE==False) and (not(os.path.isfile(file_name))):
 else:
     print(f'Skip. {file_name} exists or saving is disabled in settings.')
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Next: download images (or parallel)
 #
 # Because images might be taken down from the drz site, it is advisable to run the notebook that downloads images soon.
