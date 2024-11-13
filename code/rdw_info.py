@@ -372,7 +372,7 @@ class RdwInfo:
         self.metadata_['pivot_columns'] = {
             '3huj-srit': 'as_nummer',
             '8ys7-d773': 'brandstof_volgnummer',
-            'gr7t-qfnb': 'volgnummerenergiebron',
+            'gr7t-qfnb': ['volgnummeraandrijving', 'volgnummerenergiebron'],
             'vezc-m2t6': 'carrosserie_volgnummer',
             'jhie-znh9': ['carrosserie_volgnummer', 'carrosserie_voertuig_nummer_code_volgnummer'],
             'kmfi-hrps': ['carrosserie_volgnummer', 'carrosserie_klasse_volgnummer'],
@@ -380,13 +380,13 @@ class RdwInfo:
             'a34c-vvps': ['meld_datum_door_keuringsinstantie_dt', 'gebrek_identificatie'],
             'sghb-dzxx': ['montagedatum', 'demontagedatum'],
             'ahsi-8uyu': 'asnummer',
-            'xhyb-w7xt': 'volgnummeras',
+            'xhyb-w7xt': 'volgnummeras', # As Uitvoering
             'q7fi-ijjh': ['carrosserie_volgnummer', 'carrosserie_klasse_volgnummer'],
             'w2qp-idms': 'carrosserie_volgnummer',
             'ky2r-jqad': ['volgnummercarrosserietype'],
             'nypm-t8hx': ['carrosserie_volgnummer', 'carrosserie_uitvoering_numeriek_volgnummer'],
             'mdqe-txpd': 'volgnummer',
-            'x5v3-sewk': 'volgnummerhandelsbenamingfabr',
+            'x5v3-sewk': 'volgnummerhandelsbenamingfabr', # Handelsbenaming Fabrikant
             'fj7t-hhik': 'merkcode', 
             'kyri-nuah': 'volgnummermerk',
             'g2s6-ehxa': 'volgnummer',
@@ -448,18 +448,18 @@ class RdwInfo:
             'h9pa-e9ta': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
             '2822-t8sx': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
             'r7cw-67gs': ['eu_type_goedkeuringssleutel', 'eeg_variantcode', 'eeg_uitvoeringscode', 'uitvoering_wijzigingsnummer'], 
-            'xhyb-w7xt': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # as_uitvoering
-            'x5v3-sewk': ['typegoedkeuringsnummer', 'codevariantgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Handelsbenaming Fabrikant
-            'ky2r-jqad': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # carrosserie_uitvoering
-            'gr7t-qfnb': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Energiebron Uitvoering
-            'd3ex-xghj': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Koppeling Uitvoering
-            'byxc-wwua': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Basis Uitvoering
-            'm692-vvff': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Speciale Doeleinden
-            'kyri-nuah': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Merk Uitvoering
-            '7rjk-eycs': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Versnelling Uitvoering
-            '4by9-ammk': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Aandrijving Uitvoering
-            'xn6e-huse': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # Rupsbandset Uitvoering
-            '9s6a-b42z': 'typegoedkeuringsnummer', # Intrekking Typegoedkeuring
+            'xhyb-w7xt': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 10 as_uitvoering
+            'x5v3-sewk': ['typegoedkeuringsnummer', 'codevariantgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 4 Handelsbenaming Fabrikant
+            'ky2r-jqad': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 6 carrosserie_uitvoering
+            'gr7t-qfnb': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 3 Energiebron Uitvoering
+            'd3ex-xghj': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 9 Koppeling Uitvoering
+            'byxc-wwua': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 1 Basis Uitvoering
+            'm692-vvff': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 7 Speciale Doeleinden
+            'kyri-nuah': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 5 Merk Uitvoering
+            '7rjk-eycs': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 8 Versnelling Uitvoering
+            '4by9-ammk': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 2 Aandrijving Uitvoering
+            'xn6e-huse': ['typegoedkeuringsnummer', 'codevarianttgk', 'codeuitvoeringtgk', 'volgnummerrevisieuitvoering'], # 11 Rupsbandset Uitvoering
+            '9s6a-b42z': 'typegoedkeuringsnummer', # 12 Intrekking Typegoedkeuring
             }
         if (api_name in self.metadata_['primary_keys']) and (self.metadata_['primary_keys'][api_name] == 'kenteken'):
             self.clean_reg() # Capitals and no fillers
@@ -723,13 +723,13 @@ class RdwInfo:
         cols = self.metadata_['pivot_columns'][api_name]
         cols = [cols] if isinstance(cols, str) else cols
         prim_key = self.metadata_['primary_keys'][api_name]
-        prim_key = [prim_key] if isinstance(prim_key, str) else prim_key       
+        prim_key = [prim_key] if isinstance(prim_key, str) else prim_key # make list of one if it is a single string       
         
         # pivot
         
         # create df with unique rows
         df_uniq_idx = df.reset_index().set_index(prim_key + cols)
-        assert df_uniq_idx.index.is_unique, f'During {api_name}.'
+        assert df_uniq_idx.index.is_unique, f'During pivot in {api_name} {cols} were not enough to yield unique observations.'
 
         # rank values in pivot columns to get a sorted index number (0, 1, 2, ..) 
         for i, col in enumerate(cols):
