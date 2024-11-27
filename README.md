@@ -9,6 +9,8 @@
 - Images can be used for classification.
 
 ## Change log
+- November 2024:
+    - RDW discontinued some apis (needed to enrich data). This was fixed by using the new repacement apis called TGK. 
 - February 2024:
     - Do prediction of price with separate notebooks. Use "shelve" to store models between notebooks.
     - Add tree model to predict price.
