@@ -179,19 +179,19 @@ class Nhtsa:
             self.errormsg_ = f'URL <{self.call_}> is invalid. It might have characters that are not allowed.'
             if self.verboselevel_ > 0:
                 print(self.errormsg_)
-            resp = pd.DataFrame(data = {'Group Name': np.NaN, 'Element': 'Vin', 'Value': vin}, index = [-1])
+            resp = pd.DataFrame(data = {'Group Name': np.nan, 'Element': 'Vin', 'Value': vin}, index = [-1])
         
         except HTTPError:
             self.succes_ = False
             self.errormsg_ = f'URL <{self.call_}> is invalid. Server might be offline.'
             if self.verboselevel_ > 0:
                 print(self.errormsg_)
-            resp = pd.DataFrame(data = {'Group Name': np.NaN, 'Element': 'Vin', 'Value': vin}, index = [-1])
+            resp = pd.DataFrame(data = {'Group Name': np.nan, 'Element': 'Vin', 'Value': vin}, index = [-1])
             
         # Clean up response
         resp.drop_duplicates(inplace=True)
         resp.set_index(['Group Name', 'Element'], inplace=True)
-        resp = pd.concat([resp, pd.DataFrame({'Value': self.vin_}, index=[(np.NaN, 'Vin')])]) # add input
+        resp = pd.concat([resp, pd.DataFrame({'Value': self.vin_}, index=[(np.nan, 'Vin')])]) # add input
         # add origin
         resp.loc[:, 'nhtsa key'] = resp.index.to_frame().fillna('').apply(' / '.join, axis=1)
         
@@ -339,7 +339,7 @@ class Nhtsa:
         indx.Element = indx.Element.apply(lambda x: re.sub(r'\((.+)\)', r'\1', x) if x in self.units_ else x).to_list()
         if self.verboselevel_ >= 4:
             print('These elements have characters that are not allowed')
-            for l in indx.Element.apply(lambda x: x if re.search('\(.+\)', x) is not None else np.NaN).dropna().to_list():
+            for l in indx.Element.apply(lambda x: x if re.search('\(.+\)', x) is not None else np.nan).dropna().to_list():
                 print(f'\t{l}')
         self.data.index = pd.MultiIndex.from_frame(indx)
         
@@ -497,7 +497,7 @@ class Nhtsa_batch:
         df_ = self.vins_
         df_.iloc[:,0] = df_.iloc[:,0].apply(lambda x: re.sub(';','?', x) if ';' in x else x)
         df_.iloc[:,1] = df_.iloc[:,1].astype(str)
-        df_ = df_.replace({'': np.NaN}).dropna(subset=df_.columns[0])
+        df_ = df_.replace({'': np.nan}).dropna(subset=df_.columns[0])
         self.vins_ = df_.fillna('').apply(','.join, axis=1)
         
 
@@ -537,7 +537,7 @@ class Nhtsa_batch:
 
             # add to dataframe
             add = expand_results_columns(add)
-            add.replace({'Not Applicable': np.NaN, '': np.NaN}, inplace=True)
+            add.replace({'Not Applicable': np.nan, '': np.nan}, inplace=True)
             add.index = batch.index.copy()
             resp = pd.concat([resp, add])
             
@@ -561,7 +561,7 @@ class Nhtsa_batch:
         ], axis=1)
         new_index = pd.concat([new_index,
                                pd.concat([
-                                    pd.DataFrame(data=[['System', np.NaN, np.NaN]] * sys_cols.shape[0], index=sys_cols, columns=[f'GroupName_{i}' for i in range(3)]),
+                                    pd.DataFrame(data=[['System', np.nan, np.nan]] * sys_cols.shape[0], index=sys_cols, columns=[f'GroupName_{i}' for i in range(3)]),
                                     pd.Series(data=sys_cols, index=sys_cols, name='Element')
                                 ], axis=1)], axis=0)
         new_index = new_index.fillna('')

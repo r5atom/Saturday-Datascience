@@ -82,15 +82,15 @@ def get_sub_apis(df):
             
     return list(api_names), list(api_full_names), list(api_urls)
 
-def web_request(url, params):
+def web_request(url, params, headers={"User-Agent": "Mozilla/5.0"}):
     
     import requests
     
-    resp = requests.request('GET', url, params=params)
+    resp = requests.request('GET', url, params=params, headers=headers)
     
     if resp.status_code != 200:
-        print(f'\n{url}\n{params}\nStatus: {resp.status_code}')
-    
+        print(f'\nurl: {url}\nwith params: {params}\nreturns status: {resp.status_code}')
+   
     return resp
 
 def soda_request(api_url, token, params):
@@ -305,7 +305,7 @@ def get_metadata(api_name, token=''):
 
     # low cardinality could point to categorical data (factors)
     # create a new empty "object" column
-    md.loc[:, ('field_content', 'factors')] = pd.Series(index=md.index, dtype='object', data=np.NaN) 
+    md.loc[:, ('field_content', 'factors')] = pd.Series(index=md.index, dtype='object', data=np.nan) 
     
     if ('field_content', 'cardinality') not in md:
         # there is no cardinality info stop here
@@ -411,21 +411,21 @@ class RdwInfo:
         # Unique id per row
         # "*" means no index. These are reference tables.
         self.metadata_['primary_keys'] = {
-            'm9d7-ebf2': 'kenteken',
-            '3huj-srit': 'kenteken',
-            '8ys7-d773': 'kenteken',
-            'vezc-m2t6': 'kenteken',
-            'jhie-znh9': 'kenteken',
-            'kmfi-hrps': 'kenteken',
-            'sgfe-77wx': 'kenteken',
-            'a34c-vvps': 'kenteken',
-            'sghb-dzxx': 'kenteken', 
-            'vkij-7mwc': 'kenteken',
-            '3xwf-ince': 'kenteken',
-            '2ba7-embk': 'kenteken',
-            '7ug8-2dtt': 'kenteken',
-            't49b-isb7': 'kenteken', 
-            '55kv-xf7m': 'eu_type_goedkeuringssleutel',
+            'm9d7-ebf2': 'kenteken', # main: gekentekende_voertuigen
+            '3huj-srit': 'kenteken', # assen
+            '8ys7-d773': 'kenteken', # brandstof
+            'vezc-m2t6': 'kenteken', # carrosserie
+            'jhie-znh9': 'kenteken', # carrosserie_specificatie
+            'kmfi-hrps': 'kenteken', # voertuigklasse
+            'sgfe-77wx': 'kenteken', # meldingen_keuringsinstantie 
+            'a34c-vvps': 'kenteken', # geconstateerde_gebreken
+            'sghb-dzxx': 'kenteken', # toegevoegde_objecten
+            'vkij-7mwc': 'kenteken', # keuringen
+            '3xwf-ince': 'kenteken', # rupsbanden
+            '2ba7-embk': 'kenteken', # subcategorie_voertuig
+            '7ug8-2dtt': 'kenteken', # bijzonderheden
+            't49b-isb7': 'kenteken', # terugroep_actie_status
+            '55kv-xf7m': 'eu_type_goedkeuringssleutel', # EEG_Voertuigtypegoedkeuring
             'jqs4-4kvw': '*', #'code_toelichting_tellerstandoordeel',
             'hx2c-gt7k': '*', #'gebrek_identificatie',
             '5k74-3jha': '*', #'volgnummer',
@@ -641,6 +641,7 @@ class RdwInfo:
             sep = '.' # separator between index fields
 
             idx = self.get_idx()
+            idx = idx.astype(str)
 
             # if primary key is a list of key we need to make a composite key
             assert idx.map(lambda x: sep not in x).all().all() # It could complicate things if sep is already present
@@ -858,6 +859,15 @@ class OviInfo:
             (warn_text[0].startswith(f'Er zijn geen gegevens gevonden voor het ingevulde kenteken {reg.upper()}.')) or \
             (warn_text[0].startswith(f'{reg.upper()} is geen geldig kenteken.'))
         )
+        # discontinued (as of december 2024)
+        message_lines = tree.xpath('//*/app-ovi//*/p/text()')
+        if (len(message_lines) > 1) and (message_lines[0] == 'Aan het laden... een moment geduld a.u.b.'):
+            DISCONT = True
+        else:
+            DISCONT = False
+
+
+
 
         # return result
         if ERROR:
@@ -870,6 +880,14 @@ class OviInfo:
             self.reset_resp()
             sleep(TIME_OUT)
             return self.check_ovi_status() # try again (recursive)
+        if DISCONT:
+            self.reset_resp()
+            msg = f'Discontinued query directly from url {self._url}'
+            if self.verbose_level_ > 2:
+                print(msg)
+
+            return False
+
         elif WARNING_NA:
             return '\n'.join(warn_text)
         

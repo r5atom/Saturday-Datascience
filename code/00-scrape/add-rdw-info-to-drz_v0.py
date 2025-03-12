@@ -6,14 +6,18 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.16.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [markdown] slideshow={"slide_type": ""} editable=true
+# %% [markdown]
+# # ORGINEEL
+# ----------
+
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # <a id='rdw_top'>
 
 # %% [markdown]
@@ -65,6 +69,8 @@ QUICK_MERGE = False
 SKIPSAVE = False
 OVIDATA = True
 VERBOSE = 1
+
+print(AUCTION_ID)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Modules and functions
@@ -287,7 +293,8 @@ del rdw_per_reg['geconstateerde_gebreken']
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 out = pd.concat(rdw_per_reg, axis=1)
-display(out.loc[:, (slice(None), 'TimeStamp')].bfill(axis=0).iloc[-1,:].to_frame())
+# When TimeStamp is filled, this auction has information from that api.
+display(out.loc[:, (slice(None), 'TimeStamp')].bfill(axis=0).iloc[[0],:].reset_index(drop=True).T)
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save
@@ -313,16 +320,34 @@ else:
 # %% [markdown]
 # # Conformity codes
 
+# %%
+# As of Dec 2024 something changed. This field is no longer returned
+if 'volgnummer_wijziging_eu_typegoedkeuring' not in rdw_per_reg['gekentekende_voertuigen']:
+    conf = rdw_per_reg['gekentekende_voertuigen'][[
+        'typegoedkeuringsnummer', 
+        'uitvoering', 
+        'variant'
+    ]].copy()
+    conf.loc[:,'volgnummer_wijziging_eu_typegoedkeuring'] = 0
+else:
+    conf = rdw_per_reg['gekentekende_voertuigen'][[
+        'typegoedkeuringsnummer', 
+        'uitvoering', 
+        'variant', 
+        'volgnummer_wijziging_eu_typegoedkeuring'
+    ]].copy()
+
+
 # %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 # empty dict
 rdw_per_confcode = dict()
-# Conformity codes consists of four fields that make a composite key
-conf = rdw_per_reg['gekentekende_voertuigen'][[
-    'typegoedkeuringsnummer', 
-    'uitvoering', 
-    'variant', 
-    'volgnummer_wijziging_eu_typegoedkeuring'
-]].copy()
+# # Conformity codes consists of four fields that make a composite key
+# conf = rdw_per_reg['gekentekende_voertuigen'][[
+#     'typegoedkeuringsnummer', 
+#     'uitvoering', 
+#     'variant', 
+#     'volgnummer_wijziging_eu_typegoedkeuring'
+# ]].copy()
 
 # drop nan
 conf.dropna(inplace=True)
@@ -349,7 +374,7 @@ display(
     .reset_index()\
     .groupby('eu_type_goedkeuringssleutel')\
     .nunique()\
-    .replace(1,np.NaN)\
+    .replace(1,np.nan)\
     .dropna(how='all')\
     .fillna(1)\
     .astype(int)\
@@ -512,7 +537,7 @@ nhtsa_per_vin = dict()
 
 # %% editable=true slideshow={"slide_type": ""} tags=["nbconvert_instruction:remove_all_outputs"]
 key = 'vpic'
-df_ =  drz.loc[:, ['Vin', 'Mfyear']].copy().replace({'': np.NaN, 'onbekend': np.NaN}) # copy from drz
+df_ =  drz.loc[:, ['Vin', 'Mfyear']].copy().replace({'': np.nan, 'onbekend': np.nan}) # copy from drz
 
 # borrow mfyear from rdw info
 rdw_mfy = pd.merge(  left = rdw_per_reg['registrations'].reset_index(),
@@ -560,6 +585,9 @@ df_vins = df_vins.reset_index().set_index(['VIN', 'MFY'])
 
 # %%
 out = df_vins.copy()
+
+# %%
+out
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
 # Save

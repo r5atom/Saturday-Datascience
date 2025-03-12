@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.16.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -34,7 +34,7 @@
 # First create a settings file for current auction.
 # This file may already exist.
 # !cd ..; \
-# python3 assets/make_auction_setting_file.py "2024-0022" I "20241123" \
+# python3 assets/make_auction_setting_file.py "2025-0005" I "20250312" \
 # -v -c assets/drz-settings.ini \
 # -s assets/drz-settings-current.json
 
@@ -177,6 +177,11 @@ for col in ['Start online veiling', 'Sluiting online veiling']:
 
 
 # %% tags=["nbconvert_instruction:remove_all_outputs"]
+if AUCTION_ID not in auct_dates.index:
+    with pd.option_context('display.max_rows', None):
+        display(auct_dates)
+    raise RuntimeError(f'AUCTION_ID [{AUCTION_ID}] not listed in .csv file with auction dates.')
+
 now = pd.Timestamp.now()
 expected = pd.to_datetime(auction_month,format='%Y-%m')
 expected = auct_dates.loc[AUCTION_ID].values[0]
@@ -240,6 +245,7 @@ if RUN_EXAMPLES:
     ids = [
         f'K{auction_month[2:4]}00{month_counter}1800', 
         f'K{auction_month[2:4]}00{month_counter}1801', 
+        f'K{auction_month[2:4]}00{month_counter}1802', 
         f'K{auction_month[2:4]}00{month_counter}1900', 
         f'K{auction_month[2:4]}00{month_counter}1901', 
         f'K{auction_month[2:4]}00{month_counter}1000', 
