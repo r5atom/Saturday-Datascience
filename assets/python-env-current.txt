@@ -79,6 +79,7 @@ notebook                  7.3.2
 notebook_shim             0.2.3
 numpy                     2.2.3
 odfpy                     1.4.1
+opencv-python             4.11.0.86
 overrides                 7.3.1
 packaging                 21.3
 pandas                    2.2.3
