@@ -310,6 +310,10 @@ def get_metadata(api_name, token=''):
     if ('field_content', 'cardinality') not in md:
         # there is no cardinality info stop here
         return md
+    
+    if ('field_content', 'top') not in md:
+        # there is no top (meaning no cardinality) stop here as well
+        return md
 
     n_category_max = max(md.loc[:, ('field_content', 'top')].apply(lambda x: len(x) if isinstance(x, list) else x)) # default max is twenty top observations
     is_cat = (md.loc[:, ('field_content', 'cardinality')] < n_category_max) & (md.loc[:, ('field_content', 'cardinality')] > 1) # 19 or less indicates category

@@ -207,18 +207,20 @@ sub_apis,_,_ = get_sub_apis(rdw_per_reg[from_key])
 sub_apis += ['3xwf-ince', '2ba7-embk', '7ug8-2dtt', 't49b-isb7', keur_api, apk_api, toe_api] #,'a34c-vvps', # some extra apis with registrations
 print(f'{from_key}')
 for api_name in sub_apis:
+    print(api_name, end = '')
     Info.set_api_name(api_name)
     Info.process_api()
     key = re.sub('\s', '_', Info.metadata_['name'].lower())
     key = re.sub(f'^{from_key}_', '', key)
     rdw_per_reg[key] = Info.get_df().copy()
     print(api_name, key)
-
+    
 # Get apis from apk api
 from_key = 'meldingen_keuringsinstantie'
 sub_apis,_,_ = get_sub_apis(rdw_per_reg[from_key])
 print(f'{from_key}')
 for api_name in set(sub_apis):
+    print(api_name, end = '')
     Info.set_api_name(api_name)
     Info.process_api()
     key = re.sub('\s', '_', Info.metadata_['name'].lower())
